@@ -1,0 +1,21 @@
+# ninja log v6
+3	61	7696195951217819	freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-mkdir	662d150ae5115852
+3	61	7696195951217819	C:/Users/user/source/repos/BasicsTetris/out/build/x64-Debug/_deps/freetype-subbuild/freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-mkdir	662d150ae5115852
+62	9677	7696196047380285	freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-download	9c4bcbab9a82d9d7
+62	9677	7696196047380285	C:/Users/user/source/repos/BasicsTetris/out/build/x64-Debug/_deps/freetype-subbuild/freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-download	9c4bcbab9a82d9d7
+9678	9792	7696196047450280	freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-update	7ae2460a528fab6c
+9678	9792	7696196047450280	C:/Users/user/source/repos/BasicsTetris/out/build/x64-Debug/_deps/freetype-subbuild/freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-update	7ae2460a528fab6c
+9792	9847	7696196049090293	freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-patch	b026129942284cad
+9792	9847	7696196049090293	C:/Users/user/source/repos/BasicsTetris/out/build/x64-Debug/_deps/freetype-subbuild/freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-patch	b026129942284cad
+9847	9904	7696196049650284	freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-configure	5d47403bfc510afb
+9847	9904	7696196049650284	C:/Users/user/source/repos/BasicsTetris/out/build/x64-Debug/_deps/freetype-subbuild/freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-configure	5d47403bfc510afb
+9904	9959	7696196050207674	freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-build	f4e46ce65ffffa6e
+9904	9959	7696196050207674	C:/Users/user/source/repos/BasicsTetris/out/build/x64-Debug/_deps/freetype-subbuild/freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-build	f4e46ce65ffffa6e
+9959	10016	7696196050777656	freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-install	d4c6582951c42fbf
+9959	10016	7696196050777656	C:/Users/user/source/repos/BasicsTetris/out/build/x64-Debug/_deps/freetype-subbuild/freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-install	d4c6582951c42fbf
+10017	10071	7696196051317656	freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-test	ff4472ba563c52f1
+10017	10071	7696196051317656	C:/Users/user/source/repos/BasicsTetris/out/build/x64-Debug/_deps/freetype-subbuild/freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-test	ff4472ba563c52f1
+10071	10141	7696196052037656	CMakeFiles/freetype-populate-complete	a3fad34340175844
+10071	10141	7696196052037656	freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-done	a3fad34340175844
+10071	10141	7696196052037656	C:/Users/user/source/repos/BasicsTetris/out/build/x64-Debug/_deps/freetype-subbuild/CMakeFiles/freetype-populate-complete	a3fad34340175844
+10071	10141	7696196052037656	C:/Users/user/source/repos/BasicsTetris/out/build/x64-Debug/_deps/freetype-subbuild/freetype-populate-prefix/src/freetype-populate-stamp/freetype-populate-done	a3fad34340175844
