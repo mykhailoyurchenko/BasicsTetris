@@ -1,31 +1,20 @@
-cmake_minimum_required(VERSION 3.31)
-project(BasicsTetris)
+cmake_minimum_required(VERSION 3.28)
+project(Tetris LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-# Вкажіть каталоги з заголовками
-include_directories(${CMAKE_SOURCE_DIR}/include)
+include(FetchContent)
+FetchContent_Declare(SFML
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG 3.0.1
+        GIT_SHALLOW ON
+        EXCLUDE_FROM_ALL
+        SYSTEM)
+FetchContent_MakeAvailable(SFML)
 
-# Вкажіть каталоги з бібліотеками
-link_directories(${CMAKE_SOURCE_DIR}/lib)
 
-# Додайте вихідні файли
-file(GLOB SOURCES
-        "src/*.cpp"
-        "src/*.c"
-)
-
-add_executable(${PROJECT_NAME} ${SOURCES})
-
-# Якщо збирали glad самостійно, додайте libglad
-# Інакше можна лінкувати лише з OpenGL
-target_link_libraries(${PROJECT_NAME}
-        glfw3            # бібліотека GLFW
-        glad             # якщо є libglad.a/.lib
-        ${CMAKE_DL_LIBS} # для динамічного завантаження на Linux
-)
-
-# На Windows автоматично лінкується opengl32
-if (WIN32)
-    target_link_libraries(${PROJECT_NAME} opengl32)
-endif()
+add_executable(main main.cpp
+        src/Menu.h)
+target_compile_features(main PRIVATE cxx_std_17)
+target_link_libraries(main PRIVATE SFML::Graphics)
+file(COPY ${CMAKE_SOURCE_DIR}/texture/background.jpg DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/texture)
