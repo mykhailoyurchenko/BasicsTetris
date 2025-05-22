@@ -12,6 +12,9 @@ FetchContent_Declare(SFML
         SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main main.cpp)
+
+add_executable(main main.cpp
+        src/Menu.h)
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
+file(COPY ${CMAKE_SOURCE_DIR}/texture/background.jpg DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/texture)
