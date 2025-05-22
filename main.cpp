@@ -5,7 +5,8 @@ using namespace std;
 
 int main()
 {
-    RenderWindow window(VideoMode({1920, 1080}), "Tetris");
+    RenderWindow window(VideoMode({1920, 1080}), "тетріс");
+
 
 
 
