@@ -4,16 +4,8 @@ using namespace sf;
 using namespace std;
 
 
-
-
-
-
-
-
 int main()
 {
-
-
     RenderWindow window(VideoMode({1920, 1080}), "Tetris");
 
     std::vector<sf::CircleShape> circles;
@@ -80,6 +72,7 @@ int main()
 
         //перевірка на взаємодію з кноакою
         if ((mouseX >= x1)and(mouseX <= x2) and (mouseY >= y1)  and (mouseY <= y2)) {
+            
             rectButton1.setFillColor(Color(20, 90, 0));
             if (Mouse::isButtonPressed(Mouse::Button::Left)) {
                 sf::CircleShape circle(30.f);
