@@ -5,14 +5,37 @@
 using namespace sf;
 using namespace std;
 
+vector<RectangleShape> rectangles;
+
+void createButton(RectangleShape button, float mouseX,float mouseY) {
+	float lBorderB1 = button.getPosition().x;
+	float dBorderB1 = button.getPosition().y;
+	float rBorderB1 = lBorderB1 + button.getSize().x;
+	float uBorderB1 = dBorderB1 + button.getSize().y;
+	//перевірка на взаємодію з кноакою
+	if ((mouseX >= lBorderB1) && (mouseX <= rBorderB1) && (mouseY >= dBorderB1) && (mouseY <= uBorderB1)) {
+		button.setFillColor(Color(20, 90, 0));
+		if (Mouse::isButtonPressed(Mouse::Button::Left)) {
+			RectangleShape tetrisRect(Vector2f(500, 900));
+			tetrisRect.setFillColor(sf::Color::Black);
+			tetrisRect.setPosition(Vector2f(700, 50));
+			rectangles.push_back(tetrisRect);
+			button.setFillColor(Color::Yellow);
+
+		}
+		else {
+			button.setFillColor(Color(0, 0, 0, 12));
+		}
+	}
+
+}
+
 int main()
 {
-
 	RenderWindow window(VideoMode({ 1920, 1080 }), "Tetris");
 	window.setFramerateLimit(60);
 
-	vector<RectangleShape> rectangles;
-
+	
 	RectangleShape rect;
 	rect.setFillColor(Color(0, 0, 0, 12));
 	rect.setPosition(Vector2f(750, 500));
@@ -33,13 +56,16 @@ int main()
 
 	//налаштування фону
 	Texture backgroundTexture;
-	backgroundTexture.loadFromFile("src/texture/background.jpg");
+	if (!backgroundTexture.loadFromFile("src/texture/background.jpg")) {
+		return -1; // Помилка завантаження
+	}
+	
 	Sprite background(backgroundTexture);
 	background.setTexture(backgroundTexture);
 
 	//налаштування шрифта
 	Font font;
-	if (!font.openFromFile("src/fonts/Roboto_Condensed-Black.ttf")) return 3;
+	if (!font.openFromFile("src/fonts/Roboto_Condensed-Black.ttf")) return -1;
 
 	//налаштування тексту
 	Text textButton1(font);
@@ -49,55 +75,26 @@ int main()
 	textButton1.setPosition(Vector2f(900, 490));
 
 	int score = 0;
-	sf::Text scoreText(font);
+	Text scoreText(font);
 	scoreText.setCharacterSize(40);
-	scoreText.setFillColor(sf::Color::White);
+	scoreText.setFillColor(Color::White);
 	scoreText.setPosition(Vector2f(50, 50));
 
-
-	//перевірка чи рендериця фон
-	if (!backgroundTexture.loadFromFile("src/texture/background.jpg")) {
-		return -1; // Помилка завантаження
-	}
-
-	bool showRectangle = false;
-
 	while (window.isOpen()) {
-
 
 		//відстежувіння мишки
 		float mouseX = Mouse::getPosition(window).x;
 		float mouseY = Mouse::getPosition(window).y;
 
-
 		//кординати кінця і початку кнопки
-		float x1 = button1.getPosition().x;
-		float y1 = button1.getPosition().y;
-		float x2 = x1 + button1.getSize().x;
-		float y2 = y1 + button1.getSize().y;
+		createButton(button1, mouseX, mouseY);
 
-		float x11 = button2.getPosition().x;
-		float y11 = button2.getPosition().y;
-		float x22 = x11 + button2.getSize().x;
-		float y22 = y11 + button2.getSize().y;
+		float lBorderB2 = button2.getPosition().x;
+		float dBorderB2 = button2.getPosition().y;
+		float rBorderB2 = lBorderB2 + button2.getSize().x;
+		float uBorderB2 = dBorderB2 + button2.getSize().y;
 
-		//перевірка на взаємодію з кноакою
-		if ((mouseX >= x1) && (mouseX <= x2) && (mouseY >= y1) && (mouseY <= y2)) {
-			button1.setFillColor(Color(20, 90, 0));
-			if (Mouse::isButtonPressed(Mouse::Button::Left)) {
-				RectangleShape tetrisRect(Vector2f(500, 900));
-				tetrisRect.setFillColor(sf::Color::Black);
-				tetrisRect.setPosition(Vector2f(700, 50));
-				rectangles.push_back(tetrisRect);
-				button1.setFillColor(Color::Yellow);
-
-			}
-		}
-		else {
-			button1.setFillColor(Color((0, 0, 0, 12)));
-		}
-
-		if ((mouseX >= x11) && (mouseX <= x22) && (mouseY >= y11) && (mouseY <= y22)) {
+		if ((mouseX >= lBorderB2) && (mouseX <= rBorderB2) && (mouseY >= dBorderB2) && (mouseY <= uBorderB2)) {
 			button2.setFillColor(Color(20, 90, 0));
 			if (Mouse::isButtonPressed(Mouse::Button::Left)) {
 				if (!rectangles.empty()) {
@@ -131,6 +128,7 @@ int main()
 		for (const auto& tetrisRect : rectangles)
 			window.draw(tetrisRect);
 
-		window.display();
+
 	}
+	window.display();
 }
