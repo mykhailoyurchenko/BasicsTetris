@@ -32,10 +32,10 @@ void createButton(RectangleShape button, float mouseX,float mouseY) {
 
 int main()
 {
-	RenderWindow window(VideoMode({ 1920, 1080 }), "Tetris");
+	RenderWindow window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default,State::Fullscreen);
 	window.setFramerateLimit(60);
 
-	
+
 	RectangleShape rect;
 	rect.setFillColor(Color(0, 0, 0, 12));
 	rect.setPosition(Vector2f(750, 500));
@@ -59,7 +59,7 @@ int main()
 	if (!backgroundTexture.loadFromFile("src/texture/background.jpg")) {
 		return -1; // Помилка завантаження
 	}
-	
+
 	Sprite background(backgroundTexture);
 	background.setTexture(backgroundTexture);
 
