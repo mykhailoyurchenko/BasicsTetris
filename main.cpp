@@ -1,11 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <Menu.h>
 
+#include "src/Menu.h"
+
 using namespace sf;
 using namespace std;
 
 int main()
 {
+
 
     RenderWindow window(VideoMode({1920, 1080}), "Tetris");
 

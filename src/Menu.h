@@ -1,10 +1,11 @@
-#include <SFML/Graphics.hpp>
+//
+// Created by STALJ on 23.05.2025.
+//
 
-using namespace sf;
-using namespace std;
-
-#ifndef MAIN_H
+#ifndef MENU_H
 #define MENU_H
+
+
 
 class Menu {
 
@@ -12,5 +13,4 @@ class Menu {
 
 
 
-
-#endif //MAIN_H
+#endif //MENU_H
