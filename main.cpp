@@ -50,7 +50,7 @@ int main()
 
 
 	RectangleShape button2;
-	button2.setFillColor(Color(0, 0, 0, 12));
+	button2.setFillColor(Color(0, 0, 0, 70));
 	button2.setPosition(Vector2f(1450, 500));
 	button2.setSize(Vector2f(200, 50));
 
@@ -73,6 +73,12 @@ int main()
 	textButton1.setCharacterSize(50);
 	textButton1.setFillColor(Color::White);
 	textButton1.setPosition(Vector2f(900, 490));
+
+	Text goBack(font);
+	goBack.setString("Go back");
+	goBack.setCharacterSize(50);
+	goBack.setFillColor(Color::White);
+	goBack.setPosition(Vector2f(1475, 490));
 
 	int score = 0;
 	Text scoreText(font);
@@ -105,7 +111,7 @@ int main()
 			}
 		}
 		else {
-			button2.setFillColor(Color(0, 0, 0, 12));
+			button2.setFillColor(Color(0, 20, 100, 70));
 		}
 
 		//обробка події закриття
@@ -125,6 +131,8 @@ int main()
 		window.draw(button2);
 		window.draw(textButton1);
 		window.draw(scoreText);
+		window.draw(goBack);
+
 		for (const auto& tetrisRect : rectangles)
 			window.draw(tetrisRect);
 		window.display();
