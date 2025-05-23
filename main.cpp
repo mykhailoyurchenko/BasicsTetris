@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <Menu.h>
 
 using namespace sf;
 using namespace std;
