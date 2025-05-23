@@ -5,7 +5,7 @@ using namespace std;
 
 
 
-void text(Text mtext,float xPos, float yPos, string text, int size, Color color = Color::White,int bord=0, Color bordColor = Color::Black);
+
 
 
 
@@ -54,6 +54,7 @@ int main()
     text.setString("text");
     text.setCharacterSize(50);
     text.setFillColor(Color::White);
+    text.setPosition(Vector2f(850, 500));
 
     //перевірка чи рендериця фон
     if (!backgroundTexture.loadFromFile("texture/background.jpg")) {
