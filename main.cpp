@@ -127,8 +127,7 @@ int main()
 		window.draw(scoreText);
 		for (const auto& tetrisRect : rectangles)
 			window.draw(tetrisRect);
-
+		window.display();
 
 	}
-	window.display();
 }
