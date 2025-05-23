@@ -16,7 +16,7 @@ int main()
 
     RenderWindow window(VideoMode({1920, 1080}), "Tetris");
 
-
+    std::vector<sf::CircleShape> circles;
 
     RectangleShape rect;
     rect.setFillColor(Color(0, 0, 0, 12));
@@ -50,11 +50,12 @@ int main()
     Font font;
     if (!font.openFromFile("fonts/Roboto_Condensed-Black.ttf"))return 3;
 
-    Text text(font);
-    text.setString("text");
-    text.setCharacterSize(50);
-    text.setFillColor(Color::White);
-    text.setPosition(Vector2f(850, 500));
+    //налаштування тексту
+    Text textButton1(font);
+    textButton1.setString("text");
+    textButton1.setCharacterSize(50);
+    textButton1.setFillColor(Color::White);
+    textButton1.setPosition(Vector2f(850, 500));
 
     //перевірка чи рендериця фон
     if (!backgroundTexture.loadFromFile("texture/background.jpg")) {
@@ -81,18 +82,19 @@ int main()
         if ((mouseX >= x1)and(mouseX <= x2) and (mouseY >= y1)  and (mouseY <= y2)) {
             rectButton1.setFillColor(Color(20, 90, 0));
             if (Mouse::isButtonPressed(Mouse::Button::Left)) {
-
+                sf::CircleShape circle(30.f);
+                circle.setFillColor(sf::Color::Green);
+                circle.setPosition(Vector2f(400, 300));
+                circles.push_back(circle);
                 rectButton1.setFillColor(Color::Yellow);
             }
-        }
-        else {
+        } else {
             rectButton1.setFillColor(Color((0, 0, 0, 12)));
         }
 
 
-
         //обробка події закриття
-        while (const optional event = window.pollEvent())  {
+        while (const optional event = window.pollEvent()) {
             if (event->is<Event::Closed>())
                 window.close();
         }
@@ -102,7 +104,10 @@ int main()
         window.draw(background);
         window.draw(rectButton1);
         window.draw(rectButton2);
-        window.draw(text);
+        window.draw(textButton1);
+
+        for (const auto& circle : circles)
+            window.draw(circle);
 
         window.display();
     }
