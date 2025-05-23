@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <Menu.h>
+#include <random>
 #include <sstream>
 
 using namespace sf;
@@ -30,8 +31,13 @@ void createButton(RectangleShape button, float mouseX,float mouseY) {
 
 }
 
+
+
 int main()
 {
+
+
+
 	RenderWindow window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default,State::Fullscreen);
 	window.setFramerateLimit(60);
 
@@ -100,7 +106,9 @@ int main()
 		float rBorderB2 = lBorderB2 + button2.getSize().x;
 		float uBorderB2 = dBorderB2 + button2.getSize().y;
 
-		if ((mouseX >= lBorderB2) && (mouseX <= rBorderB2) && (mouseY >= dBorderB2) && (mouseY <= uBorderB2)) {
+		auto mousePos = Vector2f(Mouse::getPosition(window));
+
+		if (button2.getGlobalBounds().contains(mousePos)) {
 			button2.setFillColor(Color(20, 90, 0));
 			if (Mouse::isButtonPressed(Mouse::Button::Left)) {
 				if (!rectangles.empty()) {
@@ -132,6 +140,8 @@ int main()
 		window.draw(textButton1);
 		window.draw(scoreText);
 		window.draw(goBack);
+
+
 
 		for (const auto& tetrisRect : rectangles)
 			window.draw(tetrisRect);
