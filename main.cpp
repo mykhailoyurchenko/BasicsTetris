@@ -3,20 +3,25 @@
 using namespace sf;
 using namespace std;
 
+
+
+void text(Text mtext,float xPos, float yPos, string text, int size, Color color = Color::White,int bord=0, Color bordColor = Color::Black);
+
+
+
+
 int main()
 {
-    RenderWindow window(VideoMode({1920, 1080}), "тетріс");
 
 
+    RenderWindow window(VideoMode({1920, 1080}), "Tetris");
 
 
-
-    bool isOver = false;
 
     RectangleShape rect;
     rect.setFillColor(Color(0, 0, 0, 12));
     rect.setPosition(Vector2f(750, 500));
-    rect.setSize(Vector2f(200, 50));
+    rect.setSize(Vector2f(400, 550));
 
         //квадрат/кнопка
         RectangleShape rectButton1;
@@ -41,11 +46,21 @@ int main()
     Sprite background(backgroundTexture);
     background.setTexture(backgroundTexture);
 
+    //налаштування шрифта
+    Font font;
+    if (!font.openFromFile("fonts/Roboto_Condensed-Black.ttf"))return 3;
+
+    Text text(font);
+    text.setString("text");
+    text.setCharacterSize(50);
+    text.setFillColor(Color::White);
+
     //перевірка чи рендериця фон
     if (!backgroundTexture.loadFromFile("texture/background.jpg")) {
         return -1; // Помилка завантаження
     }
 
+    bool showRectangle = false;
 
     while (window.isOpen()){
 
@@ -65,7 +80,7 @@ int main()
         if ((mouseX >= x1)and(mouseX <= x2) and (mouseY >= y1)  and (mouseY <= y2)) {
             rectButton1.setFillColor(Color(20, 90, 0));
             if (Mouse::isButtonPressed(Mouse::Button::Left)) {
-                isOver = true;
+
                 rectButton1.setFillColor(Color::Yellow);
             }
         }
@@ -86,6 +101,7 @@ int main()
         window.draw(background);
         window.draw(rectButton1);
         window.draw(rectButton2);
+        window.draw(text);
 
         window.display();
     }
