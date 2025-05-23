@@ -13,17 +13,23 @@ int main()
 
 	RenderWindow window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default,State::Fullscreen);
 	window.setFramerateLimit(60);
+	Image icon;
+	if (!icon.loadFromFile("src/texture/icon.png")) return -1; // Помилка завантаження
+	window.setIcon(icon);
 
 	RectangleShape game(Vector2f(400, 550));
 	RectangleShape button1(Vector2f(200, 50));
 	RectangleShape button2(Vector2f(200, 50));
 
-	Texture backgroundTexture("src/texture/background.jpg");
-	Sprite background(backgroundTexture);
-	Font font;
-
+	Texture backgroundTexture;
 	if (!backgroundTexture.loadFromFile("src/texture/background.jpg")) return -1; // Помилка завантаження
+	Sprite background(backgroundTexture);
+
+	Font tetrisFont;
+	Font font;
+	
 	if (!font.openFromFile("src/fonts/Roboto_Condensed-Black.ttf")) return -1;
+	if(!tetrisFont.openFromFile("src/fonts/Oi-Regular.ttf")) return -1; // Помилка завантаження
 
 	game.setFillColor(Color(0, 0, 0, 12));
 	game.setPosition(Vector2f(750, 500));
@@ -39,6 +45,7 @@ int main()
 	Text textButton1(font,"Play",50);
 	Text goBack(font, "Go back", 50);
 	Text scoreText(font, "0", 40);
+	Text tetrisText(tetrisFont, "Tetris", 70);
 
 	textButton1.setFillColor(Color::White);
 	textButton1.setPosition(Vector2f(900, 490));
@@ -49,6 +56,8 @@ int main()
 	scoreText.setFillColor(Color::White);
 	scoreText.setPosition(Vector2f(50, 50));
 
+	tetrisText.setFillColor(Color::White);
+	tetrisText.setPosition(Vector2f(200, 500));
 
 	int scoreCounrter = 0;
 	while (window.isOpen()) {
@@ -79,7 +88,6 @@ int main()
 			if (Mouse::isButtonPressed(Mouse::Button::Left)) {
 				if (!rectangles.empty()) {
 					rectangles.pop_back(); // Remove last rectangle
-
 				}
 				button2.setFillColor(Color::Yellow);
 			}
@@ -106,12 +114,12 @@ int main()
 		window.draw(textButton1);
 		window.draw(scoreText);
 		window.draw(goBack);
-
-
+		window.draw(tetrisText);
 
 		for (const auto& tetrisRect : rectangles) {
 			window.draw(tetrisRect);
 		}
+
 		window.display();
 
 	}
