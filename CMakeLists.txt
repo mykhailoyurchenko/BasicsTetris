@@ -16,6 +16,8 @@ FetchContent_MakeAvailable(SFML)
 add_executable(main main.cpp
         src/Menu.cpp
         src/Menu.h
+        src/TetrisMenu.cpp
+        src/TetrisMenu.h
 )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)

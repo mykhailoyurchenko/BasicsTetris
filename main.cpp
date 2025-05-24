@@ -2,14 +2,19 @@
 #include <Menu.h>
 #include <random>
 #include <sstream>
+#include <vector>
+#include <TetrisMenu.h>
 
 using namespace sf;
 using namespace std;
 
 
+
 int main()
 {
 	vector<RectangleShape> rectangles;
+
+	TetrisMenu grid(24, 16, 25, 750, 100);
 
 	RenderWindow window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default,State::Fullscreen);
 	window.setFramerateLimit(60);
@@ -17,6 +22,8 @@ int main()
 	RectangleShape game(Vector2f(400, 550));
 	RectangleShape button1(Vector2f(200, 50));
 	RectangleShape button2(Vector2f(200, 50));
+
+
 
 	Texture backgroundTexture("src/texture/background.jpg");
 	Sprite background(backgroundTexture);
@@ -39,6 +46,10 @@ int main()
 	Text textButton1(font,"Play",50);
 	Text goBack(font, "Go back", 50);
 	Text scoreText(font, "0", 40);
+
+	Text inputText(font, "", 30);
+	inputText.setPosition(Vector2f (280, 280));
+	inputText.setFillColor(sf::Color::Black);
 
 	textButton1.setFillColor(Color::White);
 	textButton1.setPosition(Vector2f(900, 490));
@@ -107,8 +118,11 @@ int main()
 		window.draw(scoreText);
 		window.draw(goBack);
 
-
-
+		window.draw(grid);
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+			sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+			grid.handleClick(mousePos, sf::Color::Red); // or any color you want
+		}
 		for (const auto& tetrisRect : rectangles) {
 			window.draw(tetrisRect);
 		}
