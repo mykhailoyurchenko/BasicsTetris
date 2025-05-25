@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-#include <Menu.h>
+#include <MenuState.h>
 #include <sstream>
 #include <iostream>
 
