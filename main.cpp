@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <MenuState.h>
 #include <sstream>
 #include <iostream>
 
@@ -95,6 +96,8 @@ int main()
 		else {
 			playButtonText.setFillColor(Color::White);
 		}
+
+		Event::FocusGained event();
 		if (backButton.getGlobalBounds().contains(mousePos)) {
 			backButton.setFillColor(Color(20, 90, 0));
 			if (Mouse::isButtonPressed(Mouse::Button::Left)) {
