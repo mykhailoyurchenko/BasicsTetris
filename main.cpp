@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <Menu.h>
 #include <sstream>
 #include <iostream>
 
@@ -22,6 +21,7 @@ int main()
 	RectangleShape game(Vector2f(500, 900));
 	RectangleShape playButton(Vector2f(150, 50));
 	RectangleShape backButton(Vector2f(150, 50));
+
 
 	Texture backgroundTexture;
 	if (!backgroundTexture.loadFromFile("src/texture/background.jpg")) return -1; // Помилка завантаження
@@ -95,7 +95,6 @@ int main()
 		else {
 			playButtonText.setFillColor(Color::White);
 		}
-
 		if (backButton.getGlobalBounds().contains(mousePos)) {
 			backButton.setFillColor(Color(20, 90, 0));
 			if (Mouse::isButtonPressed(Mouse::Button::Left)) {
@@ -114,8 +113,12 @@ int main()
 
 		//обробка події закриття
 		while (const optional event = window.pollEvent()) {
-			if (event->is<Event::Closed>())
+			if (event->is<Event::Closed>()) {
 				window.close();
+			}
+			if (event->is<Event::KeyPressed>()) {
+
+			}
 		}
 
 		ostringstream scoreLeadOut;
@@ -124,7 +127,7 @@ int main()
 
 		//рендер
 		window.clear();
-		window.draw(background);
+			window.draw(background);
 
 		for (const auto& tetrisRect : rectangles) {
 			window.draw(*tetrisRect);

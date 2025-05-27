@@ -13,10 +13,9 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(main
-    main.cpp
-    src/Menu.cpp
-    src/Menu.h
-)
+    "main.cpp"
+    "MenuState.cpp"  "src/States.h"   "playState.cpp" "GameState.cpp" "src/Game.h")
+
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
 target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/src)
