@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <sstream>
 #include <iostream>
+#include <States.h>
 
 
 using namespace sf;
@@ -9,6 +10,7 @@ using namespace std;
 
 int main()
 {
+
 	vector<RectangleShape*> rectangles;
 	vector<Text*> texts;
 
@@ -97,7 +99,7 @@ int main()
 		}
 		if (backButton.getGlobalBounds().contains(mousePos)) {
 			backButton.setFillColor(Color(20, 90, 0));
-			if (Mouse::isButtonPressed(Mouse::Button::Left)) {
+			if (Mouse::isButtonPressed(Mouse::Button::Left)) {	
 				auto i = find(rectangles.begin(), rectangles.end(), &game);
 				if (i != rectangles.end()) {
 					rectangles.erase(i);
@@ -140,4 +142,7 @@ int main()
 	}
 	rectangles.clear();
 	texts.clear();
+
+	
+	
 }
