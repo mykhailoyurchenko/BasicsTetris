@@ -14,7 +14,7 @@ void MenuState::eventHandler(Event& event) {
 
 		Vector2f mousePos = Vector2f(Mouse::getPosition(game->getWindow()));
 		if (playButton.getGlobalBounds().contains(mousePos)) {
-			game->setState(new PlayState());
+			game->setState(new PlayState(*game));
 		}
 	}
 }
