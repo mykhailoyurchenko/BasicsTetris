@@ -4,38 +4,38 @@
 
 using namespace sf;
 
-class GameState {//Базовый класс
+class GameState {
 public:
-	virtual void eventHandler(Event& event) {};//Обновление действий
-	virtual void update() {};//Обновление значений и рендер
-	virtual void draw(RenderWindow& window) {};//Отрисовка
-	virtual ~GameState() = default;//Деструктор
-protected://Конструктор для классу Game 
+	virtual void eventHandler(Event& event) {};
+	virtual void update() {};
+	virtual void draw(RenderWindow& window) {};
+	virtual ~GameState() = default;
+protected:
 	GameState(Game& game);
-	Game* game;//Указатель на обьект Game 
-	Texture backgroundTexture;//Визуал
-	Sprite background;//Визуал
-	Font font;//Визуал
-	Font tetrisFont;//Визуал
-	Text tetrisText;//Визуал
+	Game* game;
+	Texture backgroundTexture;
+	Sprite background;
+	Font font;
+	Font tetrisFont;
+	Text tetrisText;
 };
-class MenuState : public GameState {//Класс для меню игры
-	RectangleShape playButton;//Кнопка
-	Text playButtonText;//Текст для кнопки play 
-public://Конструктор 
+class MenuState : public GameState {
+	RectangleShape playButton;
+	Text playButtonText;
+public:
 	MenuState(Game& game);
 	void eventHandler(Event& event) override;
 	void update() override;
 	void draw(RenderWindow& window) override;
 
 };
-class PlayState : public GameState {//Класс для игры
-	RectangleShape game;//Игровое поле
-	RectangleShape backButton;//Кнопка возварата в меню 
-	Text backButtonText;//Текст для возварата
-	Text scoreText;//Отображение набранных очков
+class PlayState : public GameState {
+	RectangleShape game;
+	RectangleShape backButton;
+	Text backButtonText;
+	Text scoreText;
 public:
-	PlayState();//Конструктор
+	PlayState();
  	void eventHandler(Event& event) override;
 	void update() override;
 	void draw(RenderWindow& window) override;
