@@ -1,5 +1,4 @@
-#include <States.h>
-
+#include "Game.h"
 
 MenuState::MenuState(Game& game) : GameState(game), playButton(Vector2f(150, 50)), playButtonText(font, "Play", 50) {
 	playButton.setFillColor(Color(0, 0, 0, 0.0));
@@ -9,6 +8,7 @@ MenuState::MenuState(Game& game) : GameState(game), playButton(Vector2f(150, 50)
 	playButtonText.setPosition(Vector2f(900, 490));
 }
 void MenuState::eventHandler(Event& event) {
+	GameState::eventHandler(event);
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
 
@@ -18,7 +18,16 @@ void MenuState::eventHandler(Event& event) {
 		}
 	}
 }
+void MenuState::update() {
+	Vector2f mousePos = Vector2f(Mouse::getPosition(game->getWindow()));
+	if (playButton.getGlobalBounds().contains(mousePos)) {
+		playButtonText.setFillColor(Color::Yellow);
+	}
+	else playButtonText.setFillColor(Color::White);
+}
 void MenuState::draw(RenderWindow& window) {
+	GameState::draw(window);
 	window.draw(playButton);
 	window.draw(playButtonText);
+	window.display();
 }

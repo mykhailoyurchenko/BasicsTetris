@@ -1,15 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <Game.h>
-
-
 using namespace sf;
+
+class Game;
 
 class GameState {//Базовый класс
 public:
-	virtual void eventHandler(Event& event) {};//Обновление действий
+	virtual void eventHandler(Event& event);//Обновление действий
 	virtual void update() {};//Обновление значений и рендер
-	virtual void draw(RenderWindow& window) {};//Отрисовка
+	virtual void draw(RenderWindow& window);//Отрисовка
 	virtual ~GameState() = default;//Деструктор
 protected://Поля дочірніх класів GameState
 	GameState(Game& game);
@@ -17,9 +16,10 @@ protected://Поля дочірніх класів GameState
 	//Визуал
 	Texture backgroundTexture;
 	Sprite background;
+	Image backgroundI;
 	Font font;
 	Font tetrisFont;
-	Text tetrisText;//
+	Text tetrisText;
 };
 class MenuState : public GameState {//Класс состояния игры
 	RectangleShape playButton;//Кнопка
@@ -32,7 +32,7 @@ public:
 
 };
 class PlayState : public GameState {//Класс состояния игры
-	RectangleShape game;//Игровое поле
+	RectangleShape gameField;//Игровое поле
 	RectangleShape backButton;//Кнопка возварата в меню 
 	Text backButtonText;//Текст для возварата
 	Text scoreText;//Отображение набранных очков

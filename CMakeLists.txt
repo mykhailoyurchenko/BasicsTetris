@@ -14,7 +14,7 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(main
     "main.cpp"
-    "MenuState.cpp"  "src/States.h"   "playState.cpp" "GameState.cpp" "src/Game.h")
+    "MenuState.cpp"  "src/States.h"   "playState.cpp" "GameState.cpp" "src/Game.h" "mainOld.cpp")
 
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
@@ -26,6 +26,7 @@ add_custom_command(TARGET main POST_BUILD
     "${CMAKE_SOURCE_DIR}/src/texture"
     "$<TARGET_FILE_DIR:main>/src/texture"
 )
+file(COPY ${CMAKE_SOURCE_DIR}/src/texture/background.jpg DESTINATION ${CMAKE_BINARY_DIR}/src/texture)
 
 # Копіювання директорії fonts
 add_custom_command(TARGET main POST_BUILD
