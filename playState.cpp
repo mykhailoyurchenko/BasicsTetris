@@ -1,12 +1,12 @@
 #include "Game.h"
 
 PlayState::PlayState(Game& game) : GameState(game), backButton(Vector2f(150, 50)), 
-backButtonText(font, "Play", 50), scoreText(font, "0", 40) {
-	backButton.setFillColor(Color(0, 0, 0, 70));
-	backButton.setPosition(Vector2f(1480, 500));
+backButtonText(font, "Go back", 50), scoreText(font, "0", 40) {
+	backButton.setFillColor(Color(0, 0, 0, 0.0));
+	backButton.setPosition(Vector2f(1750, 50));
 
 	backButtonText.setFillColor(Color::White);
-	backButtonText.setPosition(Vector2f(1475, 490));
+	backButtonText.setPosition(Vector2f(1740, 40));
 
 	scoreText.setFillColor(Color::White);
 	scoreText.setPosition(Vector2f(50, 50));
@@ -31,7 +31,7 @@ void PlayState::draw(RenderWindow& window) {
 void PlayState::update() {
 	Vector2f mousePos = Vector2f(Mouse::getPosition(game->getWindow()));
 	if (backButton.getGlobalBounds().contains(mousePos)) {
-		backButton.setFillColor(Color(20, 90, 0));
+		backButtonText.setFillColor(Color::Yellow);
 	}
-	else backButton.setFillColor(Color(0, 20, 100, 70));
+	else backButtonText.setFillColor(Color(255, 255, 255, 255));
 }
