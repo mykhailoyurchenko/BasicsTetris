@@ -4,6 +4,7 @@ using namespace sf;
 
 class Game;
 
+
 class GameState {//Базовый класс
 public:
 	virtual void eventHandler(Event& event);//Обновление действий
@@ -15,8 +16,6 @@ protected://Поля дочірніх класів GameState
 	Game* game;//Указатель на обьект классу Game 
 	//Визуал
 	Texture backgroundTexture;
-	Sprite background;
-	Image backgroundI;
 	Font font;
 	Font tetrisFont;
 	Text tetrisText;

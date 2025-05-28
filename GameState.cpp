@@ -1,21 +1,21 @@
-#include "Game.h"
+п»ї#include "Game.h"
 
-
-//Конструктор 
-GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris", 70), background(backgroundTexture) {
-	//Пути к файлам
+//РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ 
+GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris", 70) {
+	//РџСѓС‚Рё Рє С„Р°Р№Р»Р°Рј
 	const filesystem::path path1 = "src/texture/background.jpg";
 	const filesystem::path path2 = "src/fonts/Roboto_Condensed-Black.ttf";
 	const filesystem::path path3 = "src/fonts/Oi-Regular.ttf";
-	//Загрузка текстур,шрифта
-	if (!backgroundI.loadFromFile(path1)) cerr << "Помилка доступу до файлу: " << path1 << endl;
-	if (!font.openFromFile(path2)) cerr << "Помилка доступу до файлу: " << path2 << endl;
-	if (!tetrisFont.openFromFile(path3)) cerr << "Помилка доступу до файлу: " << path3 << endl;
+	
+	//Р—Р°РіСЂСѓР·РєР° С‚РµРєСЃС‚СѓСЂ,С€СЂРёС„С‚Р°
+	if (!backgroundTexture.loadFromFile(path1)) cerr << "РџРѕРјРёР»РєР° РґРѕСЃС‚СѓРїСѓ РґРѕ С„Р°Р№Р»Сѓ: " << path1 << endl;
+	if (!font.openFromFile(path2)) cerr << "РџРѕРјРёР»РєР° РґРѕСЃС‚СѓРїСѓ РґРѕ С„Р°Р№Р»Сѓ: " << path2 << endl;
+	if (!tetrisFont.openFromFile(path3)) cerr << "РџРѕРјРёР»РєР° РґРѕСЃС‚СѓРїСѓ РґРѕ С„Р°Р№Р»Сѓ: " << path3 << endl;
+	Sprite background(backgroundTexture);
 
-	//Настройка тексту
+	//РќР°СЃС‚СЂРѕР№РєР° С‚РµРєСЃС‚Сѓ
 	tetrisText.setFillColor(Color::White);
 	tetrisText.setPosition(Vector2f(200, 500));
-	background.setTexture(backgroundTexture);
 }
 void GameState::eventHandler(Event& event) {
 	if (event.is<Event::Closed>()) {
@@ -24,6 +24,7 @@ void GameState::eventHandler(Event& event) {
 }
 void GameState::draw(RenderWindow& window) {
 	window.clear();
-	window.draw(background);//Отрисовка background
+	Sprite background(backgroundTexture);
+	window.draw(background);  //СЂРµРЅРґРµСЂ background
 	window.draw(tetrisText);
 }
