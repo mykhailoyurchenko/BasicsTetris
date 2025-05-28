@@ -43,8 +43,8 @@ int mainOld()
 	playButton.setPosition(Vector2f(850, 500));
 	rectangles.push_back(&playButton);
 
-	backButton.setFillColor(Color(0, 0, 0, 70));
-	backButton.setPosition(Vector2f(1480, 500));
+	backButton.setFillColor(Color(0, 0, 0, 0.0));
+	backButton.setPosition(Vector2f(1750, 50));
 	rectangles.push_back(&backButton);
 
 	//налаштування тексту
