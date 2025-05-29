@@ -38,10 +38,10 @@ class PlayState : public GameState {//Класс состояния игры
 	RectangleShape backButton;//Кнопка возварата в меню 
 	Text backButtonText;//Текст для возварата
 	Text scoreText; // Текст для отображения очков
-	Text scoreOutur;//Отображение набранных очков
+	Text scoreOutput;//Отображение набранных очков
 	Text timeText;// Текст для відображення часу
-	Text timeOutur;//Рахунок часу
-	Text bestScoreOutur; // Найкращий рахунок 
+	Text timeOutput;//Рахунок часу
+	Text bestScoreOutput; // Найкращий рахунок 
 	Text bestScoreText; // Текст найкращого рахунку
 
 public:
