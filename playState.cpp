@@ -1,6 +1,6 @@
 ﻿#include "Game.h"
 // Констуктор класу PlayState
-PlayState::PlayState(Game& game) : GameState(game),gameField(24, 16, 25, 750, 100), gameFieldNext(Vector2f(230,600)), backButton(Vector2f(150, 50)),
+PlayState::PlayState(Game& game) : GameState(game), gameField(24, 16, 25, 750, 100), gameFieldNext(Vector2f(230, 600)), backButton(Vector2f(150, 50)),
 backButtonText(font, "Go back", 50), scoreText(font, "0", 40) {
 	backButton.setFillColor(Color(0, 0, 0, 0.0));
 	backButton.setPosition(Vector2f(1750, 50));
@@ -37,20 +37,18 @@ void PlayState::draw(RenderWindow& window) {
 	window.draw(gameField);
 	window.draw(gameFieldNext);
 	window.draw(scoreText);
-	
-	
+
+
 }
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update() {
 	GameState::update();
-
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-
-		gameField.handleClick(game->getMousePos(), sf::Color::Red);
-
 	if (backButton.getGlobalBounds().contains(game->getMousePos())) {
 		backButtonText.setFillColor(Color::Yellow);
 	}
 	else backButtonText.setFillColor(Color(255, 255, 255, 255));
-}
 
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+		gameField.handleClick(game->getMousePos(), sf::Color::Red);
+	}
+}
