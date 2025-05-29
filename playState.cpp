@@ -1,5 +1,6 @@
 #include "Game.h"
-// Êîíñòóêòîð êëàñó PlayState
+
+// ÃŠÃ®Ã­Ã±Ã²Ã³ÃªÃ²Ã®Ã° ÃªÃ«Ã Ã±Ã³ PlayState
 PlayState::PlayState(Game& game) : GameState(game), backButton(Vector2f(150, 50)),
 backButtonText(font, "Go back", 50), scoreText(font, "0", 40) {
 	backButton.setFillColor(Color(0, 0, 0, 0.0));
@@ -10,8 +11,16 @@ backButtonText(font, "Go back", 50), scoreText(font, "0", 40) {
 
 	scoreText.setFillColor(Color::White);
 	scoreText.setPosition(Vector2f(50, 50));
+
+	gameField.setSize(Vector2f(500, 800));
+	gameField.setPosition(Vector2f(700, 150));
+	gameField.setFillColor(Color::Black);
+
+	gameFieldNext.setSize(Vector2f(230,600));
+	gameFieldNext.setPosition(Vector2f(1200, 150));
+	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
 }
-//ïåðåâ³ðêà íà âçàºìîä³þ ç êíîïêîþ
+//Ã¯Ã¥Ã°Ã¥Ã¢Â³Ã°ÃªÃ  Ã­Ã  Ã¢Ã§Ã ÂºÃ¬Ã®Ã¤Â³Ã¾ Ã§ ÃªÃ­Ã®Ã¯ÃªÃ®Ã¾
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
 
@@ -22,19 +31,21 @@ void PlayState::eventHandler(Event& event) {
 		}
 	}
 }
-// ðåíäåð
+// Ã°Ã¥Ã­Ã¤Ã¥Ã°
 void PlayState::draw(RenderWindow& window) {
 	GameState::draw(window);
+	window.draw(gameField);
+	window.draw(gameFieldNext);
 	window.draw(backButton);
 	window.draw(backButtonText);
 	window.draw(scoreText);
 }
-// çì³íà êîë³ð òåêñòó êíîïêè ïðè íàâåäåíí³ ìèø³
+// Ã§Ã¬Â³Ã­Ã  ÃªÃ®Ã«Â³Ã° Ã²Ã¥ÃªÃ±Ã²Ã³ ÃªÃ­Ã®Ã¯ÃªÃ¨ Ã¯Ã°Ã¨ Ã­Ã Ã¢Ã¥Ã¤Ã¥Ã­Ã­Â³ Ã¬Ã¨Ã¸Â³
 void PlayState::update() {
 	GameState::update();
 
 	if (backButton.getGlobalBounds().contains(game->getMousePos())) {
 		backButtonText.setFillColor(Color::Yellow);
 	}
-	else backButtonText.setFillColor(Color(255, 255, 255, 255));
+	else backButtonText.setFillColor(Color(Color::White));
 }
