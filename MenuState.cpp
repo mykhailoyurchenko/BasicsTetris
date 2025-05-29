@@ -13,18 +13,16 @@ void MenuState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) { // Перевірка натискання миші
-
-		Vector2f mousePos = Vector2f(Mouse::getPosition(game->getWindow()));
-		if (playButton.getGlobalBounds().contains(mousePos)) {
-			game->setState(new PlayState(*game));
+		if (playButton.getGlobalBounds().contains(game->getMousePos())) {
+			game->setState<PlayState>();
 		}
 	}
 }
 // Оновлення стану
 void MenuState::update() {
-	Vector2f mousePos = Vector2f(Mouse::getPosition(game->getWindow()));
+	GameState::update();
 	// Зміна кольору тексту 
-	if (playButton.getGlobalBounds().contains(mousePos)) {
+	if (playButton.getGlobalBounds().contains(game->getMousePos())) {
 		playButtonText.setFillColor(Color::Yellow);
 	}
 	else playButtonText.setFillColor(Color::White);
@@ -34,5 +32,4 @@ void MenuState::draw(RenderWindow& window) {
 	GameState::draw(window); // Відмальовка
 	window.draw(playButton);
 	window.draw(playButtonText);
-	window.display();
 }	

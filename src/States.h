@@ -13,9 +13,10 @@ public:
 	virtual ~GameState() = default;//Деструктор
 protected://Поля дочірніх класів GameState
 	GameState(Game& game);
-	Game* game;//Указатель на обьект классу Game 
+	Game* game;//Указатель на обьект классу Game
 	//Визуал
 	Texture backgroundTexture;
+	Sprite* backgroundSprite;
 	Font font;
 	Font tetrisFont;
 	Text tetrisText;
