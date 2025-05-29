@@ -33,11 +33,17 @@ public:
 
 };
 class PlayState : public GameState {//Класс состояния игры
-	TetrisMenu gameField;
+	TetrisMenu gameField;//Игровое поле
 	RectangleShape gameFieldNext;//Поле для следующих фигур
 	RectangleShape backButton;//Кнопка возварата в меню 
 	Text backButtonText;//Текст для возварата
-	Text scoreText;//Отображение набранных очков
+	Text scoreText; // Текст для отображения очков
+	Text scoreOutur;//Отображение набранных очков
+	Text timeText;// Текст для відображення часу
+	Text timeOutur;//Рахунок часу
+	Text bestScoreOutur; // Найкращий рахунок 
+	Text bestScoreText; // Текст найкращого рахунку
+
 public:
 	PlayState(Game& game);
  	void eventHandler(Event& event) override;
