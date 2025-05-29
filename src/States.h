@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
+#include "TetrisMenu.h"
 using namespace sf;
 
 class Game;
@@ -32,7 +33,7 @@ public:
 
 };
 class PlayState : public GameState {//Класс состояния игры
-	RectangleShape gameField;//Игровое поле
+	TetrisMenu gameField;//Игровое поле
 	RectangleShape gameFieldNext;//Поле для следующих фигур
 	RectangleShape backButton;//Кнопка возварата в меню 
 	Text backButtonText;//Текст для возварата
@@ -42,6 +43,7 @@ class PlayState : public GameState {//Класс состояния игры
 	Text timeOutur;//Рахунок часу
 	Text bestScoreOutur; // Найкращий рахунок 
 	Text bestScoreText; // Текст найкращого рахунку
+
 public:
 	PlayState(Game& game);
  	void eventHandler(Event& event) override;

@@ -1,4 +1,4 @@
-#include <SFML/Graphics.hpp>
+п»ї#include <SFML/Graphics.hpp>
 #include <sstream>
 #include <iostream>
 #include <States.h>
@@ -17,7 +17,7 @@ int mainOld()
 	RenderWindow window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default, State::Fullscreen);
 	window.setFramerateLimit(60);
 	Image icon;
-	if (!icon.loadFromFile("src/texture/icon.png")) return -1; // Помилка завантаження
+	if (!icon.loadFromFile("src/texture/icon.png")) return -1;
 	window.setIcon(icon);
 
 	RectangleShape game(Vector2f(500, 900));
@@ -26,19 +26,19 @@ int mainOld()
 
 
 	Texture backgroundTexture;
-	if (!backgroundTexture.loadFromFile("src/texture/background.jpg")) return -1; // Помилка завантаження
+	if (!backgroundTexture.loadFromFile("src/texture/background.jpg")) return -1;
 	Sprite background(backgroundTexture);
 
 	Font tetrisFont;
 	Font font;
 
 	if (!font.openFromFile("src/fonts/Roboto_Condensed-Black.ttf")) return -1;
-	if (!tetrisFont.openFromFile("src/fonts/Oi-Regular.ttf")) return -1; // Помилка завантаження
+	if (!tetrisFont.openFromFile("src/fonts/Oi-Regular.ttf")) return -1;
 
 	game.setFillColor(Color::Black);
 	game.setPosition(Vector2f(700, 50));
 
-	//квадрат/кнопка
+	//РєРІР°РґСЂР°С‚/РєРЅРѕРїРєР°
 	playButton.setFillColor(Color(0, 0, 0, 0.0));
 	playButton.setPosition(Vector2f(850, 500));
 	rectangles.push_back(&playButton);
@@ -47,7 +47,7 @@ int mainOld()
 	backButton.setPosition(Vector2f(1750, 50));
 	rectangles.push_back(&backButton);
 
-	//налаштування тексту
+	//РЅР°Р»Р°С€С‚СѓРІР°РЅРЅСЏ С‚РµРєСЃС‚Сѓ
 	Text playButtonText(font, "Play", 50);
 	Text backButtonText(font, "Go back", 50);
 	Text scoreText(font, "0", 40);
@@ -74,7 +74,7 @@ int mainOld()
 	int scoreCounrter = 0;
 	while (window.isOpen()) {
 
-		//відстежувіння мишки
+		//РІС–РґСЃС‚РµР¶СѓРІС–РЅРЅСЏ РјРёС€РѕРє
 		//float mouseX = Mouse::getPosition(window).x;
 		//float mouseY = Mouse::getPosition(window).y;
 
@@ -113,7 +113,7 @@ int mainOld()
 			backButton.setFillColor(Color(0, 20, 100, 70));
 		}
 
-		//обробка події закриття
+		//РѕР±СЂРѕР±РєР° РїРѕРґС–С— Р·Р°РєСЂРёС‚С‚СЏ
 		while (const optional event = window.pollEvent()) {
 			if (event->is<Event::Closed>()) {
 				window.close();
@@ -127,7 +127,7 @@ int mainOld()
 		scoreLeadOut << "Score: " << scoreCounrter;
 		scoreText.setString(scoreLeadOut.str());
 
-		//рендер
+		//СЂРµРЅРґРµСЂ
 		window.clear();
 		window.draw(background);
 

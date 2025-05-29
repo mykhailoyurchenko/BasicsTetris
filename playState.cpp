@@ -1,8 +1,9 @@
 ﻿#include "Game.h"
 
-// Êîíñòóêòîð êëàñó PlayState
-PlayState::PlayState(Game& game) : GameState(game), backButton(Vector2f(150, 50)), 
-backButtonText(font, "Go back", 50), scoreText(font, "Score:", 40), scoreOutur(font, "0", 40), timeText(font, "Time:", 40), timeOutur(font, "00:00:00", 40), bestScoreOutur(font, "0", 40), bestScoreText(font, "Best Score:", 40) {
+// Констуктор класу PlayState
+PlayState::PlayState(Game& game) : GameState(game), gameField(24, 16, 25, 750, 100), gameFieldNext(Vector2f(230, 600)), backButton(Vector2f(150, 50)),
+backButtonText(font, "Go back", 50), scoreText(font, "0", 40),, scoreOutur(font, "0", 40), timeText(font, "Time:", 40), timeOutur(font, "00:00:00", 40), 
+bestScoreOutur(font, "0", 40), bestScoreText(font, "Best Score:", 40) {
 
 	backButton.setFillColor(Color(0, 0, 0, 0.0));
 	backButton.setPosition(Vector2f(1750, 50));
@@ -34,15 +35,11 @@ backButtonText(font, "Go back", 50), scoreText(font, "Score:", 40), scoreOutur(f
 	bestScoreText.setFillColor(Color::White);
 	bestScoreText.setPosition(Vector2f(1472, 825));
 
-	gameField.setSize(Vector2f(500, 800));
-	gameField.setPosition(Vector2f(700, 150));
-	gameField.setFillColor(Color::Black);
-
-	gameFieldNext.setSize(Vector2f(230,600));
 	gameFieldNext.setPosition(Vector2f(1200, 150));
 	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
 }
-//ïåðåâ³ðêà íà âçàºìîä³þ ç êíîïêîþ
+
+//перевірка на взаємодію з кнопкою
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
 
@@ -52,27 +49,34 @@ void PlayState::eventHandler(Event& event) {
 			game->setState<MenuState>();
 		}
 	}
+
+
+
 }
-// ðåíäåð
+// рендер
 void PlayState::draw(RenderWindow& window) {
 	GameState::draw(window);
-	window.draw(gameField);
-	window.draw(gameFieldNext);
 	window.draw(backButton);
 	window.draw(backButtonText);
+	window.draw(gameField);
+	window.draw(gameFieldNext);
 	window.draw(scoreText);
 	window.draw(scoreOutur);
 	window.draw(timeText);
 	window.draw(timeOutur);
 	window.draw(bestScoreText);
 	window.draw(bestScoreOutur);
+
 }
-// çì³íà êîë³ð òåêñòó êíîïêè ïðè íàâåäåíí³ ìèø³
+// зміна колір тексту кнопки при наведенні миші
 void PlayState::update() {
 	GameState::update();
-
 	if (backButton.getGlobalBounds().contains(game->getMousePos())) {
 		backButtonText.setFillColor(Color::Yellow);
 	}
-	else backButtonText.setFillColor(Color(Color::White));
+	else backButtonText.setFillColor(Color(255, 255, 255, 255));
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+		gameField.handleClick(game->getMousePos(), sf::Color::Red);
+	}
 }
