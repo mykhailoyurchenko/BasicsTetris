@@ -5,29 +5,30 @@
 using namespace sf;
 using namespace std;
 
-class GameState;
-class MenuState;
+class GameState;//Базовий клас 
+class MenuState;// Клас стану гри
 
-class Game {
-	RenderWindow window;
-	GameState* currentState; 
+class Game {	//Основний клас гри
+	RenderWindow window; //Вікно гри
+	GameState* currentState; // Поточний стан гри
 	//GameState* pendingState;
-	Image icon;
+	Image icon; //Зображення іконки
 public:
+	//Налаштування вікна гри
 	Game() : window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default, State::Windowed) {
-		window.setFramerateLimit(60);
-		const filesystem::path path = "src/texture/icon.png";
+		window.setFramerateLimit(60);//Обмеження 60 кадрів
+		const filesystem::path path = "src/texture/icon.png";//Путь до іконки
 
 		if (!icon.loadFromFile(path)) {
 			cerr << "Помилка доступу до файлу: " << path << endl;
-		}
-		window.setIcon(icon);
-		currentState = new MenuState(*this);
+		}//Перевірка на завантаження іконки 
+		window.setIcon(icon);//Встановлення іконки
+		currentState = new MenuState(*this);// Початковий стан гри(меню)
 		// pendingState = nullptr;
 	}
 	GameState* getState() { return currentState; }
 	RenderWindow& getWindow() { return window; }
-
+	//Головний цикл гри
 	void run() {
 		while (window.isOpen()) {
 			currentState->update();
@@ -38,6 +39,7 @@ public:
 			//applyPendingState();
 		}
 	}
+	//зміна стану гри
 	void setState(GameState* newState) {
 		if (currentState) {
 			delete currentState;
