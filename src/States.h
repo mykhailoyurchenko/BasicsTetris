@@ -40,6 +40,8 @@ class PlayState : public GameState {//Класс состояния игры
 	Text scoreOutur;//Отображение набранных очков
 	Text timeText;// Текст для відображення часу
 	Text timeOutur;//Рахунок часу
+	Text bestScoreOutur; // Найкращий рахунок 
+	Text bestScoreText; // Текст найкращого рахунку
 public:
 	PlayState(Game& game);
  	void eventHandler(Event& event) override;
