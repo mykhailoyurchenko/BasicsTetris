@@ -32,6 +32,7 @@ public:
 };
 class PlayState : public GameState {//Класс состояния игры
 	RectangleShape gameField;//Игровое поле
+	RectangleShape gameFieldNext;//Поле для следующих фигур
 	RectangleShape backButton;//Кнопка возварата в меню 
 	Text backButtonText;//Текст для возварата
 	Text scoreText;//Отображение набранных очков

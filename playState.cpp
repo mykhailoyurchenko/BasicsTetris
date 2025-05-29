@@ -10,6 +10,14 @@ backButtonText(font, "Go back", 50), scoreText(font, "0", 40) {
 
 	scoreText.setFillColor(Color::White);
 	scoreText.setPosition(Vector2f(50, 50));
+
+	gameField.setSize(Vector2f(500, 800));
+	gameField.setPosition(Vector2f(700, 150));
+	gameField.setFillColor(Color::Black);
+
+	gameFieldNext.setSize(Vector2f(230,600));
+	gameFieldNext.setPosition(Vector2f(1200, 150));
+	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
 }
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
@@ -17,12 +25,14 @@ void PlayState::eventHandler(Event& event) {
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
 		Vector2f mousePos = Vector2f(Mouse::getPosition(game->getWindow()));
 		if (backButton.getGlobalBounds().contains(mousePos)) {
-			game->setState(new PlayState(*game));
+			game->setState(new MenuState(*game));
 		}
 	}
 }
 void PlayState::draw(RenderWindow& window) {
 	GameState::draw(window);
+	window.draw(gameField);
+	window.draw(gameFieldNext);
 	window.draw(backButton);
 	window.draw(backButtonText);
 	window.draw(scoreText);
@@ -33,5 +43,5 @@ void PlayState::update() {
 	if (backButton.getGlobalBounds().contains(mousePos)) {
 		backButtonText.setFillColor(Color::Yellow);
 	}
-	else backButtonText.setFillColor(Color(255, 255, 255, 255));
+	else backButtonText.setFillColor(Color::White);
 }
