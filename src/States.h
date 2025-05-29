@@ -1,42 +1,45 @@
-#pragma once
+п»ї#pragma once
 #include <SFML/Graphics.hpp>
 using namespace sf;
 
 class Game;
 
 
-class GameState {//Базовый класс
+class GameState {//Р‘Р°Р·РѕРІС‹Р№ РєР»Р°СЃСЃ
 public:
-	virtual void eventHandler(Event& event);//Обновление действий
-	virtual void update() {};//Обновление значений и рендер
-	virtual void draw(RenderWindow& window);//Отрисовка
-	virtual ~GameState() = default;//Деструктор
-protected://Поля дочірніх класів GameState
+	virtual void eventHandler(Event& event);//РћР±РЅРѕРІР»РµРЅРёРµ РґРµР№СЃС‚РІРёР№
+	virtual void update() {};//РћР±РЅРѕРІР»РµРЅРёРµ Р·РЅР°С‡РµРЅРёР№ Рё СЂРµРЅРґРµСЂ
+	virtual void draw(RenderWindow& window);//РћС‚СЂРёСЃРѕРІРєР°
+	virtual ~GameState() = default;//Р”РµСЃС‚СЂСѓРєС‚РѕСЂ
+protected://РџРѕР»СЏ РґРѕС‡С–СЂРЅС–С… РєР»Р°СЃС–РІ GameState
 	GameState(Game& game);
-	Game* game;//Указатель на обьект классу Game
-	//Визуал
+	Game* game;//РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РѕР±СЊРµРєС‚ РєР»Р°СЃСЃСѓ Game
+	//Р’РёР·СѓР°Р»
 	Texture backgroundTexture;
 	Sprite* backgroundSprite;
 	Font font;
 	Font tetrisFont;
 	Text tetrisText;
 };
-class MenuState : public GameState {//Класс состояния игры
-	RectangleShape playButton;//Кнопка
-	Text playButtonText;//Текст для кнопки play 
+class MenuState : public GameState {//РљР»Р°СЃСЃ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂС‹
+	RectangleShape playButton;//РљРЅРѕРїРєР°
+	Text playButtonText;//РўРµРєСЃС‚ РґР»СЏ РєРЅРѕРїРєРё play 
 public:
-	MenuState(Game& game);//Передача посилання на поточну гру,для обробки подій
+	MenuState(Game& game);//РџРµСЂРµРґР°С‡Р° РїРѕСЃРёР»Р°РЅРЅСЏ РЅР° РїРѕС‚РѕС‡РЅСѓ РіСЂСѓ,РґР»СЏ РѕР±СЂРѕР±РєРё РїРѕРґС–Р№
 	void eventHandler(Event& event) override;
 	void update() override;
 	void draw(RenderWindow& window) override;
 
 };
-class PlayState : public GameState {//Класс состояния игры
-	RectangleShape gameField;//Игровое поле
-	RectangleShape gameFieldNext;//Поле для следующих фигур
-	RectangleShape backButton;//Кнопка возварата в меню 
-	Text backButtonText;//Текст для возварата
-	Text scoreText;//Отображение набранных очков
+class PlayState : public GameState {//РљР»Р°СЃСЃ СЃРѕСЃС‚РѕСЏРЅРёСЏ РёРіСЂС‹
+	RectangleShape gameField;//РРіСЂРѕРІРѕРµ РїРѕР»Рµ
+	RectangleShape gameFieldNext;//РџРѕР»Рµ РґР»СЏ СЃР»РµРґСѓСЋС‰РёС… С„РёРіСѓСЂ
+	RectangleShape backButton;//РљРЅРѕРїРєР° РІРѕР·РІР°СЂР°С‚Р° РІ РјРµРЅСЋ 
+	Text backButtonText;//РўРµРєСЃС‚ РґР»СЏ РІРѕР·РІР°СЂР°С‚Р°
+	Text scoreText; // РўРµРєСЃС‚ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РѕС‡РєРѕРІ
+	Text scoreOutur;//РћС‚РѕР±СЂР°Р¶РµРЅРёРµ РЅР°Р±СЂР°РЅРЅС‹С… РѕС‡РєРѕРІ
+	Text timeText;// РўРµРєСЃС‚ РґР»СЏ РІС–РґРѕР±СЂР°Р¶РµРЅРЅСЏ С‡Р°СЃСѓ
+	Text timeOutur;//Р Р°С…СѓРЅРѕРє С‡Р°СЃСѓ
 public:
 	PlayState(Game& game);
  	void eventHandler(Event& event) override;
