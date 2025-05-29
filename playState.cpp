@@ -25,6 +25,9 @@ void PlayState::eventHandler(Event& event) {
 			game->setState<MenuState>();
 		}
 	}
+
+
+
 }
 // рендер
 void PlayState::draw(RenderWindow& window) {
@@ -34,13 +37,20 @@ void PlayState::draw(RenderWindow& window) {
 	window.draw(gameField);
 	window.draw(gameFieldNext);
 	window.draw(scoreText);
+	
+	
 }
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update() {
 	GameState::update();
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+
+		gameField.handleClick(game->getMousePos(), sf::Color::Red);
 
 	if (backButton.getGlobalBounds().contains(game->getMousePos())) {
 		backButtonText.setFillColor(Color::Yellow);
 	}
 	else backButtonText.setFillColor(Color(255, 255, 255, 255));
 }
+

@@ -1,5 +1,7 @@
 ﻿#include "TetrisMenu.h"
 
+
+
 void TetrisMenu::handleClick(const sf::Vector2f& mousePos, sf::Color newColor) {//hueta
     int col = (mousePos.x - originX) / cellSize;//hueta
     int row = (mousePos.y - originY) / cellSize;//hueta
