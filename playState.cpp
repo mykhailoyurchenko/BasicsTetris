@@ -1,6 +1,5 @@
-#include "Game.h"
-
-// Êîíñòóêòîð êëàñó PlayState
+﻿#include "Game.h"
+// Констуктор класу PlayState
 PlayState::PlayState(Game& game) : GameState(game), backButton(Vector2f(150, 50)),
 backButtonText(font, "Go back", 50), scoreText(font, "0", 40) {
 	backButton.setFillColor(Color(0, 0, 0, 0.0));
@@ -16,11 +15,11 @@ backButtonText(font, "Go back", 50), scoreText(font, "0", 40) {
 	gameField.setPosition(Vector2f(700, 150));
 	gameField.setFillColor(Color::Black);
 
-	gameFieldNext.setSize(Vector2f(230,600));
+	gameFieldNext.setSize(Vector2f(230, 600));
 	gameFieldNext.setPosition(Vector2f(1200, 150));
 	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
 }
-//ïåðåâ³ðêà íà âçàºìîä³þ ç êíîïêîþ
+//перевірка на взаємодію з кнопкою
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
 
@@ -31,21 +30,21 @@ void PlayState::eventHandler(Event& event) {
 		}
 	}
 }
-// ðåíäåð
+// рендер
 void PlayState::draw(RenderWindow& window) {
 	GameState::draw(window);
-	window.draw(gameField);
-	window.draw(gameFieldNext);
 	window.draw(backButton);
 	window.draw(backButtonText);
+	window.draw(gameField);
+	window.draw(gameFieldNext);
 	window.draw(scoreText);
 }
-// çì³íà êîë³ð òåêñòó êíîïêè ïðè íàâåäåíí³ ìèø³
+// зміна колір тексту кнопки при наведенні миші
 void PlayState::update() {
 	GameState::update();
 
 	if (backButton.getGlobalBounds().contains(game->getMousePos())) {
 		backButtonText.setFillColor(Color::Yellow);
 	}
-	else backButtonText.setFillColor(Color(Color::White));
+	else backButtonText.setFillColor(Color(255, 255, 255, 255));
 }
