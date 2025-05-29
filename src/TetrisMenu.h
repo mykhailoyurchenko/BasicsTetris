@@ -1,11 +1,4 @@
-//
-// Created by STALJ on 24.05.2025.
-//
-
-#ifndef TETRISMENU_H
-#define TETRISMENU_H
-
-#pragma once
+﻿#pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
 
@@ -28,6 +21,3 @@ private:
     int rows, cols, cellSize, originX, originY;
     std::vector<std::vector<CellData>> grid;
 };
-
-
-#endif //TETRISMENU_H

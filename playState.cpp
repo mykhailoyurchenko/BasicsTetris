@@ -14,6 +14,7 @@ backButtonText(font, "Go back", 50), scoreText(font, "0", 40) {
 	gameFieldNext.setPosition(Vector2f(1200, 150));
 	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
 }
+
 //перевірка на взаємодію з кнопкою
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
