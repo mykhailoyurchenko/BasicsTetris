@@ -5,30 +5,32 @@
 using namespace sf;
 using namespace std;
 
-class GameState;
-class MenuState;
+class GameState;//Базовий клас 
+class MenuState;// Клас стану гри
 
-class Game {
-	RenderWindow window;
-	shared_ptr<GameState> currentState; // GameState* currentState;
+
+class Game { //Основний клас гри
+	RenderWindow window; //Вікно гри
+	shared_ptr<GameState> currentState; // GameState* currentState; // Поточний стан гри
 	Vector2f mousePos;//Позиція мишки
-	Image icon;
+	Image icon; //Зображення іконки
 public:
+	//Налаштування вікна гри
 	Game() : window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default, State::Windowed) {
-		mousePos = Vector2f(Mouse::getPosition(window));
+		mousePos = Vector2f(Mouse::getPosition(window)); //Обмеження 60 кадрів
 		window.setFramerateLimit(60);
-		const filesystem::path path = "src/texture/icon.png";
+		const filesystem::path path = "src/texture/icon.png"; //Путь до іконки
 
 		if (!icon.loadFromFile(path)) {
-			cerr << "Помилка доступу до файлу: " << path << endl;
+			cerr << "Помилка доступу до файлу: " << path << endl; //Перевірка на завантаження іконки 
 		}
-		window.setIcon(icon);
-		currentState = make_shared<MenuState>(*this);  // currentState = new MenuState(*this);
+		window.setIcon(icon); //Встановлення іконки
+		currentState = make_shared<MenuState>(*this);  // currentState = new MenuState(*this); // Початковий стан гри(меню)
 	}
 	~Game() = default;
 	Game(const Game&) = delete;
 	Game& operator=(const Game&) = delete;
-
+	//зміна стану гри
 	weak_ptr<GameState> getState() { return currentState; }
 	RenderWindow& getWindow() { return window; }
 	Vector2f getMousePos() { return mousePos; }
@@ -36,6 +38,7 @@ public:
 	void setState() {
 		currentState = make_shared<State>(*this); //currentState = newState
 	}
+	//Головний цикл гри
 	void run() {
 		while (window.isOpen()) {
 			mousePos = Vector2f(Mouse::getPosition(window));
@@ -48,5 +51,4 @@ public:
 			window.display();
 		}
 	}
-
 };
