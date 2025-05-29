@@ -1,4 +1,5 @@
 ﻿#include "Game.h"
+#include <iostream>
 
 //Конструктор 
 GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris", 70) {
@@ -11,7 +12,7 @@ GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris",
 	if (!backgroundTexture.loadFromFile(path1)) cerr << "Помилка доступу до файлу: " << path1 << endl;
 	if (!font.openFromFile(path2)) cerr << "Помилка доступу до файлу: " << path2 << endl;
 	if (!tetrisFont.openFromFile(path3)) cerr << "Помилка доступу до файлу: " << path3 << endl;
-	Sprite background(backgroundTexture);
+	backgroundSprite = new Sprite(backgroundTexture);
 
 	//Настройка тексту
 	tetrisText.setFillColor(Color::White);
@@ -23,8 +24,6 @@ void GameState::eventHandler(Event& event) {
 	}
 }
 void GameState::draw(RenderWindow& window) {
-	window.clear();
-	Sprite background(backgroundTexture);
-	window.draw(background);  //рендер background
+	window.draw(*backgroundSprite);  //рендер background
 	window.draw(tetrisText);
 }

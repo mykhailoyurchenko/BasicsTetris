@@ -1,6 +1,7 @@
 #include "Game.h"
 
-PlayState::PlayState(Game& game) : GameState(game), backButton(Vector2f(150, 50)), 
+// Êîíñòóêòîð êëàñó PlayState
+PlayState::PlayState(Game& game) : GameState(game), backButton(Vector2f(150, 50)),
 backButtonText(font, "Go back", 50), scoreText(font, "0", 40) {
 	backButton.setFillColor(Color(0, 0, 0, 0.0));
 	backButton.setPosition(Vector2f(1750, 50));
@@ -19,16 +20,18 @@ backButtonText(font, "Go back", 50), scoreText(font, "0", 40) {
 	gameFieldNext.setPosition(Vector2f(1200, 150));
 	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
 }
+//ïåðåâ³ðêà íà âçàºìîä³þ ç êíîïêîþ
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
+
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
-		Vector2f mousePos = Vector2f(Mouse::getPosition(game->getWindow()));
-		if (backButton.getGlobalBounds().contains(mousePos)) {
-			game->setState(new MenuState(*game));
+		if (backButton.getGlobalBounds().contains(game->getMousePos())) {
+			game->setState<MenuState>();
 		}
 	}
 }
+// ðåíäåð
 void PlayState::draw(RenderWindow& window) {
 	GameState::draw(window);
 	window.draw(gameField);
@@ -36,12 +39,13 @@ void PlayState::draw(RenderWindow& window) {
 	window.draw(backButton);
 	window.draw(backButtonText);
 	window.draw(scoreText);
-	window.display();
 }
+// çì³íà êîë³ð òåêñòó êíîïêè ïðè íàâåäåíí³ ìèø³
 void PlayState::update() {
-	Vector2f mousePos = Vector2f(Mouse::getPosition(game->getWindow()));
-	if (backButton.getGlobalBounds().contains(mousePos)) {
+	GameState::update();
+
+	if (backButton.getGlobalBounds().contains(game->getMousePos())) {
 		backButtonText.setFillColor(Color::Yellow);
 	}
-	else backButtonText.setFillColor(Color::White);
+	else backButtonText.setFillColor(Color(Color::White));
 }
