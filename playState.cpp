@@ -25,9 +25,6 @@ void PlayState::eventHandler(Event& event) {
 			game->setState<MenuState>();
 		}
 	}
-
-
-
 }
 // рендер
 void PlayState::draw(RenderWindow& window) {
