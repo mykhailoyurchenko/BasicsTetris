@@ -69,7 +69,7 @@ void PlayState::draw(RenderWindow& window) {
 void PlayState::update() {
 	GameState::update();
 
-
+	// gameField.drawTetris();
 	if (backButton.getGlobalBounds().contains(game->getMousePos())) {
 		backButtonText.setFillColor(Color::Yellow);
 	}
