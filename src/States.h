@@ -5,7 +5,6 @@ using namespace sf;
 
 class Game;
 
-
 class GameState {//Базовый класс
 public:
 	virtual void eventHandler(Event& event);//Обновление действий
@@ -35,7 +34,8 @@ public:
 class PlayState : public GameState {//Класс состояния игры
 	TetrisMenu gameField;//Игровое поле
 	RectangleShape gameFieldNext;//Поле для следующих фигур
-	RectangleShape backButton;//Кнопка возварата в меню 
+	RectangleShape backButton;//Кнопка возварата в меню
+
 	Text backButtonText;//Текст для возварата
 	Text scoreText; // Текст для отображения очков
 	Text scoreOutput;//Отображение набранных очков

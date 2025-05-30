@@ -1,7 +1,7 @@
 ﻿#include "Game.h"
 
 // Констуктор класу PlayState
-PlayState::PlayState(Game& game) : GameState(game), gameField(24, 16, 25, 750, 100), gameFieldNext(Vector2f(230, 600)), backButton(Vector2f(150, 50)),
+PlayState::PlayState(Game& game) : GameState(game), gameField(10, 20, 40, 750, 100), gameFieldNext(Vector2f(230, 600)), backButton(Vector2f(150, 50)),
 backButtonText(font, "Go back", 50), scoreText(font, "0", 40), scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40), 
 bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40) {
 
@@ -64,17 +64,18 @@ void PlayState::draw(RenderWindow& window) {
 	window.draw(timeOutput);
 	window.draw(bestScoreText);
 	window.draw(bestScoreOutput);
-
 }
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update() {
 	GameState::update();
+
+
 	if (backButton.getGlobalBounds().contains(game->getMousePos())) {
 		backButtonText.setFillColor(Color::Yellow);
 	}
 	else backButtonText.setFillColor(Color(255, 255, 255, 255));
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-		gameField.handleClick(game->getMousePos(), sf::Color::Red);
+		gameField.handleClick(game->getMousePos(), Color::Red);
 	}
 }
