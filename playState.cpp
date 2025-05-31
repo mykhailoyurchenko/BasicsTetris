@@ -63,19 +63,16 @@ void PlayState::eventHandler(Event& event) {
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
 		if (backButton.getGlobalBounds().contains(game->getMousePos())) {
 			game->setState<MenuState>();
-
+			return;
 		}
 		if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
 			game->setState<PauseState>();
+			return;
 		}
 		if (quitButtonText.getGlobalBounds().contains(game->getMousePos())) {
 			game->getWindow().close();
 		}
 	}
-
-
-	
-
 }
 // рендер
 void PlayState::draw(RenderWindow& window) {

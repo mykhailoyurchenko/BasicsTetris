@@ -58,13 +58,12 @@ public:
 	void update() override;
 	void draw(RenderWindow& window) override;
 };
-class PauseState : public GameState {
+class PauseState : public PlayState {
 	RectangleShape pauseOverlay;
 	Text pauseResumeText;
 	Text pauseQuitText;
 
 public:
-	
 	PauseState(Game& game);
 	void eventHandler(Event& event) override;
 	void update() override;
