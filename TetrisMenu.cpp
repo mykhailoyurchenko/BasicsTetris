@@ -1,4 +1,4 @@
-#include <TetrisMenu.h>
+﻿#include <TetrisMenu.h>
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -14,41 +14,48 @@ void TetrisMenu::handleClick(const Vector2f& mousePos, Color newColor) {
 TetrisMenu::TetrisMenu(int cols, int rows, int cellSize, int originX, int originY)
     : cols(cols), rows(rows), cellSize(cellSize), originX(originX), originY(originY) {
     grid.resize(cols, std::vector<CellData>(rows, { 0, Color::Black }));
-  /*  for (int i = 0; i < 4;i++)
-	  {
-        tetrises[0][i] = Vector2f(i, 0);
+    for (int i = 0; i < 4;i++)
+	{
+        tetrises[0][i] = IntVec2{i, 0};
     }
 	for (int i = 0; i < 4; i++)
 	{
-        if(i < 2) tetrises[1][i] = Vector2f(0, i);
-        else tetrises[1][i] = Vector2f(i - 1, 1); 
+        if(i < 2) tetrises[1][i] = IntVec2{0, i};
+        else tetrises[1][i] = IntVec2{i - 1, 1}; 
 	}
 	for (int i = 0; i < 4; i++)
 	{
-		if (i < 3) tetrises[2][i] = Vector2f(i, 0);
-		else tetrises[2][i] = Vector2f(2, -1);
+		if (i < 3) tetrises[2][i] = IntVec2{i, 0};
+		else tetrises[2][i] = IntVec2{2, -1};
 	}
 	for (int i = 0; i < 4; i++)
 	{
-		if (i < 2) tetrises[3][i] = Vector2f(0, i);
-		else tetrises[3][i] = Vector2f(1, i - 2);
+		if (i < 2) tetrises[3][i] = IntVec2{0, i};
+		else tetrises[3][i] = IntVec2{1, i - 2};
 	}
 	for (int i = 0; i < 4; i++)
 	{
-		if (i < 2) tetrises[4][i] = Vector2f(i, 1);
-		else tetrises[4][i] = Vector2f(i - 1, 0);
+		if (i < 2) tetrises[4][i] = IntVec2{i, 1};
+		else tetrises[4][i] = IntVec2{i - 1, 0};
 	}
     for (int i = 0; i < 4; i++)
     {
-        if (i < 2) tetrises[5][i] = Vector2f(i, 1);
-        else tetrises[5][i] = Vector2f(1, 1);
+        if (i < 2) tetrises[5][i] = IntVec2{i, 1};
+        else tetrises[5][i] = IntVec2{1, 1};
 	}
 	for (int i = 0; i < 4; i++)
 	{
-		if (i < 3) tetrises[6][i] = Vector2f(i, 0);
-		else tetrises[6][i] = Vector2f(1, -1);
-	}*\
+		if (i < 3) tetrises[6][i] = IntVec2{i, 0};
+		else tetrises[6][i] = IntVec2{1, -1};
+	}
 
+}
+void TetrisMenu::drawTetris(int number) {
+	for(auto& tetris : tetrises[number]) {
+		int x = tetris.x;
+		int y = tetris.y;
+		grid[x][y].color = Color::Blue;
+	}
 }
 void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
     sf::RectangleShape cell(Vector2f(cellSize, cellSize));
