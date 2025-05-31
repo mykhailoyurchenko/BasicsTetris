@@ -1,4 +1,4 @@
-﻿#include <TetrisMenu.h>
+#include <TetrisMenu.h>
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -14,8 +14,8 @@ void TetrisMenu::handleClick(const Vector2f& mousePos, Color newColor) {
 TetrisMenu::TetrisMenu(int cols, int rows, int cellSize, int originX, int originY)
     : cols(cols), rows(rows), cellSize(cellSize), originX(originX), originY(originY) {
     grid.resize(cols, std::vector<CellData>(rows, { 0, Color::Black }));
-    for (int i = 0; i < 4;i++)
-	{
+  /*  for (int i = 0; i < 4;i++)
+	  {
         tetrises[0][i] = Vector2f(i, 0);
     }
 	for (int i = 0; i < 4; i++)
@@ -47,9 +47,9 @@ TetrisMenu::TetrisMenu(int cols, int rows, int cellSize, int originX, int origin
 	{
 		if (i < 3) tetrises[6][i] = Vector2f(i, 0);
 		else tetrises[6][i] = Vector2f(1, -1);
-	}
-}
+	}*\
 
+}
 void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
     sf::RectangleShape cell(Vector2f(cellSize, cellSize));
     cell.setOutlineColor(Color(32, 31, 31));
