@@ -20,8 +20,8 @@ public:
 private:
     int cols, rows, cellSize, originX, originY;
     std::vector<std::vector<CellData>> grid;
-    std::array<std::array<Vector2f,4>,7> tetrises;
-	std::vector<sf::Vector2f> currentTetris; // Stores the current Tetris piece positions
+   // std::array<std::array<Vector2f,4>,7> tetrises;
+	//std::vector<sf::Vector2f> currentTetris; // Stores the current Tetris piece positions
     sf::Color currentColor; // Color of the current Tetris piece
     sf::Clock clock; // For timing movements
     float moveInterval; // Time interval for moving the Tetris piece

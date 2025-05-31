@@ -35,6 +35,14 @@ class PlayState : public GameState {//Класс состояния игры
 	TetrisMenu gameField;//Игровое поле
 	RectangleShape gameFieldNext;//Поле для следующих фигур
 	RectangleShape backButton;//Кнопка возварата в меню
+	
+	RectangleShape quitButton;      
+	Text quitButtonText;            
+	RectangleShape pauseButton;     
+	Text pauseButtonText;           
+	
+	
+
 
 	Text backButtonText;//Текст для возварата
 	Text scoreText; // Текст для отображения очков
@@ -47,6 +55,18 @@ class PlayState : public GameState {//Класс состояния игры
 public:
 	PlayState(Game& game);
  	void eventHandler(Event& event) override;
+	void update() override;
+	void draw(RenderWindow& window) override;
+};
+class PauseState : public GameState {
+	RectangleShape pauseOverlay;
+	Text pauseResumeText;
+	Text pauseQuitText;
+
+public:
+	
+	PauseState(Game& game);
+	void eventHandler(Event& event) override;
 	void update() override;
 	void draw(RenderWindow& window) override;
 };

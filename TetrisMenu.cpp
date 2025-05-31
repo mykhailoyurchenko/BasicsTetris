@@ -14,7 +14,7 @@ void TetrisMenu::handleClick(const Vector2f& mousePos, Color newColor) {
 TetrisMenu::TetrisMenu(int cols, int rows, int cellSize, int originX, int originY)
     : cols(cols), rows(rows), cellSize(cellSize), originX(originX), originY(originY) {
     grid.resize(cols, std::vector<CellData>(rows, { 0, Color::Black }));
-    for (int i = 0; i < 4;i++)
+  /*  for (int i = 0; i < 4;i++)
 	{
         tetrises[0][i] = Vector2f(i, 0);
        
@@ -27,15 +27,15 @@ TetrisMenu::TetrisMenu(int cols, int rows, int cellSize, int originX, int origin
 	for (int i = 0; i < 4; i++)
 	{
 		if (i < 3) tetrises[2][i] = Vector2f(i, 1);
+
 		else tetrises[2][i] = Vector2f(i, 0);
 	}
 	for (int i = 0; i < 4; i++)
 	{
 		if (i < 2) tetrises[3][i] = Vector2f(0, i);
 		else tetrises[3][i] = Vector2f(i - 2, 0);
-	}
+	}*/
 }
-
 void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
     sf::RectangleShape cell(Vector2f(cellSize, cellSize));
     cell.setOutlineColor(Color(32, 31, 31));
