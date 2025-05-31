@@ -35,16 +35,14 @@ class PlayState : public GameState {//Класс состояния игры
 	TetrisMenu gameField;//Игровое поле
 	RectangleShape gameFieldNext;//Поле для следующих фигур
 	RectangleShape backButton;//Кнопка возварата в меню
-	
-	RectangleShape quitButton;      
-	Text quitButtonText;            
-	RectangleShape pauseButton;     
-	Text pauseButtonText;           
-	
-	
+	RectangleShape quitButton;
+	RectangleShape pauseButton;
 
-
+    
+	Text quitButtonText;
 	Text backButtonText;//Текст для возварата
+	Text pauseButtonText;
+
 	Text scoreText; // Текст для отображения очков
 	Text scoreOutput;//Отображение набранных очков
 	Text timeText;// Текст для відображення часу

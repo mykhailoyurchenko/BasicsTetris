@@ -3,21 +3,21 @@
 // Констуктор класу PlayState
 PlayState::PlayState(Game& game) : GameState(game), gameField(10, 20, 40, 750, 100), gameFieldNext(Vector2f(230, 600)), backButton(Vector2f(150, 50)),
 backButtonText(font, "Go back", 50), scoreText(font, "0", 40), scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40), 
-bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40),quitButton(Vector2f(150,50)),quitButtonText(font,"Quit",40),pauseButton(Vector2f(150,50)),pauseButtonText(font,"Pause",40){
+bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40),
+quitButton(Vector2f(150,50)),quitButtonText(font,"Quit",40),pauseButton(Vector2f(150,50)),pauseButtonText(font,"Pause",40){
 
 
-	quitButton.setFillColor(Color(0.0, 0, 0, 0.0));
+	quitButton.setFillColor(Color(0, 0, 0, 0.0));
 	quitButton.setPosition(Vector2f(1750, 200));
+
 	quitButtonText.setFillColor(Color::White);
 	quitButtonText.setPosition(Vector2f(1770, 200));
 
-	pauseButton.setFillColor(Color(0, 0, 0.0, 0.0));
-	pauseButton.setPosition(Vector2f(1600, 20));
+	pauseButton.setFillColor(Color(0, 0, 0, 0.0));
+	pauseButton.setPosition(Vector2f(1770, 200));
+
 	pauseButtonText.setFillColor(Color::White);
 	pauseButtonText.setPosition(Vector2f(1610, 200));
-
-	
-
 
 	backButton.setFillColor(Color(0, 0, 0, 0.0));
 	backButton.setPosition(Vector2f(1750, 50));
@@ -65,7 +65,7 @@ void PlayState::eventHandler(Event& event) {
 			game->setState<MenuState>();
 			return;
 		}
-		if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
+		if (pauseButton.getGlobalBounds().contains(game->getMousePos())) {
 			game->setState<PauseState>();
 			return;
 		}
