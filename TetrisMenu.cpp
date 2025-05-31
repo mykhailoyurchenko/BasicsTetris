@@ -17,22 +17,36 @@ TetrisMenu::TetrisMenu(int cols, int rows, int cellSize, int originX, int origin
     for (int i = 0; i < 4;i++)
 	{
         tetrises[0][i] = Vector2f(i, 0);
-       
     }
 	for (int i = 0; i < 4; i++)
 	{
         if(i < 2) tetrises[1][i] = Vector2f(0, i);
-        else tetrises[1][i] = Vector2f(i - 1, 1);
+        else tetrises[1][i] = Vector2f(i - 1, 1); 
 	}
 	for (int i = 0; i < 4; i++)
 	{
-		if (i < 3) tetrises[2][i] = Vector2f(i, 1);
-		else tetrises[2][i] = Vector2f(i, 0);
+		if (i < 3) tetrises[2][i] = Vector2f(i, 0);
+		else tetrises[2][i] = Vector2f(2, -1);
 	}
 	for (int i = 0; i < 4; i++)
 	{
 		if (i < 2) tetrises[3][i] = Vector2f(0, i);
-		else tetrises[3][i] = Vector2f(i - 2, 0);
+		else tetrises[3][i] = Vector2f(1, i - 2);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		if (i < 2) tetrises[4][i] = Vector2f(i, 1);
+		else tetrises[4][i] = Vector2f(i - 1, 0);
+	}
+    for (int i = 0; i < 4; i++)
+    {
+        if (i < 2) tetrises[5][i] = Vector2f(i, 1);
+        else tetrises[5][i] = Vector2f(1, 1);
+	}
+	for (int i = 0; i < 4; i++)
+	{
+		if (i < 3) tetrises[6][i] = Vector2f(i, 0);
+		else tetrises[6][i] = Vector2f(1, -1);
 	}
 }
 

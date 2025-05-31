@@ -3,10 +3,11 @@
 
 //Конструктор 
 GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris", 70) {
+	using namespace filesystem;
 	//Пути к файлам
-	const filesystem::path path1 = "src/texture/background.jpg";
-	const filesystem::path path2 = "src/fonts/Roboto_Condensed-Black.ttf";
-	const filesystem::path path3 = "src/fonts/Oi-Regular.ttf";
+	const path path1 = "src/texture/background.jpg";
+	const path path2 = "src/fonts/Roboto_Condensed-Black.ttf";
+	const path path3 = "src/fonts/Oi-Regular.ttf";
 	
 	//Загрузка текстур,шрифта
 	if (!backgroundTexture.loadFromFile(path1)) cerr << "Помилка доступу до файлу: " << path1 << endl;
