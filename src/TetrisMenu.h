@@ -16,6 +16,7 @@ public:
 	void moveTetris();
     // Draws the grid
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+	auto getGrid() const { return grid; }
 
 private:
     int cols, rows, cellSize, originX, originY;

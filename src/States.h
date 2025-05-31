@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
 #include "TetrisMenu.h"
+using gridType = std::vector<std::vector<CellData>>;
 using namespace sf;
 
 class Game;
@@ -23,6 +24,9 @@ protected://Поля дочірніх класів GameState
 };
 class MenuState : public GameState {//Класс состояния игры
 	RectangleShape playButton;//Кнопка
+	RectangleShape quitButton;
+	
+	Text quitButtonText;
 	Text playButtonText;//Текст для кнопки play 
 public:
 	MenuState(Game& game);//Передача посилання на поточну гру,для обробки подій
@@ -34,13 +38,9 @@ public:
 class PlayState : public GameState {//Класс состояния игры
 	TetrisMenu gameField;//Игровое поле
 	RectangleShape gameFieldNext;//Поле для следующих фигур
-	RectangleShape backButton;//Кнопка возварата в меню
-	RectangleShape quitButton;
+
 	RectangleShape pauseButton;
 
-    
-	Text quitButtonText;
-	Text backButtonText;//Текст для возварата
 	Text pauseButtonText;
 
 	Text scoreText; // Текст для отображения очков
@@ -52,14 +52,17 @@ class PlayState : public GameState {//Класс состояния игры
 
 public:
 	PlayState(Game& game);
+	gridType getField();
  	void eventHandler(Event& event) override;
 	void update() override;
 	void draw(RenderWindow& window) override;
 };
 class PauseState : public PlayState {
 	RectangleShape pauseOverlay;
-	Text pauseResumeText;
-	Text pauseQuitText;
+	
+	Text ResumeText;
+	Text MainMenuText;
+	RectangleShape box;
 
 public:
 	PauseState(Game& game);

@@ -1,4 +1,4 @@
-#include <TetrisMenu.h>
+﻿#include <TetrisMenu.h>
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -47,7 +47,7 @@ TetrisMenu::TetrisMenu(int cols, int rows, int cellSize, int originX, int origin
 	{
 		if (i < 3) tetrises[6][i] = Vector2f(i, 0);
 		else tetrises[6][i] = Vector2f(1, -1);
-	}*\
+	}*/
 
 }
 void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
