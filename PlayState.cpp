@@ -58,7 +58,6 @@ void PlayState::eventHandler(Event& event) {
 			game->setState<PauseState>();
 			return;
 		}
-		
 	}
 }
 // рендер
@@ -83,13 +82,18 @@ void PlayState::draw(RenderWindow& window) {
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update() {
 	GameState::update();
+	gameField.drawTetris(0);
+	if (quitButton.getGlobalBounds().contains(game->getMousePos())) {
+		quitButtonText.setFillColor(Color::Yellow);
+	}
+	else quitButtonText.setFillColor(Color::White);
+
 
 	if (pauseButton.getGlobalBounds().contains(game->getMousePos())) {
 		pauseButtonText.setFillColor(Color::Yellow);
 	}
-	else {
-		pauseButtonText.setFillColor(Color::White);
-	}
+	else pauseButtonText.setFillColor(Color::White);
+
 	// gameField.drawTetris();
 	
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
