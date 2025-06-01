@@ -12,7 +12,7 @@ struct CellData {
 
 using gridType = std::array<std::array<CellData, 20>, 10>;
 
-class TetrisMenu : public sf::Drawabletype {
+class TetrisMenu : public sf::Drawable {
 public:
     TetrisMenu(int cellSize, int originX, int originY);
 
