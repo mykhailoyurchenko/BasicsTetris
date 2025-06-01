@@ -4,6 +4,7 @@
 MenuState::MenuState(Game& game) : GameState(game), playButton(Vector2f(150, 50)), playButtonText(font, "Play", 50), quitButton(Vector2f(150, 50)), quitButtonText(font, "Quit", 40) {
 	sf::Vector2u winSize = game.getWindow().getSize();
 	playButton.setFillColor(Color(0, 0, 0, 0.0));
+	// кнопка гри
 	Vector2f position(winSize.x * 0.5, winSize.y * 0.5);
 	playButton.setPosition(position);
 	centerOrigin(playButton);
@@ -11,12 +12,15 @@ MenuState::MenuState(Game& game) : GameState(game), playButton(Vector2f(150, 50)
 	playButtonText.setFillColor(Color::White);
 	playButtonText.setPosition(position);
 	centerOrigin(playButtonText);
-
+	// кнопка виходу
 	quitButton.setFillColor(Color(0, 0, 0, 0.0));
-	quitButton.setPosition(Vector2f(1750, 200));
+	Vector2f quitposition(winSize.x * 0.8, winSize.y * 0.4);
+	quitButton.setPosition(quitposition);
+	centerOrigin(quitButton);
 
 	quitButtonText.setFillColor(Color::White);
-	quitButtonText.setPosition(Vector2f(1750, 200));
+	quitButtonText.setPosition(quitposition);
+	centerOrigin(quitButtonText);
 }
 // Обробка подій на клік
 void MenuState::eventHandler(Event& event) {
