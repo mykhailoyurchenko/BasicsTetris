@@ -1,8 +1,14 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
 #include "TetrisMenu.h"
-using gridType = std::vector<std::vector<CellData>>;
 using namespace sf;
+//using gridType = std::vector<std::vector<CellData>>;
+
+template<typename Drawabletype>
+void centerOrigin(Drawabletype& drawable) {
+	FloatRect bounds = drawable.getLocalBounds();
+	drawable.setOrigin({ bounds.size.x / 2, bounds.size.y / 2 });
+}
 
 class Game;
 

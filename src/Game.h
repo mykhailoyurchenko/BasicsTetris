@@ -11,7 +11,7 @@ class MenuState;// Клас стану гри
 
 class Game { //Основний клас гри
 	RenderWindow window; //Вікно гри
-	shared_ptr<std::vector<std::vector<CellData>>> grid;
+	//shared_ptr<std::vector<std::vector<CellData>>> grid;
 	shared_ptr<GameState> currentState; // GameState* currentState; // Поточний стан гри
 	Vector2f mousePos;//Позиція мишки
 	Image icon; //Зображення іконки
@@ -39,7 +39,6 @@ public:
 	template<typename State>
 	void setState() {
 		currentState = make_shared<State>(*this); //currentState = newState
-		
 	}
 	//Головний цикл гри
 	void run() {

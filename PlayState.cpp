@@ -1,9 +1,8 @@
 ﻿#include "Game.h"
-using gridType = std::vector<std::vector<CellData>>;
-
 
 // Констуктор класу PlayState
-PlayState::PlayState(Game& game) : GameState(game), gameField(10, 20, 40, 750, 100), gameFieldNext(Vector2f(230, 600)), scoreText(font, "0", 40), scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
+PlayState::PlayState(Game& game) : GameState(game), gameField(40, 750, 100), gameFieldNext(Vector2f(230, 600)),
+scoreText(font, "0", 40),scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
 bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButton(Vector2f(150, 50)), pauseButtonText(font, "Pause", 40) {
 
 	pauseButton.setFillColor(Color(0, 0, 0, 0.0));
@@ -11,8 +10,6 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 
 	pauseButtonText.setFillColor(Color::White);
 	pauseButtonText.setPosition(Vector2f(1750, 200));
-
-	
 
 	//Лічильник для підрахунку очков
 	scoreOutput.setFillColor(Color::White);
@@ -40,14 +37,12 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 
 	gameFieldNext.setPosition(Vector2f(1200, 150));
 	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
-
-
 }
 
 //перевірка на взаємодію з кнопкою
-gridType PlayState::getField() {
-	return gameField.getGrid();
-};
+//gridType PlayState::getField() {
+//	return gameField.getGrid();
+//};
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
 
@@ -63,8 +58,6 @@ void PlayState::eventHandler(Event& event) {
 // рендер
 void PlayState::draw(RenderWindow& window) {
 	GameState::draw(window);
-
-	
 	window.draw(pauseButton);
 	window.draw(pauseButtonText);
 
@@ -82,21 +75,10 @@ void PlayState::draw(RenderWindow& window) {
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update() {
 	GameState::update();
-	gameField.drawTetris(0);
-	if (quitButton.getGlobalBounds().contains(game->getMousePos())) {
-		quitButtonText.setFillColor(Color::Yellow);
-	}
-	else quitButtonText.setFillColor(Color::White);
-
+	gameField.drawTetris(5);
 
 	if (pauseButton.getGlobalBounds().contains(game->getMousePos())) {
 		pauseButtonText.setFillColor(Color::Yellow);
 	}
 	else pauseButtonText.setFillColor(Color::White);
-
-	// gameField.drawTetris();
-	
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-		gameField.handleClick(game->getMousePos(), Color::Red);
-	}
 }

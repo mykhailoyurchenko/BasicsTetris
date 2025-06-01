@@ -1,31 +1,31 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
+#include <array>
 
 struct CellData {
-    int value;           // e.g., block type or 0 for empty
-    sf::Color color;     // color of the cell
+	int x;
+    int y;
+    sf::Color color = sf::Color::Black;     // color of the cell
+    bool isFull = 0;
     // add more fields as needed
 };
-struct IntVec2 {
-	int x;
-	int y;
-};
 
-class TetrisMenu : public sf::Drawable {
+using gridType = std::array<std::array<CellData, 20>, 10>;
+
+class TetrisMenu : public sf::Drawabletype {
 public:
-    TetrisMenu(int cols, int rows, int cellSize, int originX, int originY);
+    TetrisMenu(int cellSize, int originX, int originY);
 
-    void handleClick(const sf::Vector2f& mousePos, sf::Color newColor = sf::Color::Red);
 	void drawTetris(int number);
 	void moveTetris();
     // Draws the grid
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	auto getGrid() const { return grid; }
+     gridType getGrid() const { return grid; }
 
 private:
     int cols, rows, cellSize, originX, originY;
-    std::vector<std::vector<CellData>> grid;
-    std::array<std::array<IntVec2,4>,7> tetrises;
+    gridType grid;
+    std::array<std::array<CellData,4>,7> tetrises;
 	std::vector<sf::Vector2f> currentTetris; // Stores the current Tetris piece positions
     sf::Color currentColor; // Color of the current Tetris piece
     sf::Clock clock; // For timing movements
