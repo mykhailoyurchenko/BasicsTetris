@@ -3,8 +3,8 @@
 
 using namespace sf;
 
-TetrisMenu::TetrisMenu(int cellSize, int originX, int originY)
-    : cellSize(cellSize), originX(originX), originY(originY) {
+TetrisMenu::TetrisMenu(gridType& grid,int cellSize, int originX, int originY)
+    : grid(grid), cellSize(cellSize), originX(originX), originY(originY) {
 	cols = 10;
 	rows = 20;
 	for (int x = 0; x < cols; x++) {
@@ -47,7 +47,7 @@ TetrisMenu::TetrisMenu(int cellSize, int originX, int originY)
 		if (i < 2) tetrises[6][i] = CellData{i, 0, Color::Red};
 		else tetrises[6][i] = CellData{i - 1, 1, Color::Red};
 	}
-}
+}	
 void TetrisMenu::drawTetris(int number) {
 	for(auto& tetris : tetrises[number]) {
 		int x = tetris.x;

@@ -1,7 +1,9 @@
 ﻿#include "Game.h"
+#include <random>
 
 // Констуктор класу PlayState
-PlayState::PlayState(Game& game) : GameState(game), gameField(40, 750, 100), gameFieldNext(Vector2f(230, 600)),
+
+PlayState::PlayState(Game& game) : GameState(game), gameField(game.getGrid(), 40, 750, 100), gameFieldNext(Vector2f(230, 600)),
 scoreText(font, "Score:", 40),scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
 bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButton(Vector2f(150, 50)), pauseButtonText(font, "Pause", 40) {
 	sf::Vector2u winSize = game.getWindow().getSize();
@@ -59,9 +61,9 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 }
 
 //перевірка на взаємодію з кнопкою
-//gridType PlayState::getField() {
-//	return gameField.getGrid();
-//};
+gridType* PlayState::getGrid() {
+	return gameField.getGrid();
+};
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
 
@@ -69,7 +71,7 @@ void PlayState::eventHandler(Event& event) {
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
 		
 		if (pauseButton.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState<PauseState>();
+			game->setState(GameStateType::Pause);
 			return;
 		}
 	}
@@ -92,9 +94,11 @@ void PlayState::draw(RenderWindow& window) {
 	window.draw(bestScoreOutput);
 }
 // зміна колір тексту кнопки при наведенні миші
-void PlayState::update() {
+void PlayState::update(const Time& delta) {
 	GameState::update();
-	gameField.drawTetris(5);
+	srand(time(0));
+	int randomTetris = rand() % 7;
+	gameField.drawTetris(randomTetris);
 
 	if (pauseButton.getGlobalBounds().contains(game->getMousePos())) {
 		pauseButtonText.setFillColor(Color::Yellow);

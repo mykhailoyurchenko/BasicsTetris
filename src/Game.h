@@ -7,17 +7,19 @@ using namespace std;
 
 class GameState;//Базовий клас 
 class MenuState;// Клас стану гри
-
+enum class GameStateType { Menu, Play, Pause };
 
 class Game { //Основний клас гри
 	RenderWindow window; //Вікно гри
-	//shared_ptr<std::vector<std::vector<CellData>>> grid;
+	Clock clock;
+	gridType* grid;
 	shared_ptr<GameState> currentState; // GameState* currentState; // Поточний стан гри
 	Vector2f mousePos;//Позиція мишки
 	Image icon; //Зображення іконки
 public:
 	//Налаштування вікна гри
 	Game() : window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default, State::Windowed) {
+		grid = new gridType();
 		mousePos = Vector2f(Mouse::getPosition(window)); //Обмеження 60 кадрів
 		window.setFramerateLimit(60);
 		const filesystem::path path = "src/texture/icon.png"; //Путь до іконки
@@ -27,24 +29,40 @@ public:
 		}
 		window.setIcon(icon); //Встановлення іконки
 		currentState = make_shared<MenuState>(*this);  // currentState = new MenuState(*this); // Початковий стан гри(меню)
-		
 	}
-	~Game() = default;
+	~Game() { delete grid; };
 	Game(const Game&) = delete;
 	Game& operator=(const Game&) = delete;
 	//зміна стану гри
 	weak_ptr<GameState> getState() { return currentState; }
 	RenderWindow& getWindow() { return window; }
 	Vector2f getMousePos() { return mousePos; }
-	template<typename State>
-	void setState() {
-		currentState = make_shared<State>(*this); //currentState = newState
+	gridType& getGrid() { return *grid; }
+
+
+	void setState(GameStateType state) {
+		switch (state) {
+		case GameStateType::Menu:
+			currentState = make_shared<MenuState>(*this);
+			if (grid) {
+				grid->fill(std::array<CellData, 20>{});
+			}
+			break;
+		case GameStateType::Play:
+			currentState = make_shared<PlayState>(*this);
+			grid = currentState->getGrid();
+			break;
+		case GameStateType::Pause:
+			currentState = make_shared<PauseState>(*this);
+			grid = currentState->getGrid();
+			break;
+		}
 	}
 	//Головний цикл гри
 	void run() {
 		while (window.isOpen()) {
 			mousePos = Vector2f(Mouse::getPosition(window));
-			currentState->update();
+			currentState->update(clock.restart());
 			while (optional event = window.pollEvent()) {
 				currentState->eventHandler(*event);
 			}

@@ -28,7 +28,7 @@ void MenuState::eventHandler(Event& event) {
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) { // Перевірка натискання миші
 		if (playButton.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState<PlayState>();
+			game->setState(GameStateType::Play);
 			return;
 		}
 		if (quitButtonText.getGlobalBounds().contains(game->getMousePos())) {
@@ -37,7 +37,7 @@ void MenuState::eventHandler(Event& event) {
 	}
 }
 // Оновлення стану
-void MenuState::update() {
+void MenuState::update(const Time& delta) {
 	GameState::update();
 	if (quitButton.getGlobalBounds().contains(game->getMousePos())) {
 		quitButtonText.setFillColor(Color::Yellow);
