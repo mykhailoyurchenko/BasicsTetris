@@ -2,15 +2,11 @@
 #include "Game.h"
 
 
-PauseState::PauseState(Game& game) : PlayState(game), pauseOverlay(Vector2f(1920, 1080)), ResumeText(font, "Resume", 50), MainMenuText(font, "MainMenu", 50),
-box(Vector2f(400,600)){
-
-	sf::Vector2u winSize = game.getWindow().getSize();
+PauseState::PauseState(Game& game) : PlayState(game), pauseOverlay(Vector2f(1920, 1080)), ResumeText(font, "Resume", 50), 
+MainMenuText(font, "Main Menu", 50), box(Vector2f(400,600)){
+	Vector2u winSize = game.getWindow().getSize();
 	
-    
-	
-	
-	box.setPosition(Vector2f(750, 200));
+	box.setPosition(Vector2f(750, 200)); // Саня, побачиш - виправиш
 	box.setFillColor(Color(40, 39, 39, 255));
 	
 	pauseOverlay.setFillColor(Color(0, 0, 0, 155));
@@ -23,6 +19,7 @@ box(Vector2f(400,600)){
 
 	// Кнопка MainMenu
 	MainMenuText.setFillColor(Color::White);
+
 	Vector2f MainMenuPosition(winSize.x * 0.49, winSize.y * 0.50);
 	MainMenuText.setPosition(MainMenuPosition);
 	centerOrigin(MainMenuText);
@@ -47,7 +44,6 @@ void PauseState::eventHandler(Event& event) {
 		}
 		if (ResumeText.getGlobalBounds().contains(game->getMousePos())) {
 			game->setState(GameStateType::Play);
-			
 		}
 	};
 }

@@ -1,33 +1,22 @@
 ﻿#include "Game.h"
 
 // Конструктор меню
-MenuState::MenuState(Game& game) : GameState(game), playButton(Vector2f(150, 50)), playButtonText(font, "Play", 50), quitButton(Vector2f(150, 50)), quitButtonText(font, "Quit", 40) {
-	sf::Vector2u winSize = game.getWindow().getSize();
-	playButton.setFillColor(Color(0, 0, 0, 0.0));
-	// кнопка гри
-	Vector2f position(winSize.x * 0.5, winSize.y * 0.5);
-	playButton.setPosition(position);
-	centerOrigin(playButton);
+MenuState::MenuState(Game& game) : GameState(game), playButtonText(font, "Play", 50), quitButtonText(font, "Quit", 40) {
+	Vector2u winSize = game.getWindow().getSize();
+	centerAll(playButtonText, quitButtonText);
 
 	playButtonText.setFillColor(Color::White);
-	playButtonText.setPosition(position);
-	centerOrigin(playButtonText);
-	// кнопка виходу
-	quitButton.setFillColor(Color(0, 0, 0, 0.0));
-	Vector2f quitposition(winSize.x * 0.8, winSize.y * 0.4);
-	quitButton.setPosition(quitposition);
-	centerOrigin(quitButton);
+	playButtonText.setPosition({winSize.x * 0.5f,winSize.y * 0.5f});
 
 	quitButtonText.setFillColor(Color::White);
-	quitButtonText.setPosition(quitposition);
-	centerOrigin(quitButtonText);
+	quitButtonText.setPosition({winSize.x * 0.8f, winSize.y * 0.4f});
 }
 // Обробка подій на клік
 void MenuState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) { // Перевірка натискання миші
-		if (playButton.getGlobalBounds().contains(game->getMousePos())) {
+		if (playButtonText.getGlobalBounds().contains(game->getMousePos())) {
 			game->setState(GameStateType::Play);
 			return;
 		}
@@ -39,14 +28,14 @@ void MenuState::eventHandler(Event& event) {
 // Оновлення стану
 void MenuState::update(const Time& delta) {
 	GameState::update();
-	if (quitButton.getGlobalBounds().contains(game->getMousePos())) {
+	if (quitButtonText.getGlobalBounds().contains(game->getMousePos())) {
 		quitButtonText.setFillColor(Color::Yellow);
 	}
 	else {
 		quitButtonText.setFillColor(Color::White);
 	}
 	// Зміна кольору тексту 
-	if (playButton.getGlobalBounds().contains(game->getMousePos())) {
+	if (playButtonText.getGlobalBounds().contains(game->getMousePos())) {
 		playButtonText.setFillColor(Color::Yellow);
 	}
 	else playButtonText.setFillColor(Color::White);
@@ -54,8 +43,6 @@ void MenuState::update(const Time& delta) {
 // Відображення меню
 	void MenuState::draw(RenderWindow & window) {
 	GameState::draw(window); // Відмальовка
-	window.draw(playButton);
 	window.draw(playButtonText);
-	window.draw(quitButton);
 	window.draw(quitButtonText);
 }	

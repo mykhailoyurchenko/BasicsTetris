@@ -8,7 +8,10 @@ void centerOrigin(Drawabletype& drawable) {
 	FloatRect bounds = drawable.getLocalBounds();
 	drawable.setOrigin({ bounds.size.x / 2, bounds.size.y / 2 });
 }
-
+template<typename... Ts>
+void centerAll(Ts&... drawables) {
+	(centerOrigin(drawables), ...);
+}
 class Game;
 
 class GameState {//Базовый класс
@@ -30,9 +33,6 @@ protected://Поля дочірніх класів GameState
 	Text tetrisText;
 };
 class MenuState : public GameState {//Класс состояния игры
-	RectangleShape playButton;//Кнопка
-	RectangleShape quitButton;
-	
 	Text quitButtonText;
 	Text playButtonText;//Текст для кнопки play 
 public:
@@ -46,10 +46,7 @@ class PlayState : public GameState {//Класс состояния игры
 	TetrisMenu gameField;//Игровое поле
 	RectangleShape gameFieldNext;//Поле для следующих фигур
 
-	RectangleShape pauseButton;
-
 	Text pauseButtonText;
-
 	Text scoreText; // Текст для отображения очков
 	Text scoreOutput;//Отображение набранных очков
 	Text timeText;// Текст для відображення часу
@@ -66,11 +63,10 @@ public:
 };
 class PauseState : public PlayState {
 	RectangleShape pauseOverlay;
-	
-	Text ResumeText;
-	Text MainMenuText;
 	RectangleShape box;
 
+	Text ResumeText;
+	Text MainMenuText;
 public:
 	PauseState(Game& game);
 	void eventHandler(Event& event) override;
