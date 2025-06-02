@@ -2,42 +2,62 @@
 #include <random>
 
 // Констуктор класу PlayState
+
 PlayState::PlayState(Game& game) : GameState(game), gameField(game.getGrid(), 40, 750, 100), gameFieldNext(Vector2f(230, 600)),
-scoreText(font, "0", 40),scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
+scoreText(font, "Score:", 40),scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
 bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButton(Vector2f(150, 50)), pauseButtonText(font, "Pause", 40) {
-
+	sf::Vector2u winSize = game.getWindow().getSize();
+	// кнопка паузи
 	pauseButton.setFillColor(Color(0, 0, 0, 0.0));
-	pauseButton.setPosition(Vector2f(1750, 200));
+	Vector2f pausePosition(winSize.x * 0.95, winSize.y * 0.2);
+	pauseButton.setPosition(pausePosition);
+	centerOrigin(pauseButton);
 
+	// текст кнопки паузи
 	pauseButtonText.setFillColor(Color::White);
-	pauseButtonText.setPosition(Vector2f(1750, 200));
+	pauseButtonText.setPosition(pausePosition);
+	centerOrigin(pauseButtonText);
 
 	//Лічильник для підрахунку очков
 	scoreOutput.setFillColor(Color::White);
-	scoreOutput.setPosition(Vector2f(1617, 752));
+	Vector2f scoreOutputPosition(winSize.x * 0.83, winSize.y * 0.73);
+	scoreOutput.setPosition(scoreOutputPosition);
+	centerOrigin(scoreOutput);
 
 	//Текст для підрахунку очков
 	scoreText.setFillColor(Color::White);
-	scoreText.setPosition(Vector2f(1507, 750));
+	Vector2f scoreTextPosition(winSize.x * 0.79, winSize.y * 0.73);
+	scoreText.setPosition(scoreTextPosition);
+	centerOrigin(scoreText);
 
 	//Текст часу
 	timeText.setFillColor(Color::White);
-	timeText.setPosition(Vector2f(1520, 900));
+	Vector2f timeTextPosition(winSize.x * 0.82, winSize.y * 0.83);
+	timeText.setPosition(timeTextPosition);
+	centerOrigin(timeText);
 
 	//Лічильник часу
 	timeOutput.setFillColor(Color::White);
-	timeOutput.setPosition(Vector2f(1500, 960));
+	Vector2f timeOutputPosition(winSize.x * 0.82, winSize.y * 0.88);
+	timeOutput.setPosition(timeOutputPosition);
+	centerOrigin(timeOutput);
 
 	//Лічільник найкращого результату
 	bestScoreOutput.setFillColor(Color::White);
-	bestScoreOutput.setPosition(Vector2f(1665, 827));
+	Vector2f bestScoreOutputPosition(winSize.x * 0.87, winSize.y * 0.78);
+	bestScoreOutput.setPosition(bestScoreOutputPosition);
+	centerOrigin(bestScoreOutput);
 
 	// текст найкращого результату
 	bestScoreText.setFillColor(Color::White);
-	bestScoreText.setPosition(Vector2f(1472, 825));
+	Vector2f bestScoreTextPosition(winSize.x * 0.81, winSize.y * 0.78);
+	bestScoreText.setPosition(bestScoreTextPosition);
+	centerOrigin(bestScoreText);
 
-	gameFieldNext.setPosition(Vector2f(1200, 150));
 	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
+	Vector2f gameFieldNextPosition(winSize.x * 0.68, winSize.y * 0.40);
+	gameFieldNext.setPosition(gameFieldNextPosition);
+	centerOrigin(gameFieldNext);
 }
 
 //перевірка на взаємодію з кнопкою

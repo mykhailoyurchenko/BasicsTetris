@@ -4,17 +4,29 @@
 
 PauseState::PauseState(Game& game) : PlayState(game), pauseOverlay(Vector2f(1920, 1080)), ResumeText(font, "Resume", 50), MainMenuText(font, "MainMenu", 50),
 box(Vector2f(400,600)){
+
+	sf::Vector2u winSize = game.getWindow().getSize();
+	
+    
+	
 	
 	box.setPosition(Vector2f(750, 200));
 	box.setFillColor(Color(40, 39, 39, 255));
 	
 	pauseOverlay.setFillColor(Color(0, 0, 0, 155));
 
+	// Кнопка Resume
 	ResumeText.setFillColor(Color::White);
-	ResumeText.setPosition(Vector2f(800, 400));
+	Vector2f position(winSize.x * 0.49, winSize.y * 0.40);
+	ResumeText.setPosition(position);
+	centerOrigin(ResumeText);
 
+	// Кнопка MainMenu
 	MainMenuText.setFillColor(Color::White);
-	MainMenuText.setPosition(Vector2f(800, 500));
+	Vector2f MainMenuPosition(winSize.x * 0.49, winSize.y * 0.50);
+	MainMenuText.setPosition(MainMenuPosition);
+	centerOrigin(MainMenuText);
+	
 }  
 void PauseState::draw(RenderWindow& window) {
 	PlayState::draw(window);
