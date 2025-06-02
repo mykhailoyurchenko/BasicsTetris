@@ -1,4 +1,4 @@
-#Folders
+﻿#Folders
 .vs/
 .idea/
 out/
@@ -36,3 +36,6 @@ out/
 *.exe
 *.out
 *.app
+
+# Files
+CmakeSettings.json
