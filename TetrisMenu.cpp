@@ -3,8 +3,8 @@
 
 using namespace sf;
 
-TetrisMenu::TetrisMenu(int cellSize, int originX, int originY)
-    : cellSize(cellSize), originX(originX), originY(originY) {
+TetrisMenu::TetrisMenu(gridType& grid,int cellSize, int originX, int originY)
+    : grid(grid), cellSize(cellSize), originX(originX), originY(originY) {
 	cols = 10;
 	rows = 20;
 	for (int x = 0; x < cols; x++) {

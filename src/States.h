@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include "TetrisMenu.h"
 using namespace sf;
-//using gridType = std::vector<std::vector<CellData>>;
 
 template<typename Drawabletype>
 void centerOrigin(Drawabletype& drawable) {
@@ -15,9 +14,11 @@ class Game;
 class GameState {//Базовый класс
 public:
 	virtual void eventHandler(Event& event);//Обновление действий
-	virtual void update() {};//Обновление значений и рендер
+	virtual void update(const Time& delta = Time::Zero) {};//Обновление значений и рендер
 	virtual void draw(RenderWindow& window);//Отрисовка
 	virtual ~GameState() = default;//Деструктор
+
+	virtual gridType* getGrid() { return nullptr; }
 protected://Поля дочірніх класів GameState
 	GameState(Game& game);
 	Game* game;//Указатель на обьект классу Game
@@ -37,7 +38,7 @@ class MenuState : public GameState {//Класс состояния игры
 public:
 	MenuState(Game& game);//Передача посилання на поточну гру,для обробки подій
 	void eventHandler(Event& event) override;
-	void update() override;
+	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
 
 };
@@ -58,9 +59,9 @@ class PlayState : public GameState {//Класс состояния игры
 
 public:
 	PlayState(Game& game);
-	gridType getField();
+	gridType* getGrid() override;
  	void eventHandler(Event& event) override;
-	void update() override;
+	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
 };
 class PauseState : public PlayState {
@@ -73,6 +74,6 @@ class PauseState : public PlayState {
 public:
 	PauseState(Game& game);
 	void eventHandler(Event& event) override;
-	void update() override;
+	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
 };

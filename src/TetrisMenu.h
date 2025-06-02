@@ -3,8 +3,8 @@
 #include <array>
 
 struct CellData {
-	int x;
-    int y;
+	int x = 0;
+    int y = 0;
     sf::Color color = sf::Color::Black;     // color of the cell
     bool isFull = 0;
     // add more fields as needed
@@ -14,17 +14,17 @@ using gridType = std::array<std::array<CellData, 20>, 10>;
 
 class TetrisMenu : public sf::Drawable {
 public:
-    TetrisMenu(int cellSize, int originX, int originY);
+    TetrisMenu(gridType& grid,int cellSize, int originX, int originY);
 
 	void drawTetris(int number);
 	void moveTetris();
     // Draws the grid
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-     gridType getGrid() const { return grid; }
+    gridType* getGrid() const { return &grid; }
 
 private:
     int cols, rows, cellSize, originX, originY;
-    gridType grid;
+    gridType& grid;
     std::array<std::array<CellData,4>,7> tetrises;
 	std::vector<sf::Vector2f> currentTetris; // Stores the current Tetris piece positions
     sf::Color currentColor; // Color of the current Tetris piece

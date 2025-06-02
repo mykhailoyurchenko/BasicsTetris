@@ -30,16 +30,16 @@ void PauseState::eventHandler(Event& event) {
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
 		if (MainMenuText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState<MenuState>();
+			game->setState(GameStateType::Menu);
 			return;
 		}
 		if (ResumeText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState<PlayState>();
+			game->setState(GameStateType::Play);
 			
 		}
 	};
 }
-void PauseState::update() {
+void PauseState::update(const Time& delta) {
 	if (MainMenuText.getGlobalBounds().contains(game->getMousePos())) {
 		MainMenuText.setFillColor(Color::Yellow);
 	}
