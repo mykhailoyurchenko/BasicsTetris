@@ -47,7 +47,7 @@ TetrisMenu::TetrisMenu(gridType& grid,int cellSize, int originX, int originY)
 		if (i < 2) tetrises[6][i] = CellData{i, 0, Color::Red};
 		else tetrises[6][i] = CellData{i - 1, 1, Color::Red};
 	}
-}
+}	
 void TetrisMenu::drawTetris(int number) {
 	for(auto& tetris : tetrises[number]) {
 		int x = tetris.x;

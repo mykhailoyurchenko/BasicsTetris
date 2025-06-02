@@ -1,4 +1,5 @@
 ﻿#include "Game.h"
+#include <random>
 
 // Констуктор класу PlayState
 PlayState::PlayState(Game& game) : GameState(game), gameField(game.getGrid(), 40, 750, 100), gameFieldNext(Vector2f(230, 600)),
@@ -75,6 +76,9 @@ void PlayState::draw(RenderWindow& window) {
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update(const Time& delta) {
 	GameState::update();
+	srand(time(0));
+	int randomTetris = rand() % 7;
+	gameField.drawTetris(randomTetris);
 
 	if (pauseButton.getGlobalBounds().contains(game->getMousePos())) {
 		pauseButtonText.setFillColor(Color::Yellow);
