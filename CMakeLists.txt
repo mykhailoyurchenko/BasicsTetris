@@ -13,8 +13,8 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 add_executable(main
-    "main.cpp"
-    "src/Code/MenuState.cpp"  "src/States.h"   "src/Code/PlayState.cpp" "src/Code/GameState.cpp" "src/Game.h" "src/TetrisMenu.h" "src/Code/TetrisMenu.cpp"  "src/Code/PauseState.cpp")
+    "main.cpp" "src/States.h" "сode/PlayState.cpp" "сode/GameState.cpp" "src/Game.h"
+    "src/TetrisMenu.h" "сode/TetrisMenu.cpp" "сode/PauseState.cpp")
 
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
