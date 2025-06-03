@@ -51,10 +51,10 @@ void PauseState::update(const Time& delta) {
 	if (MainMenuText.getGlobalBounds().contains(game->getMousePos())) {
 		MainMenuText.setFillColor(Color::Yellow);
 	}
-	else MainMenuText.setFillColor(Color(255, 255, 255, 255));
+	else MainMenuText.setFillColor(Color::White);
 
 	if (ResumeText.getGlobalBounds().contains(game->getMousePos())) {
 		ResumeText.setFillColor(Color::Yellow);
 	}
-	else ResumeText.setFillColor(Color(255, 255, 255, 255));
+	else ResumeText.setFillColor(Color::White);
 }
