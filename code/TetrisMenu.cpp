@@ -1,6 +1,5 @@
 ﻿#include <TetrisMenu.h>
 #include <SFML/Graphics.hpp>
-#include <random>
 #include <iostream>
 
 
@@ -61,10 +60,10 @@ void TetrisMenu::drawTetris(int number) {
 		int y = tetris.y;
 		
 		
-		//if (x >= 0 && x < cols && y >= 0 && y < rows) {
+		if (x >= 0 && x < cols && y >= 0 && y < rows) {
 			grid[x][y].color = tetris.color;
-		//}
-		std::cout << ": " << number << "X " << tetris.x << std::endl;
+		}
+		//std::cout << ": " << number << "X " << tetris.x << std::endl;
 	}
 	
 }

@@ -12,14 +12,13 @@ enum class GameStateType { Menu, Play, Pause };
 class Game { //Основний клас гри
 	RenderWindow window; //Вікно гри
 	Clock clock;
-	gridType* grid;
+	unique_ptr<gridType> grid;
 	shared_ptr<GameState> currentState; // GameState* currentState; // Поточний стан гри
 	Vector2f mousePos;//Позиція мишки
 	Image icon; //Зображення іконки
 public:
 	//Налаштування вікна гри
 	Game() : window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default, State::Windowed) {
-		grid = new gridType();
 		mousePos = Vector2f(Mouse::getPosition(window)); //Обмеження 60 кадрів
 		window.setFramerateLimit(60);
 		const filesystem::path path = "src/texture/icon.png"; //Путь до іконки
@@ -28,17 +27,19 @@ public:
 			cerr << "Помилка доступу до файлу: " << path << endl; //Перевірка на завантаження іконки 
 		}
 		window.setIcon(icon); //Встановлення іконки
+
 		currentState = make_shared<MenuState>(*this);  // currentState = new MenuState(*this); // Початковий стан гри(меню)
+		grid = make_unique<gridType>();
 	}
-	~Game() { delete grid; };
+	~Game() = default;
 	Game(const Game&) = delete;
 	Game& operator=(const Game&) = delete;
 	//зміна стану гри
 	weak_ptr<GameState> getState() { return currentState; }
 	RenderWindow& getWindow() { return window; }
+	Clock& getClock() { return clock; }
 	Vector2f getMousePos() { return mousePos; }
 	gridType& getGrid() { return *grid; }
-
 
 	void setState(GameStateType state) {
 		switch (state) {
@@ -50,11 +51,11 @@ public:
 			break;
 		case GameStateType::Play:
 			currentState = make_shared<PlayState>(*this);
-			grid = currentState->getGrid();
+			//grid = currentState->getGrid();
 			break;
 		case GameStateType::Pause:
 			currentState = make_shared<PauseState>(*this);
-			grid = currentState->getGrid();
+			//grid = currentState->getGrid();
 			break;
 		}
 	}
@@ -62,7 +63,7 @@ public:
 	void run() {
 		while (window.isOpen()) {
 			mousePos = Vector2f(Mouse::getPosition(window));
-			currentState->update(clock.restart());
+			currentState->update();
 			while (optional event = window.pollEvent()) {
 				currentState->eventHandler(*event);
 			}
