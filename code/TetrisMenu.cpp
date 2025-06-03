@@ -1,6 +1,8 @@
 ﻿#include <TetrisMenu.h>
 #include <SFML/Graphics.hpp>
 #include <random>
+#include <iostream>
+
 
 using namespace sf;
 
@@ -51,14 +53,20 @@ TetrisMenu::TetrisMenu(gridType& grid,int cellSize, int originX, int originY)
 }	
 void TetrisMenu::drawTetris(int number) {
 	srand(time(0));
-	int randomX = rand() % (cols-2);
+	int randomX = number == 0 ? rand() % (cols - 3) : rand() % (cols - 2);
+	
 	for(auto& tetris : tetrises[number]) {
+		
 		int x = tetris.x + randomX;
 		int y = tetris.y;
-		if (x >= 0 && x < cols && y >= 0 && y < rows) {
+		
+		
+		//if (x >= 0 && x < cols && y >= 0 && y < rows) {
 			grid[x][y].color = tetris.color;
-		}
+		//}
+		std::cout << ": " << number << "X " << tetris.x << std::endl;
 	}
+	
 }
 
 void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
