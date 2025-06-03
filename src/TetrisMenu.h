@@ -28,7 +28,6 @@ private:
     std::array<std::array<CellData,4>,7> tetrises;
 	std::vector<sf::Vector2f> currentTetris; // Stores the current Tetris piece positions
     sf::Color currentColor; // Color of the current Tetris piece
-    sf::Clock clock; // For timing movements
     float moveInterval; // Time interval for moving the Tetris piece
     bool isMoving; // Flag to check if the Tetris piece is moving
 };

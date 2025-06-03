@@ -41,8 +41,8 @@ void MenuState::update(const Time& delta) {
 	else playButtonText.setFillColor(Color::White);
 }
 // Відображення меню
-	void MenuState::draw(RenderWindow & window) {
+void MenuState::draw(RenderWindow & window) {
 	GameState::draw(window); // Відмальовка
 	window.draw(playButtonText);
 	window.draw(quitButtonText);
-}	
+}

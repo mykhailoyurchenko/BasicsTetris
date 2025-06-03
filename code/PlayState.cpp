@@ -84,9 +84,11 @@ void PlayState::update(const Time& delta) {
 	GameState::update();
 	// Очищення кольору у верхніх двох рядах
 	gridType* grid = gameField.getGrid();
+
 	grid->fill(std::array<CellData, 20>{});
 	srand(time(0));
 	int randomTetris = rand() % 7;
+
 	gameField.drawTetris(randomTetris);
 
 	if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
