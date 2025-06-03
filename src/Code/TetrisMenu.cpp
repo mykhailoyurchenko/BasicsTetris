@@ -57,6 +57,7 @@ void TetrisMenu::drawTetris(int number) {
 		}
 	}
 }
+
 void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
     sf::RectangleShape cell(Vector2f(cellSize, cellSize));
     cell.setOutlineColor(Color(32, 31, 31));

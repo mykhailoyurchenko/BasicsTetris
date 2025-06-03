@@ -82,6 +82,14 @@ void PlayState::draw(RenderWindow& window) {
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update(const Time& delta) {
 	GameState::update();
+	// Очищення кольору у верхніх двох рядах
+	auto* grid = gameField.getGrid();
+	for (int x = 0; x < 10; ++x) {
+		for (int y = 0; y < 2; ++y) {
+			(*grid)[x][y].color = sf::Color::Black;
+			(*grid)[x][y].isFull = false;
+		}
+	}
 	srand(time(0));
 	int randomTetris = rand() % 7;
 	gameField.drawTetris(randomTetris);
