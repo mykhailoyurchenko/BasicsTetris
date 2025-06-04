@@ -13,15 +13,12 @@ MainMenuText(font, "Main Menu", 50), box(Vector2f(400,600)){
 
 	// Кнопка Resume
 	ResumeText.setFillColor(Color::White);
-	Vector2f position({winSize.x * 0.49f, winSize.y * 0.40f });
-	ResumeText.setPosition(position);
+	ResumeText.setPosition({ winSize.x * 0.49f, winSize.y * 0.40f });
 	centerOrigin(ResumeText);
 
 	// Кнопка MainMenu
 	MainMenuText.setFillColor(Color::White);
-
-	Vector2f MainMenuPosition({winSize.x * 0.49f, winSize.y * 0.50f });
-	MainMenuText.setPosition(MainMenuPosition);
+	MainMenuText.setPosition({ winSize.x * 0.49f, winSize.y * 0.50f });
 	centerOrigin(MainMenuText);
 	
 }  
