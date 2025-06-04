@@ -61,6 +61,12 @@ void PlayState::eventHandler(Event& event) {
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || keyboardEvent->code == Keyboard::Key::Down)) {
 		gameField.update(2.5);
 	}
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::D || keyboardEvent->code == Keyboard::Key::Right)) {
+		gameField.handleHorizontalInput();
+	}
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::A || keyboardEvent->code == Keyboard::Key::Left)) {
+		gameField.handleHorizontalInput();
+	}
 }
 // рендер
 void PlayState::draw(RenderWindow& window) {

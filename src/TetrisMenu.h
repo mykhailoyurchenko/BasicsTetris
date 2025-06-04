@@ -17,6 +17,7 @@ public:
     TetrisMenu(gridType& grid, int cellSize, int originX, int originY);
 
     void spawnTetris(int number); // Створити нову фігуру
+    void handleHorizontalInput(); // рух вправо вліво
     void update(float delta);     // Оновлення позиції фігури
     bool isActive() const;        // Чи рухається фігура
 
@@ -32,6 +33,8 @@ private:
     int currentType = -1;
     float moveInterval = 1.0f; // Інтервал спуску (сек)
     float moveTimer = 0.f;
+    bool leftPressedLastFrame = false;
+    bool rightPressedLastFrame = false;
     bool isMoving = false;
 
     bool canMove(int dx, int dy) const;

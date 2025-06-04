@@ -105,6 +105,37 @@ void TetrisMenu::clearTopRows() {
         }
     }
 }
+void TetrisMenu::handleHorizontalInput() {
+    bool leftNow = Keyboard::isKeyPressed(Keyboard::Key::A);
+    bool rightNow = Keyboard::isKeyPressed(Keyboard::Key::D);
+
+    if (leftNow && !leftPressedLastFrame) {
+        if (canMove(-1, 0)) {
+            for (auto& block : currentTetris) block.x -= 1;
+        }
+    }
+
+    if (rightNow && !rightPressedLastFrame) {
+        if (canMove(1, 0)) {
+            for (auto& block : currentTetris) block.x += 1;
+        }
+    }
+
+    
+
+    for (int x = 0; x < cols; ++x)
+        for (int y = 0; y < rows; ++y)
+            if (!grid[x][y].isFull)
+                grid[x][y].color = Color::Black;
+    if (isMoving) {
+        for (const auto& block : currentTetris) {
+            int x = block.x, y = block.y;
+            if (x >= 0 && x < cols && y >= 0 && y < rows)
+                grid[x][y].color = currentColor;
+        }
+    }
+
+}
 
 void TetrisMenu::update(float delta) {
     if (!isMoving) return;
@@ -131,6 +162,7 @@ void TetrisMenu::update(float delta) {
         }
     }
 }
+
 
 bool TetrisMenu::isActive() const {
     return isMoving;
