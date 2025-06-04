@@ -83,16 +83,25 @@ void PlayState::draw(RenderWindow& window) {
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update(const Time& delta) {
 	GameState::update();
-	// Очищення кольору у верхніх двох рядах
-	gridType& grid = game->getGrid();
+  gridType& grid = game->getGrid();
 	srand(time(0));
-	if (game->getClock().getElapsedTime() >= seconds(5)) {
-		grid.fill(std::array<CellData, 20>{});
-		gameField.drawTetris(rand() % 7);
 
-		game->getClock().restart();
+	// Рух фігури донизу кожної секунди
+	if (!gameField.isActive()) {
+		int randomTetris = rand() % 7;
+		gameField.spawnTetris(randomTetris);
+	} else {
+		gameField.update(delta.asSeconds());
 	}
 
+	// Очищення кольору у верхніх двох рядах
+
+// 	if (game->getClock().getElapsedTime() >= seconds(5)) {
+// 		grid.fill(std::array<CellData, 20>{});
+// 		gameField.drawTetris(rand() % 7);
+
+// 		game->getClock().restart();
+// 	}
 
 	if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
 		pauseButtonText.setFillColor(Color::Yellow);
