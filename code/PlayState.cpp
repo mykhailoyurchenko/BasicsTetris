@@ -19,32 +19,26 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 
 	//Текст для підрахунку очков
 	scoreText.setFillColor(Color::White);
-	Vector2f scoreTextPosition({ winSize.x * 0.79f, winSize.y * 0.73f });
-	scoreText.setPosition(scoreTextPosition);
+	scoreText.setPosition({ winSize.x * 0.79f, winSize.y * 0.73f });
 
 	//Текст часу
 	timeText.setFillColor(Color::White);
-	Vector2f timeTextPosition({ winSize.x * 0.82f, winSize.y * 0.83f });
-	timeText.setPosition(timeTextPosition);
+	timeText.setPosition({ winSize.x * 0.82f, winSize.y * 0.83f });
 
 	//Лічильник часу
 	timeOutput.setFillColor(Color::White);
-	Vector2f timeOutputPosition({ winSize.x * 0.82f, winSize.y * 0.88f });
-	timeOutput.setPosition(timeOutputPosition);
+	timeOutput.setPosition({ winSize.x * 0.82f, winSize.y * 0.88f });
 
 	//Лічільник найкращого результату
 	bestScoreOutput.setFillColor(Color::White);
-	Vector2f bestScoreOutputPosition({ winSize.x * 0.87f, winSize.y * 0.78f });
-	bestScoreOutput.setPosition(bestScoreOutputPosition);
+	bestScoreOutput.setPosition({ winSize.x * 0.87f, winSize.y * 0.78f });
 
 	// текст найкращого результату
 	bestScoreText.setFillColor(Color::White);
-	Vector2f bestScoreTextPosition({ winSize.x * 0.81f, winSize.y * 0.78f });
-	bestScoreText.setPosition(bestScoreTextPosition);
+	bestScoreText.setPosition({ winSize.x * 0.81f, winSize.y * 0.78f });
 
 	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
-	Vector2f gameFieldNextPosition({ winSize.x * 0.68f, winSize.y * 0.40f });
-	gameFieldNext.setPosition(gameFieldNextPosition);
+	gameFieldNext.setPosition({ winSize.x * 0.68f, winSize.y * 0.40f });
 }
 
 gridType* PlayState::getGrid() {

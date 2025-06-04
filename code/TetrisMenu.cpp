@@ -117,6 +117,7 @@ void TetrisMenu::update(float delta) {
             lockTetris();
         }
     }
+    
     // Оновити grid для відображення поточної фігури
     for (int x = 0; x < cols; ++x)
         for (int y = 0; y < rows; ++y)
