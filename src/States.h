@@ -40,7 +40,6 @@ public:
 	void eventHandler(Event& event) override;
 	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
-
 };
 class PlayState : public GameState {//Класс состояния игры
 	TetrisMenu gameField;//Игровое поле

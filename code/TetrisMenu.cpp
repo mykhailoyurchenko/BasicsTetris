@@ -46,18 +46,34 @@ TetrisMenu::TetrisMenu(gridType& grid, int cellSize, int originX, int originY)
 }
 
 void TetrisMenu::spawnTetris(int number) {
+    int randomX = number == 0 ? rand() % (cols - 3) : rand() % (cols - 2);
     clearTopRows();
     currentTetris.clear();
     currentType = number;
     currentColor = tetrises[number][0].color;
-    for (int i = 0; i < 4; ++i) {
-        int x = tetrises[number][i].x + 3; // стартова позиція по центру
+    for (int i = 0; i < 4; i++) {
+        int x = tetrises[number][i].x + randomX; // стартова позиція по центру
         int y = tetrises[number][i].y;
         currentTetris.push_back({x, y});
     }
     moving = true;
     moveTimer = 0.f;
 }
+// void TetrisMenu::drawTetris(int number) {
+// 	srand(time(0));
+	
+	
+// 	for(auto& tetris : tetrises[number]) {
+		
+// 		int x = tetris.x + randomX;
+// 		int y = tetris.y;
+		
+		
+// 		if (x >= 0 && x < cols && y >= 0 && y < rows) {
+// 			grid[x][y].color = tetris.color;
+// 		}
+// 		//std::cout << ": " << number << "X " << tetris.x << std::endl;
+// 	}
 
 bool TetrisMenu::canMove(int dx, int dy) const {
     for (const auto& block : currentTetris) {

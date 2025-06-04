@@ -17,7 +17,7 @@ GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris",
 
 	//Настройка тексту
 	tetrisText.setFillColor(Color::White);
-	tetrisText.setPosition(Vector2f(200, 500));
+	tetrisText.setPosition(Vector2f(200, 500)); // Змінити на вілносні координати
 }
 void GameState::eventHandler(Event& event) {
 	if (event.is<Event::Closed>()) {

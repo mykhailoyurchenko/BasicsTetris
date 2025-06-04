@@ -47,10 +47,11 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 	gameFieldNext.setPosition(gameFieldNextPosition);
 }
 
-//перевірка на взаємодію з кнопкою
 gridType* PlayState::getGrid() {
 	return gameField.getGrid();
 };
+
+//перевірка на взаємодію з кнопкою
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
 
@@ -82,6 +83,9 @@ void PlayState::draw(RenderWindow& window) {
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update(const Time& delta) {
 	GameState::update();
+  gridType& grid = game->getGrid();
+	srand(time(0));
+
 	// Рух фігури донизу кожної секунди
 	if (!gameField.isActive()) {
 		int randomTetris = rand() % 7;
@@ -89,6 +93,15 @@ void PlayState::update(const Time& delta) {
 	} else {
 		gameField.update(delta.asSeconds());
 	}
+
+	// Очищення кольору у верхніх двох рядах
+
+// 	if (game->getClock().getElapsedTime() >= seconds(5)) {
+// 		grid.fill(std::array<CellData, 20>{});
+// 		gameField.drawTetris(rand() % 7);
+
+// 		game->getClock().restart();
+// 	}
 
 	if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
 		pauseButtonText.setFillColor(Color::Yellow);
