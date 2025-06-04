@@ -61,9 +61,10 @@ public:
 	}
 	//Головний цикл гри
 	void run() {
+		srand(time(0));
 		while (window.isOpen()) {
 			mousePos = Vector2f(Mouse::getPosition(window));
-			currentState->update();
+			currentState->update(clock.restart());
 			while (optional event = window.pollEvent()) {
 				currentState->eventHandler(*event);
 			}

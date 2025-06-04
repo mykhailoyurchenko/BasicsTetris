@@ -3,13 +3,11 @@
 #include "TetrisMenu.h"
 using namespace sf;
 
-template<typename Drawabletype>
-void centerOrigin(Drawabletype& drawable) {
+template<typename Drawabletype> void centerOrigin(Drawabletype& drawable) {
 	FloatRect bounds = drawable.getLocalBounds();
 	drawable.setOrigin({ bounds.size.x / 2, bounds.size.y / 2 });
 }
-template<typename... Ts>
-void centerAll(Ts&... drawables) {
+template<typename... Ts> void centerAll(Ts&... drawables) {
 	(centerOrigin(drawables), ...);
 }
 class Game;
@@ -20,8 +18,8 @@ public:
 	virtual void update(const Time& delta = Time::Zero) {};//Обновление значений и рендер
 	virtual void draw(RenderWindow& window);//Отрисовка
 	virtual ~GameState() = default;//Деструктор
-
 	virtual gridType* getGrid() { return nullptr; }
+
 protected://Поля дочірніх класів GameState
 	GameState(Game& game);
 	Game* game;//Указатель на обьект классу Game

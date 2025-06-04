@@ -11,11 +11,11 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 
 	// текст кнопки паузи
 	pauseButtonText.setFillColor(Color::White);
-	pauseButtonText.setPosition({winSize.x * 0.95f, winSize.y * 0.2f});
+	pauseButtonText.setPosition({ winSize.x * 0.95f, winSize.y * 0.2f });
 
 	//Лічильник для підрахунку очков
 	scoreOutput.setFillColor(Color::White);
-	scoreOutput.setPosition({winSize.x * 0.83f, winSize.y * 0.73f});
+	scoreOutput.setPosition({ winSize.x * 0.83f, winSize.y * 0.73f });
 
 	//Текст для підрахунку очков
 	scoreText.setFillColor(Color::White);
@@ -57,11 +57,15 @@ void PlayState::eventHandler(Event& event) {
 
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
-		
+
 		if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
 			game->setState(GameStateType::Pause);
 			return;
 		}
+	}
+	const auto* keyboardEvent = event.getIf<Event::KeyPressed>();
+	if (keyboardEvent && keyboardEvent->code == Keyboard::Key::S) {
+		gameField.update(2.5);
 	}
 }
 // рендер
@@ -83,14 +87,14 @@ void PlayState::draw(RenderWindow& window) {
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update(const Time& delta) {
 	GameState::update();
-  gridType& grid = game->getGrid();
-	srand(time(0));
+	gridType& grid = game->getGrid();
 
 	// Рух фігури донизу кожної секунди
 	if (!gameField.isActive()) {
 		int randomTetris = rand() % 7;
 		gameField.spawnTetris(randomTetris);
-	} else {
+	}
+	else {
 		gameField.update(delta.asSeconds());
 	}
 

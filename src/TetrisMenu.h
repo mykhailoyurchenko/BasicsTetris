@@ -32,7 +32,7 @@ private:
     int currentType = -1;
     float moveInterval = 1.0f; // Інтервал спуску (сек)
     float moveTimer = 0.f;
-    bool moving = false;
+    bool isMoving = false;
 
     bool canMove(int dx, int dy) const;
     void lockTetris();

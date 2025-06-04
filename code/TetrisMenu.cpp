@@ -56,7 +56,7 @@ void TetrisMenu::spawnTetris(int number) {
         int y = tetrises[number][i].y;
         currentTetris.push_back({x, y});
     }
-    moving = true;
+    isMoving = true;
     moveTimer = 0.f;
 }
 // void TetrisMenu::drawTetris(int number) {
@@ -94,7 +94,7 @@ void TetrisMenu::lockTetris() {
             grid[x][y].isFull = true;
         }
     }
-    moving = false;
+    isMoving = false;
 }
 
 void TetrisMenu::clearTopRows() {
@@ -107,7 +107,7 @@ void TetrisMenu::clearTopRows() {
 }
 
 void TetrisMenu::update(float delta) {
-    if (!moving) return;
+    if (!isMoving) return;
     moveTimer += delta;
     if (moveTimer >= moveInterval) {
         moveTimer = 0.f;
@@ -122,7 +122,7 @@ void TetrisMenu::update(float delta) {
         for (int y = 0; y < rows; ++y)
             if (!grid[x][y].isFull)
                 grid[x][y].color = Color::Black;
-    if (moving) {
+    if (isMoving) {
         for (const auto& block : currentTetris) {
             int x = block.x, y = block.y;
             if (x >= 0 && x < cols && y >= 0 && y < rows)
@@ -132,7 +132,7 @@ void TetrisMenu::update(float delta) {
 }
 
 bool TetrisMenu::isActive() const {
-    return moving;
+    return isMoving;
 }
 
 void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
