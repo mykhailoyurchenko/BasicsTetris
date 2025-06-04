@@ -17,9 +17,12 @@ public:
     TetrisMenu(gridType& grid, int cellSize, int originX, int originY);
 
     void spawnTetris(int number); // Створити нову фігуру
-    void handleHorizontalInput(); // рух вправо вліво
     void update(float delta);     // Оновлення позиції фігури
+    void updateCurrentTetris();
+	void leftMove();
+	void rightMove();
     bool isActive() const;        // Чи рухається фігура
+
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     gridType* getGrid() const { return &grid; }

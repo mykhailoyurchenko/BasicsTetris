@@ -58,14 +58,17 @@ void PlayState::eventHandler(Event& event) {
 			return;
 		}
 	}
-	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || keyboardEvent->code == Keyboard::Key::Down)) {
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || 
+		keyboardEvent->code == Keyboard::Key::Down)) {
 		gameField.update(5.0);
 	}
-	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::D || keyboardEvent->code == Keyboard::Key::Right)) {
-		gameField.handleHorizontalInput();
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::D || 
+		keyboardEvent->code == Keyboard::Key::Right)) {
+		gameField.rightMove();
 	}
-	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::A || keyboardEvent->code == Keyboard::Key::Left)) {
-		gameField.handleHorizontalInput();
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::A || 
+		keyboardEvent->code == Keyboard::Key::Left)) {
+		gameField.leftMove();
 	}
 }
 // рендер
