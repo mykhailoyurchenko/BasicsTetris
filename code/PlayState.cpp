@@ -64,7 +64,7 @@ void PlayState::eventHandler(Event& event) {
 		}
 	}
 	const auto* keyboardEvent = event.getIf<Event::KeyPressed>();
-	if (keyboardEvent && keyboardEvent->code == Keyboard::Key::S) {
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || keyboardEvent->code == Keyboard::Key::Down)) {
 		gameField.update(2.5);
 	}
 }
