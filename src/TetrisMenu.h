@@ -26,7 +26,10 @@ public:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     gridType* getGrid() const { return &grid; }
-
+    std::array<std::array<std::pair<int, int>, 4>, 7> tetrisShapes;
+    const std::array<sf::Color, 7> tetrisColors = { sf::Color::Cyan , sf::Color::Blue, sf::Color(240,160,0),
+        sf::Color::Yellow, sf::Color::Green, sf::Color(160,0,240), sf::Color(240,0,0) };
+    std::array<int, 4> nextTetrises{};
 private:
     int cols, rows, cellSize, originX, originY;
     gridType& grid;
