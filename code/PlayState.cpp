@@ -1,11 +1,12 @@
 ﻿#include "Game.h"
 #include <random>
+#include "TetrisMenu.h"
 
 // Констуктор класу PlayState
 
 PlayState::PlayState(Game& game) : GameState(game), gameField(game.getGrid(), 40, 750, 100), gameFieldNext(Vector2f(230, 600)),
 scoreText(font, "Score:", 40), scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
-bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40) {
+bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40), cellSize(0) {
 	Vector2u winSize = game.getWindow().getSize();
 	centerAll(pauseButtonText, scoreOutput, scoreText, timeText, timeOutput, bestScoreOutput, bestScoreText, gameFieldNext);
 
@@ -41,9 +42,45 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 	gameFieldNext.setPosition({ winSize.x * 0.68f, winSize.y * 0.40f });
 }
 
+
 gridType* PlayState::getGrid() {
 	return gameField.getGrid();
 };
+
+void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4>nextTetrises) {
+	const float cellSize = 40.f;
+	sf::RectangleShape block(sf::Vector2f(cellSize, cellSize));
+	block.setOutlineColor(sf::Color(32, 31, 31));
+	block.setOutlineThickness(2.f);
+	sf::Vector2f startPosition = gameFieldNext.getPosition() + sf::Vector2f(-30.f, -80.f);
+	sf::Vector2f verticalOffset(0.f, cellSize * 3.f);
+	bool isEmpty = true;
+	for (int i : nextTetrises) {
+		if (i >= 0 && i < 7) {
+			isEmpty = false;
+			break;
+		}
+	}
+	if (isEmpty) {
+		for (int i = 0; i < 4; ++i)
+			nextTetrises[i] = rand() % 7;
+	}
+	else {
+		for (int i = 0; i < 3; ++i)
+			nextTetrises[i] = nextTetrises[i + 1];
+		nextTetrises[3] = rand() % 7;
+	}
+	for (int i = 0; i < 4; ++i) {
+		int figureType = nextTetrises[i];
+		const auto& shape = gameField.tetrisShapes[figureType];
+
+		block.setFillColor(gameField.tetrisColors[figureType]);
+		for (const auto& cell : shape) {
+			block.setPosition(startPosition + verticalOffset * float(i) + sf::Vector2f(cell.first * cellSize, cell.second * cellSize));
+			target.draw(block);
+		}
+	}
+}
 
 //перевірка на взаємодію з кнопкою
 void PlayState::eventHandler(Event& event) {
@@ -59,35 +96,40 @@ void PlayState::eventHandler(Event& event) {
 		}
 	}
 
-	
-	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W || keyboardEvent->code == Keyboard::Key::Up)) {
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W || 
+      keyboardEvent->code == Keyboard::Key::Up)) {
 		gameField.rotatePressedLastFrame;
 	}
-	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || keyboardEvent->code == Keyboard::Key::Down)) {
+
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || 
+		keyboardEvent->code == Keyboard::Key::Down)) {
 		gameField.update(5.0);
 	}
-	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::D || keyboardEvent->code == Keyboard::Key::Right)) {
-		gameField.handleHorizontalInput();
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::D || 
+		keyboardEvent->code == Keyboard::Key::Right)) {
+		gameField.rightMove();
 	}
-	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::A || keyboardEvent->code == Keyboard::Key::Left)) {
-		gameField.handleHorizontalInput();
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::A || 
+		keyboardEvent->code == Keyboard::Key::Left)) {
+		gameField.leftMove();
 	}
 
 }
-// рендер
-void PlayState::draw(RenderWindow& window) {
-	GameState::draw(window);
+void PlayState::draw(RenderWindow& window) {  
+    GameState::draw(window);  
 
-	window.draw(pauseButtonText);
-	window.draw(gameField);
-	window.draw(gameFieldNext);
+	nextTetrisesFigure(window, nextTetrises);
 
-	window.draw(scoreText);
-	window.draw(scoreOutput);
-	window.draw(timeText);
-	window.draw(timeOutput);
-	window.draw(bestScoreText);
-	window.draw(bestScoreOutput);
+    window.draw(pauseButtonText);  
+    window.draw(gameField);  
+    window.draw(gameFieldNext);  
+	
+    window.draw(scoreText);  
+    window.draw(scoreOutput);  
+    window.draw(timeText);  
+    window.draw(timeOutput);  
+    window.draw(bestScoreText);  
+    window.draw(bestScoreOutput);  
 }
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update(const Time& delta) {

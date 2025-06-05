@@ -50,10 +50,12 @@ class PlayState : public GameState {//Класс состояния игры
 	Text timeOutput;//Рахунок часу
 	Text bestScoreOutput; // Найкращий рахунок 
 	Text bestScoreText; // Текст найкращого рахунку
-
+	float cellSize;
+	std::array<int, 4> nextTetrises;
 public:
 	PlayState(Game& game);
 	gridType* getGrid() override;
+	void nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4> nextTetrises);
  	void eventHandler(Event& event) override;
 	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;

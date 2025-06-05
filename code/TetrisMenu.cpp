@@ -6,7 +6,7 @@
 using namespace sf;
 
 TetrisMenu::TetrisMenu(gridType& grid, int cellSize, int originX, int originY)
-    : grid(grid), cellSize(cellSize), originX(originX), originY(originY) {
+    : grid(grid), cellSize(cellSize), originX(originX), originY(originY)  {
     cols = 10;
     rows = 20;
     for (int x = 0; x < cols; x++) {
@@ -80,38 +80,6 @@ void TetrisMenu::clearTopRows() {
         }
     }
 }
-void TetrisMenu::handleHorizontalInput() {
-    bool leftNow = Keyboard::isKeyPressed(Keyboard::Key::A);
-    bool rightNow = Keyboard::isKeyPressed(Keyboard::Key::D);
-
-
-    if (leftNow && !leftPressedLastFrame) {
-        if (canMove(-1, 0)) {
-            for (auto& block : currentTetris) block.x -= 1;
-        }
-    }
-
-    if (rightNow && !rightPressedLastFrame) {
-        if (canMove(1, 0)) {
-            for (auto& block : currentTetris) block.x += 1;
-        }
-    }
-
-    for (int x = 0; x < cols; ++x)
-        for (int y = 0; y < rows; ++y)
-            if (!grid[x][y].isFull)
-                grid[x][y].color = Color::Black;
-    if (isMoving) {
-        for (const auto& block : currentTetris) {
-            int x = block.x, y = block.y;
-            if (x >= 0 && x < cols && y >= 0 && y < rows)
-                grid[x][y].color = currentColor;
-        }
-    }
-
-
-
-}
 // Повороти фігур
 void TetrisMenu::rotateTetris() {
     if (currentType == 3)
@@ -147,6 +115,17 @@ void TetrisMenu::handleRotationInput() {
     if (!rotateNow) {
         rotatePressedLastFrame = false;
     }
+void TetrisMenu::leftMove() {
+	if (canMove(-1, 0)) {
+		for (auto& block : currentTetris) block.x -= 1;
+	}
+    updateCurrentTetris();
+}
+void TetrisMenu::rightMove() {
+	if (canMove(1, 0)) {
+		for (auto& block : currentTetris) block.x += 1;
+	}
+    updateCurrentTetris();
 }
 
 void TetrisMenu::update(float delta) {
@@ -162,24 +141,25 @@ void TetrisMenu::update(float delta) {
             lockTetris();
         }
     }
-
-    // Оновити grid для відображення поточної фігури
-    for (int x = 0; x < cols; x++) {
-        for (int y = 0; y < rows; y++) {
-            if (!grid[x][y].isFull) {
-                grid[x][y].color = Color::Black;
-            }
-        }
-    }
-    if (isMoving) {
-        for (const auto& block : currentTetris) {
-            int x = block.x, y = block.y;
-            if (x >= 0 && x < cols && y >= 0 && y < rows)
-                grid[x][y].color = currentColor;
-        }
-    }
+    updateCurrentTetris();
 }
-
+void TetrisMenu::updateCurrentTetris() {
+    // Оновити grid для відображення поточної фігури
+	for (int x = 0; x < cols; x++) {
+		for (int y = 0; y < rows; y++) {
+			if (!grid[x][y].isFull) {
+				grid[x][y].color = Color::Black;
+			}
+		}
+	}
+	if (isMoving) {
+		for (const auto& block : currentTetris) {
+			int x = block.x, y = block.y;
+			if (x >= 0 && x < cols && y >= 0 && y < rows)
+				grid[x][y].color = currentColor;
+		}
+	}
+}
 
 bool TetrisMenu::isActive() const {
     return isMoving;
