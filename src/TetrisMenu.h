@@ -20,6 +20,10 @@ public:
     void handleHorizontalInput(); // рух вправо вліво
     void update(float delta);     // Оновлення позиції фігури
     bool isActive() const;        // Чи рухається фігура
+	void rotateTetris();            // Поворот фігури
+    void handleRotationInput();
+	bool rotatePressedLastFrame = false;    // Поворот фігури в останньому кадрі
+    
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     gridType* getGrid() const { return &grid; }

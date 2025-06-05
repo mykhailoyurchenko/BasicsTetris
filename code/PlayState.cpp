@@ -48,7 +48,7 @@ gridType* PlayState::getGrid() {
 //перевірка на взаємодію з кнопкою
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
-
+	
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	const auto* keyboardEvent = event.getIf<Event::KeyPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
@@ -57,6 +57,11 @@ void PlayState::eventHandler(Event& event) {
 			game->setState(GameStateType::Pause);
 			return;
 		}
+	}
+
+	
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W || keyboardEvent->code == Keyboard::Key::Up)) {
+		gameField.rotatePressedLastFrame;
 	}
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || keyboardEvent->code == Keyboard::Key::Down)) {
 		gameField.update(5.0);
@@ -67,6 +72,7 @@ void PlayState::eventHandler(Event& event) {
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::A || keyboardEvent->code == Keyboard::Key::Left)) {
 		gameField.handleHorizontalInput();
 	}
+
 }
 // рендер
 void PlayState::draw(RenderWindow& window) {
@@ -106,4 +112,6 @@ void PlayState::update(const Time& delta) {
 		pauseButtonText.setFillColor(Color::Yellow);
 	}
 	else pauseButtonText.setFillColor(Color::White);
+
+	
 }
