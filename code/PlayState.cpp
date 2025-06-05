@@ -85,7 +85,7 @@ void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4>n
 //перевірка на взаємодію з кнопкою
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
-
+	
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	const auto* keyboardEvent = event.getIf<Event::KeyPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
@@ -95,6 +95,12 @@ void PlayState::eventHandler(Event& event) {
 			return;
 		}
 	}
+
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W || 
+      keyboardEvent->code == Keyboard::Key::Up)) {
+		gameField.rotatePressedLastFrame;
+	}
+
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || 
 		keyboardEvent->code == Keyboard::Key::Down)) {
 		gameField.update(5.0);
@@ -107,6 +113,7 @@ void PlayState::eventHandler(Event& event) {
 		keyboardEvent->code == Keyboard::Key::Left)) {
 		gameField.leftMove();
 	}
+
 }
 void PlayState::draw(RenderWindow& window) {  
     GameState::draw(window);  
@@ -147,4 +154,6 @@ void PlayState::update(const Time& delta) {
 		pauseButtonText.setFillColor(Color::Yellow);
 	}
 	else pauseButtonText.setFillColor(Color::White);
+
+	
 }

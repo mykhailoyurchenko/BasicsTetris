@@ -22,6 +22,10 @@ public:
 	void leftMove();
 	void rightMove();
     bool isActive() const;        // Чи рухається фігура
+	void rotateTetris();            // Поворот фігури
+    void handleRotationInput();
+	bool rotatePressedLastFrame = false;    // Поворот фігури в останньому кадрі
+    
 
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

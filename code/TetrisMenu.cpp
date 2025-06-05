@@ -18,22 +18,22 @@ TetrisMenu::TetrisMenu(gridType& grid, int cellSize, int originX, int originY)
         }
     }
     // ...ініціалізація tetrisShapes як раніше...
-	tetrisShapes = { {
-			// I
-			{{{0,0}, {1,0}, {2,0}, {3,0}}},
-			// J
-			{{{0,0}, {0,1}, {1,1}, {2,1}}},
-			// L
-			{{{2,0}, {0,1}, {1,1}, {2,1}}},
-			// O
-			{{{0,0}, {1,0}, {0,1}, {1,1}}},
-			// S
-			{{{1,0}, {2,0}, {0,1}, {1,1}}},
-			// T
-			{{{1,0}, {0,1}, {1,1}, {2,1}}},
-			// Z
-			{{{0,0}, {1,0}, {1,1}, {2,1}}}
-		} };
+    tetrisShapes = { {
+            // I
+            {{{0,0}, {1,0}, {2,0}, {3,0}}},
+            // J
+            {{{0,0}, {0,1}, {1,1}, {2,1}}},
+            // L
+            {{{2,0}, {0,1}, {1,1}, {2,1}}},
+            // O
+            {{{0,0}, {1,0}, {0,1}, {1,1}}},
+            // S
+            {{{1,0}, {2,0}, {0,1}, {1,1}}},
+            // T
+            {{{1,0}, {0,1}, {1,1}, {2,1}}},
+            // Z
+            {{{0,0}, {1,0}, {1,1}, {2,1}}}
+        } };
 }
 void TetrisMenu::spawnTetris(int number) {
     int randomX = number == 0 ? rand() % (cols - 3) : rand() % (cols - 2);
@@ -44,7 +44,7 @@ void TetrisMenu::spawnTetris(int number) {
     for (int i = 0; i < 4; i++) {
         int x = tetrisShapes[number][i].first + randomX; // стартова позиція по центру
         int y = tetrisShapes[number][i].second;
-        currentTetris.push_back({x, y});
+        currentTetris.push_back({ x, y });
     }
     isMoving = true;
     moveTimer = 0.f;
@@ -80,6 +80,41 @@ void TetrisMenu::clearTopRows() {
         }
     }
 }
+// Повороти фігур
+void TetrisMenu::rotateTetris() {
+    if (currentType == 3)
+        return; // квадрат не обертається
+
+    sf::Vector2i pivot = currentTetris[1];
+    std::vector<sf::Vector2i> rotated;
+
+    for (const auto& block : currentTetris) {
+        int x = block.x - pivot.x;
+        int y = block.y - pivot.y;
+        rotated.push_back({ pivot.x - y, pivot.y + x });
+    }
+
+    // перевірка, чи можна обернути
+    for (const auto& block : rotated) {
+        if (block.x < 0 || block.x >= cols || block.y < 0 || block.y >= rows || grid[block.x][block.y].isFull)
+            return;
+    }
+
+    currentTetris = rotated;
+}
+
+// перевірка на натискання 
+void TetrisMenu::handleRotationInput() {   
+    bool rotateNow = Keyboard::isKeyPressed(Keyboard::Key::W);
+
+    if (rotateNow && !rotatePressedLastFrame) {
+        rotateTetris();                 
+        rotatePressedLastFrame = true; 
+    }
+
+    if (!rotateNow) {
+        rotatePressedLastFrame = false;
+    }
 void TetrisMenu::leftMove() {
 	if (canMove(-1, 0)) {
 		for (auto& block : currentTetris) block.x -= 1;
@@ -95,12 +130,14 @@ void TetrisMenu::rightMove() {
 
 void TetrisMenu::update(float delta) {
     if (!isMoving) return;
+    handleRotationInput();
     moveTimer += delta;
     if (moveTimer >= moveInterval) {
         moveTimer = 0.f;
         if (canMove(0, 1)) {
             for (auto& block : currentTetris) block.y += 1;
-        } else {
+        }
+        else {
             lockTetris();
         }
     }
