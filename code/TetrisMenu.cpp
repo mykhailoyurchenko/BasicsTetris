@@ -20,7 +20,7 @@ TetrisMenu::TetrisMenu(gridType& grid, int cellSize, int originX, int originY)
 	// ...ініціалізація tetrisShapes як раніше...
 	tetrisShapes = { {
 			// I
-			{{{0,0}, {1,0}, {2,0}, {3,0}}},
+			{{{0,0}, {2,0}, {1,0}, {3,0}}},
 			// J
 			{{{0,0}, {0,1}, {1,1}, {2,1}}},
 			// L
@@ -28,7 +28,7 @@ TetrisMenu::TetrisMenu(gridType& grid, int cellSize, int originX, int originY)
 			// O
 			{{{0,0}, {1,0}, {0,1}, {1,1}}},
 			// S
-			{{{1,0}, {2,0}, {0,1}, {1,1}}},
+			{{{1,0}, {2,0}, {1,1}, {0,1}}},
 			// T
 			{{{1,0}, {0,1}, {1,1}, {2,1}}},
 			// Z
@@ -42,8 +42,8 @@ void TetrisMenu::spawnTetris(int number) {
 	currentType = number;
 	currentColor = tetrisColors[number];
 	for (int i = 0; i < 4; i++) {
-		int x = tetrisShapes[number][i].first + randomX; // стартова позиція по центру
-		int y = tetrisShapes[number][i].second;
+		int x = tetrisShapes[number][i].x + randomX; // стартова позиція по центру
+		int y = tetrisShapes[number][i].y;
 		currentTetris.push_back({ x, y });
 	}
 	isMoving = true;
@@ -82,9 +82,9 @@ void TetrisMenu::clearTopRows() {
 }
 // Повороти фігур
 void TetrisMenu::rotateTetris() {
-	if (currentType == 3) return; // O-фігура не обертається
+	if (currentType == 3) return;
 
-	sf::Vector2i pivot = currentTetris[1];
+	sf::Vector2i pivot = currentTetris[2];
 	std::vector<sf::Vector2i> rotated;
 	for (const auto& block : currentTetris) {
 		int x = block.x - pivot.x;
@@ -106,26 +106,14 @@ void TetrisMenu::rotateTetris() {
 		currentTetris = rotated;
 		return;
 	}
+	// Інакше — спробувати wall kicks (ручна реалізація)
+	std::vector<sf::Vector2i> kicks = {
+		{ -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }, // горизонтальні та вертикальні зсуви
+		{ -1, -1 }, { 1, -1 }, { -1, 1 }, { 1, 1 }, // діагональні зсуви
+		{ -2, 0 }, { 2, 0 } // додаткові широкі зсуви
+	};
 
-	// Wall kicks: всі можливі зсуви для проби
-	std::vector<sf::Vector2i> shifts;
-
-	// Для I-фігури ширші зсуви
-	/*if (currentType == 0) {
-		shifts = {
-			{-2, 0}, {-1, 0}, {1, 0}, {2, 0},
-			{0, -1}, {0, -2}, {0, 1}, {0, 2},
-			{-1, -1}, {1, -1}, {-1, 1}, {1, 1}
-		};
-	}
-	else {
-		shifts = {
-			{-1, 0}, {1, 0}, {0, -1}, {0, 1},
-			{-1, -1}, {1, -1}, {-1, 1}, {1, 1}
-		};
-	}*/
-
-	for (const auto& shift : shifts) {
+	for (const auto& shift : kicks) {
 		std::vector<sf::Vector2i> kicked;
 		for (const auto& block : rotated) {
 			kicked.push_back({ block.x + shift.x, block.y + shift.y });
@@ -136,8 +124,6 @@ void TetrisMenu::rotateTetris() {
 		}
 	}
 }
-
-
 
 // перевірка на натискання 
 void TetrisMenu::handleRotationInput() {
@@ -157,10 +143,6 @@ void TetrisMenu::leftMove() {
 		for (auto& block : currentTetris) block.x -= 1;
 		autoRotated = false;
 	}
-	else if (!autoRotated) {
-		rotateTetris();
-		autoRotated = true;
-	}
 	updateCurrentTetris();
 }
 
@@ -168,10 +150,6 @@ void TetrisMenu::rightMove() {
 	if (canMove(1, 0)) {
 		for (auto& block : currentTetris) block.x += 1;
 		autoRotated = false;
-	}
-	else if (!autoRotated) {
-		rotateTetris();
-		autoRotated = true;
 	}
 	updateCurrentTetris();
 }
