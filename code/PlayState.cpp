@@ -47,31 +47,17 @@ gridType* PlayState::getGrid() {
 	return gameField.getGrid();
 };
 
-void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4>nextTetrises) {
-	const float cellSize = 60.f;
+void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4> nextTetris) {
+	const float cellSize = 50.f;
 	sf::RectangleShape block(sf::Vector2f(cellSize, cellSize));
 	block.setOutlineColor(sf::Color(32, 31, 31));
 	block.setOutlineThickness(2.f);
-	sf::Vector2f startPosition = gameFieldNext.getPosition() + sf::Vector2f(-30.f, -80.f);
+	sf::Vector2f startPosition = gameFieldNext.getPosition() + sf::Vector2f(-50.f, -200.f);
 	sf::Vector2f verticalOffset(0.f, cellSize * 3.f);
 	bool isEmpty = true;
-	for (int i : nextTetrises) {
-		if (i >= 0 && i < 7) {
-			isEmpty = false;
-			break;
-		}
-	}
-	if (isEmpty) {
-		for (int i = 0; i < 4; ++i)
-			nextTetrises[i] = rand() % 7;
-	}
-	else {
-		for (int i = 0; i < 3; ++i)
-			nextTetrises[i] = nextTetrises[i + 1];
-		nextTetrises[3] = rand() % 7;
-	}
-	for (int i = 0; i < 4; ++i) {
-		int figureType = nextTetrises[i];
+	
+	for (int i = 1; i < 4; ++i) {
+		int figureType = nextTetris[i];
 		const auto& shape = gameField.tetrisShapes[figureType];
 
 		block.setFillColor(gameField.tetrisColors[figureType]);
@@ -118,7 +104,7 @@ void PlayState::eventHandler(Event& event) {
 void PlayState::draw(RenderWindow& window) {  
     GameState::draw(window);  
 
-	nextTetrisesFigure(window, nextTetrises);
+	nextTetrisesFigure(window,gameField.getNextTetrises());
 
     window.draw(pauseButtonText);  
     window.draw(gameField);  
@@ -134,16 +120,21 @@ void PlayState::draw(RenderWindow& window) {
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update(const Time& delta) {
 	GameState::update();
+	
 	gridType& grid = game->getGrid();
 
 	// Рух фігури донизу кожної секунди
+	
 	if (!gameField.isActive()) {
-		gameField.spawnTetris(rand() % 7);
+		gameField.randomNextTetrises();
+	
+		gameField.spawnTetris();
+	
 	}
 	else {
 		gameField.update(delta.asSeconds());
 	}
-
+	
 	// Оновлення очок
 	scoreOutput.setString(std::to_string(gameField.getScore()));
 

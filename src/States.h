@@ -51,7 +51,7 @@ class PlayState : public GameState {//Класс состояния игры
 	Text bestScoreOutput; // Найкращий рахунок 
 	Text bestScoreText; // Текст найкращого рахунку
 	float cellSize;
-	std::array<int, 4> nextTetrises;
+	
 public:
 	PlayState(Game& game);
 	gridType* getGrid() override;

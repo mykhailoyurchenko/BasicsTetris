@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
 #include <ctime>
+#include "States.h"
 
 using namespace sf;
 
@@ -26,20 +27,33 @@ TetrisMenu::TetrisMenu(gridType& grid, int cellSize, int originX, int originY)
 			// Z
 			{{{0,0}, {1,0}, {1,1}, {2,1}}}
 		} };
-}
-void TetrisMenu::spawnTetris(int number) {
-	int randomX = number == 0 ? rand() % (cols - 3) : rand() % (cols - 2);
-	clearTopRows();
-	currentTetris.clear();
-	currentType = number;
-	currentColor = tetrisColors[number];
-	for (int i = 0; i < 4; i++) {
-		int x = tetrisShapes[number][i].x + randomX; // стартова позиція по центру
-		int y = tetrisShapes[number][i].y;
-		currentTetris.push_back({ x, y });
+	for (size_t i = 0; i < nextTetrises.size(); ++i) {
+		nextTetrises[i] = rand() % 7;
 	}
-	isMoving = true;
-	moveTimer = 0.f;
+}
+void TetrisMenu::randomNextTetrises() {
+	
+	
+	for (size_t i = 0; i < nextTetrises.size() - 1; ++i) {
+		nextTetrises[i] = nextTetrises[i + 1];
+	}
+	nextTetrises[nextTetrises.size() - 1] = rand() % 7;
+
+}
+void TetrisMenu::spawnTetris() {  
+	int number = nextTetrises[0];
+    int randomX = number == 0 ? rand() % (cols - 3) : rand() % (cols - 2);  
+    clearTopRows();  
+    currentTetris.clear();  
+    currentType = number;  
+    currentColor = tetrisColors[number];  
+    for (int i = 0; i < 4; i++) {  
+        int x = tetrisShapes[number][i].x + randomX; // стартова позиція по центру  
+        int y = tetrisShapes[number][i].y;  
+        currentTetris.push_back({ x, y });  
+    }  
+    isMoving = true;  
+    moveTimer = 0.f;  
 }
 //std::cout << ": " << number << "X " << tetris.x << std::endl;
 bool TetrisMenu::canMove(int dx, int dy) const {
