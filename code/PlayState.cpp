@@ -144,6 +144,9 @@ void PlayState::update(const Time& delta) {
 		gameField.update(delta.asSeconds());
 	}
 
+	// Оновлення очок
+	scoreOutput.setString(std::to_string(gameField.getScore()));
+
 	// Очищення кольору у верхніх двох рядах
 
 // 	if (game->getClock().getElapsedTime() >= seconds(5)) {
