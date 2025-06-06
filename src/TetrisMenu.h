@@ -23,7 +23,6 @@ public:
 	void rightMove();
     bool isActive() const;        // Чи рухається фігура
     void rotateTetris();            // Поворот фігури
-    void handleRotationInput();
 	bool rotatePressedLastFrame = false;    // Поворот фігури в останньому кадрі
     bool autoRotated = false;
     bool wasRotated = false;// Скинути стан гри

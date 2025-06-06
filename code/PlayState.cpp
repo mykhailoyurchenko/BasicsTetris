@@ -98,7 +98,7 @@ void PlayState::eventHandler(Event& event) {
 
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W || 
       keyboardEvent->code == Keyboard::Key::Up)) {
-		gameField.rotatePressedLastFrame;
+		gameField.rotateTetris();
 	}
 
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || 

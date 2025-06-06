@@ -158,18 +158,17 @@ void TetrisMenu::rotateTetris() {
 }
 
 // перевірка на натискання 
-void TetrisMenu::handleRotationInput() {
-	bool rotateNow = Keyboard::isKeyPressed(Keyboard::Key::W);
-
-	if (rotateNow && !rotatePressedLastFrame) {
-		rotateTetris();
-		rotatePressedLastFrame = true;
-	}
-
-	if (!rotateNow) {
-		rotatePressedLastFrame = false;
-	}
-}
+//void TetrisMenu::handleRotationInput() {
+//	bool rotateNow = Keyboard::isKeyPressed(Keyboard::Key::W);
+//
+//	if (rotateNow && !rotatePressedLastFrame) {
+//		rotatePressedLastFrame = true;
+//	}
+//
+//	if (!rotateNow) {
+//		rotatePressedLastFrame = false;
+//	}
+//}
 void TetrisMenu::leftMove() {
 	if (canMove(-1, 0)) {
 		for (auto& block : currentTetris) block.x -= 1;
@@ -188,7 +187,6 @@ void TetrisMenu::rightMove() {
 
 void TetrisMenu::update(float delta) {
 	if (!isMoving) return;
-	handleRotationInput();
 	moveTimer += delta;
 	if (moveTimer >= moveInterval) {
 		moveTimer = 0.f;
