@@ -36,7 +36,7 @@ public:
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
     gridType* getGrid() const { return &grid; }
-    std::array<int, 4> nextTetrises;
+   
 
     std::array<std::array<sf::Vector2i, 4>, 7> tetrisShapes;
     const std::array<sf::Color, 7> tetrisColors = { sf::Color::Cyan , sf::Color::Blue, sf::Color(240,160,0),
@@ -44,6 +44,7 @@ public:
 
 private:
 	int cols, rows, cellSize, originX, originY;
+	std::array<int, 4> nextTetrises;
 	gridType& grid;
 	std::vector<sf::Vector2i> currentTetris; // Позиції поточної фігури
 	sf::Color currentColor;

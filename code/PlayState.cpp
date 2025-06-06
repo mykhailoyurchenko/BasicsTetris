@@ -38,7 +38,7 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 	bestScoreText.setFillColor(Color::White);
 	bestScoreText.setPosition({ winSize.x * 0.81f, winSize.y * 0.78f });
 
-	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
+	gameFieldNext.setFillColor(Color(0, 0, 0, 0.0));
 	gameFieldNext.setPosition({ winSize.x * 0.68f, winSize.y * 0.40f });
 }
 
@@ -51,8 +51,8 @@ void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4> 
 	const float cellSize = 50.f;
 	sf::RectangleShape block(sf::Vector2f(cellSize, cellSize));
 	block.setOutlineColor(sf::Color(32, 31, 31));
-	block.setOutlineThickness(2.f);
-	sf::Vector2f startPosition = gameFieldNext.getPosition() + sf::Vector2f(-50.f, -200.f);
+	block.setOutlineThickness(6.f);
+	sf::Vector2f startPosition = gameFieldNext.getPosition() + sf::Vector2f(-50.f, -100.f);
 	sf::Vector2f verticalOffset(0.f, cellSize * 3.f);
 	bool isEmpty = true;
 	

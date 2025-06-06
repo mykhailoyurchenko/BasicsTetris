@@ -27,14 +27,14 @@ TetrisMenu::TetrisMenu(gridType& grid, int cellSize, int originX, int originY)
 			// Z
 			{{{0,0}, {1,0}, {1,1}, {2,1}}}
 		} };
-	for (size_t i = 0; i < nextTetrises.size(); ++i) {
+	for (int i = 0; i < nextTetrises.size(); ++i) {
 		nextTetrises[i] = rand() % 7;
 	}
 }
 void TetrisMenu::randomNextTetrises() {
 	
 	
-	for (size_t i = 0; i < nextTetrises.size() - 1; ++i) {
+	for (int i = 0; i < nextTetrises.size() - 1; ++i) {
 		nextTetrises[i] = nextTetrises[i + 1];
 	}
 	nextTetrises[nextTetrises.size() - 1] = rand() % 7;
