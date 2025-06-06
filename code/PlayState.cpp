@@ -48,7 +48,7 @@ gridType* PlayState::getGrid() {
 };
 
 void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4>nextTetrises) {
-	const float cellSize = 40.f;
+	const float cellSize = 60.f;
 	sf::RectangleShape block(sf::Vector2f(cellSize, cellSize));
 	block.setOutlineColor(sf::Color(32, 31, 31));
 	block.setOutlineThickness(2.f);
