@@ -41,13 +41,21 @@ public:
 	Vector2f getMousePos() { return mousePos; }
 	gridType& getGrid() { return *grid; }
 
+	void initializeGrid() {
+		for (int x = 0; x < 10; x++) {
+			for (int y = 0; y < 20; y++) {
+				(*grid)[x][y].x = x;
+				(*grid)[x][y].y = y;
+				(*grid)[x][y].color = Color::Black;
+				(*grid)[x][y].isFull = false;
+			}
+		}
+	}
 	void setState(GameStateType state) {
 		switch (state) {
 		case GameStateType::Menu:
 			currentState = make_shared<MenuState>(*this);
-			if (grid) {
-				grid->fill(std::array<CellData, 20>{});
-			}
+			initializeGrid();
 			break;
 		case GameStateType::Play:
 			currentState = make_shared<PlayState>(*this);

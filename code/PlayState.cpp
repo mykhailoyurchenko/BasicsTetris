@@ -96,7 +96,7 @@ void PlayState::eventHandler(Event& event) {
 		}
 	}
 
-	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W || 
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W ||
       keyboardEvent->code == Keyboard::Key::Up)) {
 		gameField.rotateTetris();
 	}

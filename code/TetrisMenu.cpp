@@ -9,14 +9,6 @@ TetrisMenu::TetrisMenu(gridType& grid, int cellSize, int originX, int originY)
 	: grid(grid), cellSize(cellSize), originX(originX), originY(originY) {
 	cols = 10;
 	rows = 20;
-	for (int x = 0; x < cols; x++) {
-		for (int y = 0; y < rows; y++) {
-			grid[x][y].x = x;
-			grid[x][y].y = y;
-			grid[x][y].color = Color::Black;
-			grid[x][y].isFull = false;
-		}
-	}
 	// ...ініціалізація tetrisShapes як раніше...
 	tetrisShapes = { {
 			// I
@@ -156,19 +148,6 @@ void TetrisMenu::rotateTetris() {
 		}
 	}
 }
-
-// перевірка на натискання 
-//void TetrisMenu::handleRotationInput() {
-//	bool rotateNow = Keyboard::isKeyPressed(Keyboard::Key::W);
-//
-//	if (rotateNow && !rotatePressedLastFrame) {
-//		rotatePressedLastFrame = true;
-//	}
-//
-//	if (!rotateNow) {
-//		rotatePressedLastFrame = false;
-//	}
-//}
 void TetrisMenu::leftMove() {
 	if (canMove(-1, 0)) {
 		for (auto& block : currentTetris) block.x -= 1;
