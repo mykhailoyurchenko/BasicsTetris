@@ -21,20 +21,22 @@ public:
 	void updateCurrentTetris();
 	void leftMove();
 	void rightMove();
-	bool isActive() const;        // Чи рухається фігура
-	void rotateTetris();            // Поворот фігури
-	void handleRotationInput();
+    bool isActive() const;        // Чи рухається фігура
+    void rotateTetris();            // Поворот фігури
+    void handleRotationInput();
 	bool rotatePressedLastFrame = false;    // Поворот фігури в останньому кадрі
-
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-	gridType* getGrid() const { return &grid; }
-	std::array<int, 4> nextTetrises;
-	std::array<std::array<std::pair<int, int>, 4>, 7> tetrisShapes;
-	const std::array<sf::Color, 7> tetrisColors = { sf::Color::Cyan , sf::Color::Blue, sf::Color(240,160,0),
-		sf::Color::Yellow, sf::Color::Green, sf::Color(160,0,240), sf::Color(240,0,0) };
-
+    bool autoRotated = false;
+    bool wasRotated = false;// Скинути стан гри
 	int getScore() const { return score; }
 	void resetScore() { score = 0; }
+
+
+    void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+    gridType* getGrid() const { return &grid; }
+    std::array<int, 4> nextTetrises;
+    std::array<std::array<sf::Vector2i, 4>, 7> tetrisShapes;
+    const std::array<sf::Color, 7> tetrisColors = { sf::Color::Cyan , sf::Color::Blue, sf::Color(240,160,0),
+     sf::Color::Yellow, sf::Color::Green, sf::Color(160,0,240), sf::Color(240,0,0) };
 
 private:
 	int cols, rows, cellSize, originX, originY;

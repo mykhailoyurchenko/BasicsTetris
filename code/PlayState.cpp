@@ -76,7 +76,7 @@ void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4>n
 
 		block.setFillColor(gameField.tetrisColors[figureType]);
 		for (const auto& cell : shape) {
-			block.setPosition(startPosition + verticalOffset * float(i) + sf::Vector2f(cell.first * cellSize, cell.second * cellSize));
+			block.setPosition(startPosition + verticalOffset * float(i) + sf::Vector2f(cell.x * cellSize, cell.y * cellSize));
 			target.draw(block);
 		}
 	}
