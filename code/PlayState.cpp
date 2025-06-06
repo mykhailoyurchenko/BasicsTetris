@@ -138,7 +138,7 @@ void PlayState::update(const Time& delta) {
 
 	// Рух фігури донизу кожної секунди
 	if (!gameField.isActive()) {
-		gameField.spawnTetris(0);
+		gameField.spawnTetris(rand() % 7);
 	}
 	else {
 		gameField.update(delta.asSeconds());
