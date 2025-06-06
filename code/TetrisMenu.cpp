@@ -61,15 +61,47 @@ bool TetrisMenu::canMove(int dx, int dy) const {
 }
 
 void TetrisMenu::lockTetris() {
-	for (const auto& block : currentTetris) {
-		int x = block.x;
-		int y = block.y;
-		if (x >= 0 && x < cols && y >= 0 && y < rows) {
-			grid[x][y].color = currentColor;
-			grid[x][y].isFull = true;
-		}
-	}
-	isMoving = false;
+    for (const auto& block : currentTetris) {
+        int x = block.x;
+        int y = block.y;
+        if (x >= 0 && x < cols && y >= 0 && y < rows) {
+            grid[x][y].color = currentColor;
+            grid[x][y].isFull = true;
+        }
+    }
+    clearFullRows();
+    isMoving = false;
+}
+
+void TetrisMenu::clearFullRows() {
+    int linesCleared = 0;
+    for (int y = rows - 1; y >= 0; --y) {
+        bool full = true;
+        for (int x = 0; x < cols; ++x) {
+            if (!grid[x][y].isFull) {
+                full = false;
+                break;
+            }
+        }
+        if (full) {
+            // Зсуваємо всі рядки вище вниз
+            for (int ty = y; ty > 0; --ty) {
+                for (int x = 0; x < cols; ++x) {
+                    grid[x][ty] = grid[x][ty - 1];
+                }
+            }
+            // Очищення верхнього рядка
+            for (int x = 0; x < cols; ++x) {
+                grid[x][0].color = Color::Black;
+                grid[x][0].isFull = false;
+            }
+            ++y; // перевіряємо цей рядок ще раз
+            linesCleared++;
+        }
+    }
+    if (linesCleared > 0) {
+        score += linesCleared * 100;
+    }
 }
 
 void TetrisMenu::clearTopRows() {
