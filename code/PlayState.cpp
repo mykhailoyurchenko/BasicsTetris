@@ -76,7 +76,7 @@ void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4>n
 
 		block.setFillColor(gameField.tetrisColors[figureType]);
 		for (const auto& cell : shape) {
-			block.setPosition(startPosition + verticalOffset * float(i) + sf::Vector2f(cell.first * cellSize, cell.second * cellSize));
+			block.setPosition(startPosition + verticalOffset * float(i) + sf::Vector2f(cell.x * cellSize, cell.y * cellSize));
 			target.draw(block);
 		}
 	}
@@ -138,7 +138,7 @@ void PlayState::update(const Time& delta) {
 
 	// Рух фігури донизу кожної секунди
 	if (!gameField.isActive()) {
-		gameField.spawnTetris(rand() % 7);
+		gameField.spawnTetris(0);
 	}
 	else {
 		gameField.update(delta.asSeconds());
