@@ -35,6 +35,7 @@ public:
 
 	int getScore() const { return score; }
 	void resetScore() { score = 0; }
+	float getElapsedTime() const { return elapsedTime; }
 
 private:
 	int cols, rows, cellSize, originX, originY;
@@ -48,6 +49,7 @@ private:
 	bool rightPressedLastFrame = false;
 	bool isMoving = false;
 	int score = 0;
+	float elapsedTime = 0.f; 
 
 	bool canMove(int dx, int dy) const;
 	void lockTetris();
