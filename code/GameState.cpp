@@ -1,5 +1,4 @@
 ﻿#include "Game.h"
-#include <iostream>
 
 //Конструктор 
 GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris", 70) {

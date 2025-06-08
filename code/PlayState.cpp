@@ -1,11 +1,10 @@
 ﻿#include "Game.h"
-#include <random>
-#include "TetrisMenu.h"
 #include <iomanip> // додайте для std::setw та std::setfill
+//#include <random>
 
 // Констуктор класу PlayState
 
-PlayState::PlayState(Game& game) : GameState(game), gameField(game.getGrid(), 40, 750, 100), gameFieldNext(Vector2f(230, 600)),
+PlayState::PlayState(Game& game) : GameState(game), gameFieldNext(Vector2f(230, 600)),
 scoreText(font, "Score:", 40), scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
 bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40), cellSize(0) {
 	Vector2u winSize = game.getWindow().getSize();
@@ -39,45 +38,26 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 	bestScoreText.setFillColor(Color::White);
 	bestScoreText.setPosition({ winSize.x * 0.81f, winSize.y * 0.78f });
 
-	gameFieldNext.setFillColor(Color(0, 255, 0, 150));
+	gameFieldNext.setFillColor(Color(0, 0, 0, 0.0));
 	gameFieldNext.setPosition({ winSize.x * 0.68f, winSize.y * 0.40f });
 }
 
-
-gridType* PlayState::getGrid() {
-	return gameField.getGrid();
-};
-
-void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4>nextTetrises) {
-	const float cellSize = 40.f;
+void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4> nextTetris) {
+	const float cellSize = 50.f;
 	sf::RectangleShape block(sf::Vector2f(cellSize, cellSize));
 	block.setOutlineColor(sf::Color(32, 31, 31));
-	block.setOutlineThickness(2.f);
-	sf::Vector2f startPosition = gameFieldNext.getPosition() + sf::Vector2f(-30.f, -80.f);
+	block.setOutlineThickness(6.f);
+	sf::Vector2f startPosition = gameFieldNext.getPosition() + sf::Vector2f(-50.f, -100.f);
 	sf::Vector2f verticalOffset(0.f, cellSize * 3.f);
 	bool isEmpty = true;
-	for (int i : nextTetrises) {
-		if (i >= 0 && i < 7) {
-			isEmpty = false;
-			break;
-		}
-	}
-	if (isEmpty) {
-		for (int i = 0; i < 4; ++i)
-			nextTetrises[i] = rand() % 7;
-	}
-	else {
-		for (int i = 0; i < 3; ++i)
-			nextTetrises[i] = nextTetrises[i + 1];
-		nextTetrises[3] = rand() % 7;
-	}
-	for (int i = 0; i < 4; ++i) {
-		int figureType = nextTetrises[i];
-		const auto& shape = gameField.tetrisShapes[figureType];
+	
+	for (int i = 1; i < 4; ++i) {
+		int figureType = nextTetris[i];
+		const auto& shape = game->getField().tetrisShapes[figureType];
 
-		block.setFillColor(gameField.tetrisColors[figureType]);
+		block.setFillColor(game->getField().tetrisColors[figureType]);
 		for (const auto& cell : shape) {
-			block.setPosition(startPosition + verticalOffset * float(i) + sf::Vector2f(cell.first * cellSize, cell.second * cellSize));
+			block.setPosition(startPosition + verticalOffset * float(i) + sf::Vector2f(cell.x * cellSize, cell.y * cellSize));
 			target.draw(block);
 		}
 	}
@@ -87,19 +67,12 @@ void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4>n
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
 	
-	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	const auto* keyboardEvent = event.getIf<Event::KeyPressed>();
-	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
+	TetrisMenu& gameField = game->getField();
 
-		if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState(GameStateType::Pause);
-			return;
-		}
-	}
-
-	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W || 
+	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W ||
       keyboardEvent->code == Keyboard::Key::Up)) {
-		gameField.rotatePressedLastFrame;
+		gameField.rotateTetris();
 	}
 
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || 
@@ -115,11 +88,17 @@ void PlayState::eventHandler(Event& event) {
 		gameField.leftMove();
 	}
 
+	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
+	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
+		if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
+			game->setState(GameStateType::Pause);
+		}
+	}
 }
 void PlayState::draw(RenderWindow& window) {  
     GameState::draw(window);  
-
-	nextTetrisesFigure(window, nextTetrises);
+	TetrisMenu& gameField = game->getField();
+	nextTetrisesFigure(window, gameField.getNextTetrises());
 
     window.draw(pauseButtonText);  
     window.draw(gameField);  
@@ -135,16 +114,19 @@ void PlayState::draw(RenderWindow& window) {
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update(const Time& delta) {
 	GameState::update();
-	gridType& grid = game->getGrid();
-
+	TetrisMenu& gameField = game->getField();
 	// Рух фігури донизу кожної секунди
+	
 	if (!gameField.isActive()) {
-		gameField.spawnTetris(rand() % 7);
+		gameField.randomNextTetrises();
+	
+		gameField.spawnTetris();
+	
 	}
 	else {
 		gameField.update(delta.asSeconds());
 	}
-
+	
 	// Оновлення очок
 	scoreOutput.setString(std::to_string(gameField.getScore()));
 

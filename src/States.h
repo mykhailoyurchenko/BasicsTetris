@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
 #include "TetrisMenu.h"
-using namespace sf;
 
 template<typename Drawabletype> void centerOrigin(Drawabletype& drawable) {
 	FloatRect bounds = drawable.getLocalBounds();
@@ -18,8 +17,6 @@ public:
 	virtual void update(const Time& delta = Time::Zero) {};//Обновление значений и рендер
 	virtual void draw(RenderWindow& window);//Отрисовка
 	virtual ~GameState() = default;//Деструктор
-	virtual gridType* getGrid() { return nullptr; }
-
 protected://Поля дочірніх класів GameState
 	GameState(Game& game);
 	Game* game;//Указатель на обьект классу Game
@@ -40,7 +37,7 @@ public:
 	void draw(RenderWindow& window) override;
 };
 class PlayState : public GameState {//Класс состояния игры
-	TetrisMenu gameField;//Игровое поле
+	//TetrisMenu gameField;//Игровое поле
 	RectangleShape gameFieldNext;//Поле для следующих фигур
 
 	Text pauseButtonText;
@@ -51,11 +48,10 @@ class PlayState : public GameState {//Класс состояния игры
 	Text bestScoreOutput; // Найкращий рахунок 
 	Text bestScoreText; // Текст найкращого рахунку
 	float cellSize;
-	std::array<int, 4> nextTetrises;
+	
 public:
 	PlayState(Game& game);
-	gridType* getGrid() override;
-	void nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4> nextTetrises);
+	void nextTetrisesFigure(RenderTarget& target, std::array<int, 4> nextTetrises);
  	void eventHandler(Event& event) override;
 	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
