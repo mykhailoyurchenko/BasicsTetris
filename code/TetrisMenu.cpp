@@ -195,18 +195,19 @@ void TetrisMenu::rightMove() {
 }
 
 void TetrisMenu::update(float delta) {
-	if (!isMoving) return;
-	moveTimer += delta;
-	if (moveTimer >= moveInterval) {
-		moveTimer = 0.f;
-		if (canMove(0, 1)) {
-			for (auto& block : currentTetris) block.y += 1;
-		}
-		else {
-			lockTetris();
-		}
-	}
-	updateCurrentTetris();
+    if (!isMoving) return;
+    elapsedTime += delta;
+    moveTimer += delta;
+    if (moveTimer >= moveInterval) {
+        moveTimer = 0.f;
+        if (canMove(0, 1)) {
+            for (auto& block : currentTetris) block.y += 1;
+        }
+        else {
+            lockTetris();
+        }
+    }
+    updateCurrentTetris();
 }
 
 void TetrisMenu::tetrisesShift() {

@@ -1,4 +1,5 @@
 ﻿#include "Game.h"
+#include <iomanip> // додайте для std::setw та std::setfill
 //#include <random>
 
 // Констуктор класу PlayState
@@ -128,6 +129,19 @@ void PlayState::update(const Time& delta) {
 	
 	// Оновлення очок
 	scoreOutput.setString(std::to_string(gameField.getScore()));
+
+
+		//час
+	int totalSeconds = static_cast<int>(gameField.getElapsedTime());
+	int hours = totalSeconds / 3600;
+	int minutes = (totalSeconds % 3600) / 60;
+	int seconds = totalSeconds % 60;
+
+	std::ostringstream oss;
+	oss << std::setw(2) << std::setfill('0') << hours << ":"
+	    << std::setw(2) << std::setfill('0') << minutes << ":"
+	    << std::setw(2) << std::setfill('0') << seconds;
+	timeOutput.setString(oss.str());
 
 	if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
 		pauseButtonText.setFillColor(Color::Yellow);

@@ -34,6 +34,8 @@ public:
 	std::array<int, 4> getNextTetrises() const { return nextTetrises; }
 	void resetScore() { score = 0; }
 	//void reset();
+	float getElapsedTime() const { return elapsedTime; }
+
 
 
 	void draw(RenderTarget& target, RenderStates states) const override;
@@ -57,7 +59,8 @@ private:
 	float moveTimer = 0.f;
 	bool isMoving = false;
 	bool autoRotated = false;
-
+  int score = 0;
+	float elapsedTime = 0.f; 
 	void lockTetris();
 	void clearTopRows();
 };
