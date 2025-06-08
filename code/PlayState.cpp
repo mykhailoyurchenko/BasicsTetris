@@ -1,5 +1,6 @@
 ﻿#include "Game.h"
 #include <iomanip> // додайте для std::setw та std::setfill
+#include<sstream>
 //#include <random>
 
 // Констуктор класу PlayState
@@ -146,6 +147,4 @@ void PlayState::update(const Time& delta) {
 		pauseButtonText.setFillColor(Color::Yellow);
 	}
 	else pauseButtonText.setFillColor(Color::White);
-
-	
 }
