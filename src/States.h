@@ -37,7 +37,6 @@ public:
 	void draw(RenderWindow& window) override;
 };
 class PlayState : public GameState {//Класс состояния игры
-	//TetrisMenu gameField;//Игровое поле
 	RectangleShape gameFieldNext;//Поле для следующих фигур
 
 	Text pauseButtonText;
