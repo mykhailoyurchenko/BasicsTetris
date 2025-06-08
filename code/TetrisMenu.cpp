@@ -189,18 +189,19 @@ void TetrisMenu::rightMove() {
 }
 
 void TetrisMenu::update(float delta) {
-	if (!isMoving) return;
-	moveTimer += delta;
-	if (moveTimer >= moveInterval) {
-		moveTimer = 0.f;
-		if (canMove(0, 1)) {
-			for (auto& block : currentTetris) block.y += 1;
-		}
-		else {
-			lockTetris();
-		}
-	}
-	updateCurrentTetris();
+    if (!isMoving) return;
+    elapsedTime += delta;
+    moveTimer += delta;
+    if (moveTimer >= moveInterval) {
+        moveTimer = 0.f;
+        if (canMove(0, 1)) {
+            for (auto& block : currentTetris) block.y += 1;
+        }
+        else {
+            lockTetris();
+        }
+    }
+    updateCurrentTetris();
 }
 void TetrisMenu::updateCurrentTetris() {
 	// Оновити grid для відображення поточної фігури
@@ -225,14 +226,14 @@ bool TetrisMenu::isActive() const {
 }
 
 void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
-	sf::RectangleShape cell(Vector2f(cellSize, cellSize));
-	cell.setOutlineColor(Color(32, 31, 31));
-	cell.setOutlineThickness(1.f);
-	for (int x = 0; x < cols; x++) {
-		for (int y = 0; y < rows; y++) {
-			cell.setPosition(Vector2f(originX + x * cellSize, originY + y * cellSize));
-			cell.setFillColor(grid[x][y].color);
-			target.draw(cell);
-		}
-	}
+    RectangleShape cell(Vector2f(cellSize, cellSize));
+    cell.setOutlineColor(Color(32, 31, 31));
+    cell.setOutlineThickness(1.f);
+    for (int x = 0; x < cols; x++) {
+        for (int y = 0; y < rows; y++) {
+            cell.setPosition(Vector2f(originX + x * cellSize, originY + y * cellSize));
+            cell.setFillColor(grid[x][y].color);
+            target.draw(cell);
+        }
+    }
 }

@@ -31,6 +31,8 @@ public:
 	int getScore() const { return score; }
 	std::array<int, 4> getNextTetrises() const { return nextTetrises; }
 	void resetScore() { score = 0; }
+
+	float getElapsedTime() const { return elapsedTime; }
 	void reset();
 	void randomNextTetrises();
 
@@ -55,6 +57,7 @@ private:
 	bool rightPressedLastFrame = false;
 	bool isMoving = false;
 	int score = 0;
+	float elapsedTime = 0.f; 
 
 	bool canMove(int dx, int dy) const;
 	void lockTetris();
