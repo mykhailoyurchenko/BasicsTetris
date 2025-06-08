@@ -72,8 +72,14 @@ void PlayState::eventHandler(Event& event) {
 	TetrisMenu& gameField = game->getField();
 
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W ||
-      keyboardEvent->code == Keyboard::Key::Up)) {
+      keyboardEvent->code == Keyboard::Key::Up) && !gameField.isUpHelded()) {
 		gameField.rotateTetris();
+		gameField.setUpHeld(true);
+	}
+	else if (auto* kr = event.getIf<sf::Event::KeyReleased>()) {
+		if (kr->code == sf::Keyboard::Key::W || kr->code == sf::Keyboard::Key::Up) {
+			gameField.setUpHeld(false);
+		}
 	}
 
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::S || 

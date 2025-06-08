@@ -20,6 +20,7 @@ public:
 	Game() : window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default, State::Windowed) {
 		mousePos = Vector2f(Mouse::getPosition(window)); //Обмеження 60 кадрів
 		window.setFramerateLimit(60);
+		//window.setKeyRepeatEnabled(false);
 		const filesystem::path path = "src/texture/icon.png"; //Путь до іконки
 
 		if (!icon.loadFromFile(path)) {

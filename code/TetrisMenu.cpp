@@ -105,13 +105,12 @@ void TetrisMenu::spawnTetris() {
 	int number = nextTetrises[0];
     int randomX = number == 0 ? rand() % (cols - 3) : rand() % (cols - 2);  
     clearTopRows();  
-    currentTetris.clear();  
+	currentTetris.fill({});
     currentType = number;  
     currentColor = tetrisColors[number];  
     for (int i = 0; i < 4; i++) {  
-        int x = tetrisShapes[number][i].x + randomX; // стартова позиція по центру  
-        int y = tetrisShapes[number][i].y;  
-        currentTetris.push_back({ x, y }); 
+        currentTetris[i].x = tetrisShapes[number][i].x + randomX;// стартова позиція по центру  
+		currentTetris[i].y = tetrisShapes[number][i].y;
     }  
     isMoving = true;  
     moveTimer = 0.f;  
@@ -122,14 +121,14 @@ void TetrisMenu::rotateTetris() {
 	if (currentType == 3) return;
 
 	Vector2i pivot = currentTetris[2];
-	std::vector<Vector2i> rotated;
-	for (const auto& block : currentTetris) {
-		int x = block.x - pivot.x;
-		int y = block.y - pivot.y;
-		rotated.push_back({ pivot.x - y, pivot.y + x });
+	std::array<Vector2i,4> rotated;
+	for (int i = 0; i < 4; i++) {
+		int x = currentTetris[i].x - pivot.x;
+		int y = currentTetris[i].y - pivot.y;
+		rotated[i] = { pivot.x - y, pivot.y + x };
 	}
 
-	auto fits = [&](const std::vector<Vector2i>& shape) {
+	auto fits = [&](const std::array<Vector2i,4>& shape) {
 		for (const auto& block : shape) {
 			if (block.x < 0 || block.x >= cols || block.y < 0 || block.y >= rows)
 				return false;
@@ -151,9 +150,9 @@ void TetrisMenu::rotateTetris() {
 	};
 
 	for (const auto& shift : kicks) {
-		std::vector<Vector2i> kicked;
-		for (const auto& block : rotated) {
-			kicked.push_back({ block.x + shift.x, block.y + shift.y });
+		std::array<Vector2i,4> kicked;
+		for (int i = 0; i < 4; i++) {
+			kicked[i] = { rotated[i].x + shift.x, rotated[i].y + shift.y };
 		}
 		if (fits(kicked)) {
 			currentTetris = kicked;
@@ -181,7 +180,7 @@ void TetrisMenu::updateCurrentTetris() {
 void TetrisMenu::leftMove() {
 	if (canMove(-1, 0)) {
 		for (auto& block : currentTetris) block.x -= 1;
-		autoRotated = false;
+		upHeld = false;
 	}
 	updateCurrentTetris();
 }
@@ -189,7 +188,7 @@ void TetrisMenu::leftMove() {
 void TetrisMenu::rightMove() {
 	if (canMove(1, 0)) {
 		for (auto& block : currentTetris) block.x += 1;
-		autoRotated = false;
+		upHeld = false;
 	}
 	updateCurrentTetris();
 }

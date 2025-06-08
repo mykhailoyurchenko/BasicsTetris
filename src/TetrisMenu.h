@@ -27,16 +27,17 @@ public:
 	void rightMove();
 	void rotateTetris();            // Поворот фігури
 
+	void setUpHeld(bool upHelded) { upHeld = upHelded; }
+
 	bool canMove(int dx, int dy) const;
 	bool isActive() const { return isMoving; } // Чи рухається фігура
-
+	bool isUpHelded() const { return upHeld; }
+	
 	int getScore() const { return score; }
+	float getElapsedTime() const { return elapsedTime; }
 	std::array<int, 4> getNextTetrises() const { return nextTetrises; }
 	void resetScore() { score = 0; }
 	//void reset();
-	float getElapsedTime() const { return elapsedTime; }
-
-
 
 	void draw(RenderTarget& target, RenderStates states) const override;
 
@@ -48,7 +49,7 @@ private:
 	int cols, rows, cellSize, originX, originY;
 	gridType grid;
 
-	std::vector<Vector2i> currentTetris; // Позиції поточної фігури
+	std::array<Vector2i,4> currentTetris; // Позиції поточної фігури
 	std::array<int, 4> nextTetrises;
 
 	Color currentColor;
@@ -56,11 +57,11 @@ private:
 	int score = 0;
 
 	float moveInterval = 1.0f; // Інтервал спуску (сек)
+	float elapsedTime = 0.f;
 	float moveTimer = 0.f;
 	bool isMoving = false;
-	bool autoRotated = false;
-  int score = 0;
-	float elapsedTime = 0.f; 
+	bool upHeld = false;
+
 	void lockTetris();
 	void clearTopRows();
 };
