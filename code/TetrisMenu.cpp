@@ -1,7 +1,6 @@
 ﻿#include <SFML/Graphics.hpp>
 #include "TetrisMenu.h"
-#include "States.h"
-
+#include <iostream>
 #include <cstdlib>
 #include <ctime>
 
@@ -20,6 +19,9 @@ TetrisMenu::TetrisMenu(int cellSize, int originX, int originY)
 			grid[x][y].isFull = false;
 		}
 	}
+	for (int i = 0; i < nextTetrises.size(); ++i) {
+		nextTetrises[i] = rand() % 7;
+	}
 	// ...ініціалізація tetrisShapes як раніше...
 	tetrisShapes = { {
 			// I
@@ -37,18 +39,67 @@ TetrisMenu::TetrisMenu(int cellSize, int originX, int originY)
 			// Z
 			{{{0,0}, {1,0}, {1,1}, {2,1}}}
 		} };
-	for (int i = 0; i < nextTetrises.size(); ++i) {
-		nextTetrises[i] = rand() % 7;
+
+}
+bool TetrisMenu::canMove(int dx, int dy) const {
+	for (const auto& block : currentTetris) {
+		int nx = block.x + dx;
+		int ny = block.y + dy;
+		if (nx < 0 || nx >= cols || ny < 0 || ny >= rows) return false;
+		if (grid[nx][ny].isFull) return false;
+	}
+	return true;
+}
+
+void TetrisMenu::clearTopRows() { // Temporary
+	for (int x = 0; x < cols; x++) {
+		for (int y = 0; y < 2; y++) {
+			grid[x][y].color = Color::Black;
+			grid[x][y].isFull = false;
+		}
 	}
 }
-void TetrisMenu::randomNextTetrises() {
-	
-	
-	for (int i = 0; i < nextTetrises.size() - 1; ++i) {
-		nextTetrises[i] = nextTetrises[i + 1];
+void TetrisMenu::clearFullRows() {
+	int linesCleared = 0;
+	for (int y = rows - 1; y >= 0; y--) {
+		bool full = true;
+		for (int x = 0; x < cols; x++) {
+			if (!grid[x][y].isFull) {
+				full = false;
+				break;
+			}
+		}
+		if (full) {
+			// Зсуваємо всі рядки вище вниз
+			for (int ty = y; ty > 0; ty--) {
+				for (int x = 0; x < cols; x++) {
+					grid[x][ty] = grid[x][ty - 1];
+				}
+			}
+			// Очищення верхнього рядка
+			for (int x = 0; x < cols; ++x) {
+				grid[x][0].color = Color::Black;
+				grid[x][0].isFull = false;
+			}
+			y++; // перевіряємо цей рядок ще раз
+			linesCleared++;
+		}
 	}
-	nextTetrises[nextTetrises.size() - 1] = rand() % 7;
-
+	if (linesCleared > 0) {
+		score += linesCleared * 100;
+	}
+}
+void TetrisMenu::lockTetris() {
+	for (const auto& block : currentTetris) {
+		int x = block.x;
+		int y = block.y;
+		if (x >= 0 && x < cols && y >= 0 && y < rows) {
+			grid[x][y].color = currentColor;
+			grid[x][y].isFull = true;
+		}
+	}
+	clearFullRows();
+	isMoving = false;
 }
 void TetrisMenu::spawnTetris() {  
 	int number = nextTetrises[0];
@@ -60,74 +111,12 @@ void TetrisMenu::spawnTetris() {
     for (int i = 0; i < 4; i++) {  
         int x = tetrisShapes[number][i].x + randomX; // стартова позиція по центру  
         int y = tetrisShapes[number][i].y;  
-        currentTetris.push_back({ x, y });  
+        currentTetris.push_back({ x, y }); 
     }  
     isMoving = true;  
     moveTimer = 0.f;  
 }
 //std::cout << ": " << number << "X " << tetris.x << std::endl;
-bool TetrisMenu::canMove(int dx, int dy) const {
-	for (const auto& block : currentTetris) {
-		int nx = block.x + dx;
-		int ny = block.y + dy;
-		if (nx < 0 || nx >= cols || ny < 0 || ny >= rows) return false;
-		if (grid[nx][ny].isFull) return false;
-	}
-	return true;
-}
-
-void TetrisMenu::lockTetris() {
-    for (const auto& block : currentTetris) {
-        int x = block.x;
-        int y = block.y;
-        if (x >= 0 && x < cols && y >= 0 && y < rows) {
-            grid[x][y].color = currentColor;
-            grid[x][y].isFull = true;
-        }
-    }
-    clearFullRows();
-    isMoving = false;
-}
-
-void TetrisMenu::clearFullRows() {
-    int linesCleared = 0;
-    for (int y = rows - 1; y >= 0; --y) {
-        bool full = true;
-        for (int x = 0; x < cols; ++x) {
-            if (!grid[x][y].isFull) {
-                full = false;
-                break;
-            }
-        }
-        if (full) {
-            // Зсуваємо всі рядки вище вниз
-            for (int ty = y; ty > 0; --ty) {
-                for (int x = 0; x < cols; ++x) {
-                    grid[x][ty] = grid[x][ty - 1];
-                }
-            }
-            // Очищення верхнього рядка
-            for (int x = 0; x < cols; ++x) {
-                grid[x][0].color = Color::Black;
-                grid[x][0].isFull = false;
-            }
-            ++y; // перевіряємо цей рядок ще раз
-            linesCleared++;
-        }
-    }
-    if (linesCleared > 0) {
-        score += linesCleared * 100;
-    }
-}
-
-void TetrisMenu::clearTopRows() {
-	for (int x = 0; x < cols; x++) {
-		for (int y = 0; y < 2; y++) {
-			grid[x][y].color = Color::Black;
-			grid[x][y].isFull = false;
-		}
-	}
-}
 // Повороти фігур
 void TetrisMenu::rotateTetris() {
 	if (currentType == 3) return;
@@ -155,20 +144,37 @@ void TetrisMenu::rotateTetris() {
 		return;
 	}
 	// Інакше — спробувати wall kicks (ручна реалізація)
-	std::vector<sf::Vector2i> kicks = {
+	std::vector<Vector2i> kicks = {
 		{ -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 }, // горизонтальні та вертикальні зсуви
 		{ -1, -1 }, { 1, -1 }, { -1, 1 }, { 1, 1 }, // діагональні зсуви
 		{ -2, 0 }, { 2, 0 } // додаткові широкі зсуви
 	};
 
 	for (const auto& shift : kicks) {
-		std::vector<sf::Vector2i> kicked;
+		std::vector<Vector2i> kicked;
 		for (const auto& block : rotated) {
 			kicked.push_back({ block.x + shift.x, block.y + shift.y });
 		}
 		if (fits(kicked)) {
 			currentTetris = kicked;
 			return;
+		}
+	}
+}
+void TetrisMenu::updateCurrentTetris() {
+	// Оновити grid для відображення поточної фігури
+	for (int x = 0; x < cols; x++) {
+		for (int y = 0; y < rows; y++) {
+			if (!grid[x][y].isFull) {
+				grid[x][y].color = Color::Black;
+			}
+		}
+	}
+	if (isMoving) {
+		for (const auto& block : currentTetris) {
+			int x = block.x, y = block.y;
+			if (x >= 0 && x < cols && y >= 0 && y < rows)
+				grid[x][y].color = currentColor;
 		}
 	}
 }
@@ -202,30 +208,16 @@ void TetrisMenu::update(float delta) {
 	}
 	updateCurrentTetris();
 }
-void TetrisMenu::updateCurrentTetris() {
-	// Оновити grid для відображення поточної фігури
-	for (int x = 0; x < cols; x++) {
-		for (int y = 0; y < rows; y++) {
-			if (!grid[x][y].isFull) {
-				grid[x][y].color = Color::Black;
-			}
-		}
-	}
-	if (isMoving) {
-		for (const auto& block : currentTetris) {
-			int x = block.x, y = block.y;
-			if (x >= 0 && x < cols && y >= 0 && y < rows)
-				grid[x][y].color = currentColor;
-		}
-	}
-}
 
-bool TetrisMenu::isActive() const {
-	return isMoving;
+void TetrisMenu::tetrisesShift() {
+	for (int i = 0; i < nextTetrises.size() - 1; ++i) {
+		nextTetrises[i] = nextTetrises[i + 1];
+	}
+	nextTetrises[nextTetrises.size() - 1] = rand() % 7;
 }
 
 void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
-	sf::RectangleShape cell(Vector2f(cellSize, cellSize));
+	RectangleShape cell(Vector2f(cellSize, cellSize));
 	cell.setOutlineColor(Color(32, 31, 31));
 	cell.setOutlineThickness(1.f);
 	for (int x = 0; x < cols; x++) {

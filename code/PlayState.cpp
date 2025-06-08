@@ -117,7 +117,7 @@ void PlayState::update(const Time& delta) {
 	// Рух фігури донизу кожної секунди
 	
 	if (!gameField.isActive()) {
-		gameField.randomNextTetrises();
+		gameField.tetrisesShift();
 	
 		gameField.spawnTetris();
 	
@@ -129,16 +129,8 @@ void PlayState::update(const Time& delta) {
 	// Оновлення очок
 	scoreOutput.setString(std::to_string(gameField.getScore()));
 
-	// Очищення кольору у верхніх двох рядах
-
-// 	if (game->getClock().getElapsedTime() >= seconds(5)) {
-// 		grid.fill(std::array<CellData, 20>{});
-// 		game->getClock().restart();
-// 	}
 	if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
 		pauseButtonText.setFillColor(Color::Yellow);
 	}
 	else pauseButtonText.setFillColor(Color::White);
-
-	
 }
