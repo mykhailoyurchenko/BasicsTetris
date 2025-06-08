@@ -1,15 +1,25 @@
-﻿#include <TetrisMenu.h>
-#include <SFML/Graphics.hpp>
+﻿#include <SFML/Graphics.hpp>
+#include "TetrisMenu.h"
+#include "States.h"
+
 #include <cstdlib>
 #include <ctime>
-#include "States.h"
+
 
 using namespace sf;
 
-TetrisMenu::TetrisMenu(gridType& grid, int cellSize, int originX, int originY)
-	: grid(grid), cellSize(cellSize), originX(originX), originY(originY) {
+TetrisMenu::TetrisMenu(int cellSize, int originX, int originY)
+	: cellSize(cellSize), originX(originX), originY(originY) {
 	cols = 10;
 	rows = 20;
+	for (int x = 0; x < cols; x++) {
+		for (int y = 0; y < rows; y++) {
+			grid[x][y].x = x;
+			grid[x][y].y = y;
+			grid[x][y].color = Color::Black;
+			grid[x][y].isFull = false;
+		}
+	}
 	// ...ініціалізація tetrisShapes як раніше...
 	tetrisShapes = { {
 			// I
@@ -122,15 +132,15 @@ void TetrisMenu::clearTopRows() {
 void TetrisMenu::rotateTetris() {
 	if (currentType == 3) return;
 
-	sf::Vector2i pivot = currentTetris[2];
-	std::vector<sf::Vector2i> rotated;
+	Vector2i pivot = currentTetris[2];
+	std::vector<Vector2i> rotated;
 	for (const auto& block : currentTetris) {
 		int x = block.x - pivot.x;
 		int y = block.y - pivot.y;
 		rotated.push_back({ pivot.x - y, pivot.y + x });
 	}
 
-	auto fits = [&](const std::vector<sf::Vector2i>& shape) {
+	auto fits = [&](const std::vector<Vector2i>& shape) {
 		for (const auto& block : shape) {
 			if (block.x < 0 || block.x >= cols || block.y < 0 || block.y >= rows)
 				return false;

@@ -1,5 +1,4 @@
-﻿#include "States.h"
-#include "Game.h"
+﻿#include "Game.h"
 
 
 PauseState::PauseState(Game& game) : PlayState(game), pauseOverlay(Vector2f(1920, 1080)), ResumeText(font, "Resume", 50), 

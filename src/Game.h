@@ -2,7 +2,6 @@
 #include "States.h"
 #include <iostream>
 
-using namespace sf;
 using namespace std;
 
 class GameState;//Базовий клас 
@@ -12,8 +11,8 @@ enum class GameStateType { Menu, Play, Pause };
 class Game { //Основний клас гри
 	RenderWindow window; //Вікно гри
 	Clock clock;
-	unique_ptr<gridType> grid;
-	shared_ptr<GameState> currentState; // GameState* currentState; // Поточний стан гри
+	unique_ptr<TetrisMenu> gameField;
+	unique_ptr<GameState> currentState; // GameState* currentState; // Поточний стан гри
 	Vector2f mousePos;//Позиція мишки
 	Image icon; //Зображення іконки
 public:
@@ -28,42 +27,30 @@ public:
 		}
 		window.setIcon(icon); //Встановлення іконки
 
-		currentState = make_shared<MenuState>(*this);  // currentState = new MenuState(*this); // Початковий стан гри(меню)
-		grid = make_unique<gridType>();
+		gameField = make_unique<TetrisMenu>(40, 750, 100);
+		currentState = make_unique<MenuState>(*this);  // currentState = new MenuState(*this); // Початковий стан гри(меню)
 	}
 	~Game() = default;
 	Game(const Game&) = delete;
 	Game& operator=(const Game&) = delete;
-	//зміна стану гри
-	weak_ptr<GameState> getState() { return currentState; }
+
+	//weak_ptr<GameState> getState() { return currentState; }
 	RenderWindow& getWindow() { return window; }
 	Clock& getClock() { return clock; }
 	Vector2f getMousePos() { return mousePos; }
-	gridType& getGrid() { return *grid; }
+	TetrisMenu& getField() { return *gameField; }
 
-	void initializeGrid() {
-		for (int x = 0; x < 10; x++) {
-			for (int y = 0; y < 20; y++) {
-				(*grid)[x][y].x = x;
-				(*grid)[x][y].y = y;
-				(*grid)[x][y].color = Color::Black;
-				(*grid)[x][y].isFull = false;
-			}
-		}
-	}
 	void setState(GameStateType state) {
 		switch (state) {
 		case GameStateType::Menu:
-			currentState = make_shared<MenuState>(*this);
-			initializeGrid();
+			gameField = make_unique<TetrisMenu>(40, 750, 100);
+			currentState = make_unique<MenuState>(*this);
 			break;
 		case GameStateType::Play:
-			currentState = make_shared<PlayState>(*this);
-			//grid = currentState->getGrid();
+			currentState = make_unique<PlayState>(*this);
 			break;
 		case GameStateType::Pause:
-			currentState = make_shared<PauseState>(*this);
-			//grid = currentState->getGrid();
+			currentState = make_unique<PauseState>(*this);
 			break;
 		}
 	}
