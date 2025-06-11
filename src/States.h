@@ -46,7 +46,6 @@ class PlayState : public GameState {//Класс состояния игры
 	Text timeOutput;//Рахунок часу
 	Text bestScoreOutput; // Найкращий рахунок 
 	Text bestScoreText; // Текст найкращого рахунку
-	float cellSize;
 	
 public:
 	PlayState(Game& game);

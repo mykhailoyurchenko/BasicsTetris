@@ -21,24 +21,6 @@ TetrisMenu::TetrisMenu(int cellSize, int originX, int originY)
 	for (int i = 0; i < nextTetrises.size(); ++i) {
 		nextTetrises[i] = rand() % 7;
 	}
-	// ...ініціалізація tetrisShapes як раніше...
-	tetrisShapes = { {
-			// I
-			{{{0,0}, {2,0}, {1,0}, {3,0}}},
-			// J
-			{{{0,0}, {0,1}, {1,1}, {2,1}}},
-			// L
-			{{{2,0}, {0,1}, {1,1}, {2,1}}},
-			// O
-			{{{0,0}, {1,0}, {0,1}, {1,1}}},
-			// S
-			{{{1,0}, {2,0}, {1,1}, {0,1}}},
-			// T
-			{{{1,0}, {0,1}, {1,1}, {2,1}}},
-			// Z
-			{{{0,0}, {1,0}, {1,1}, {2,1}}}
-		} };
-
 }
 bool TetrisMenu::canMove(int dx, int dy) const {
 	for (const auto& block : currentTetris) {
@@ -135,7 +117,7 @@ void TetrisMenu::rotateTetris() {
 				return false;
 		}
 		return true;
-		};
+	};
 
 	if (fits(rotated)) {
 		currentTetris = rotated;

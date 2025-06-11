@@ -1,13 +1,13 @@
 ﻿#include "Game.h"
 #include <iomanip> // додайте для std::setw та std::setfill
-#include<sstream>
+#include <sstream>
 //#include <random>
 
 // Констуктор класу PlayState
 
 PlayState::PlayState(Game& game) : GameState(game), gameFieldNext(Vector2f(230, 600)),
 scoreText(font, "Score:", 40), scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
-bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40), cellSize(0) {
+bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40) {
 	Vector2u winSize = game.getWindow().getSize();
 	centerAll(pauseButtonText, scoreOutput, scoreText, timeText, timeOutput, bestScoreOutput, bestScoreText, gameFieldNext);
 
@@ -43,22 +43,24 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 	gameFieldNext.setPosition({ winSize.x * 0.68f, winSize.y * 0.40f });
 }
 
-void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4> nextTetris) {
+void PlayState::nextTetrisesFigure(RenderTarget& target, std::array<int, 4> nextTetris) {
 	const float cellSize = 50.f;
-	sf::RectangleShape block(sf::Vector2f(cellSize, cellSize));
-	block.setOutlineColor(sf::Color(32, 31, 31));
+	TetrisMenu& gameField = game->getField();
+
+	RectangleShape block(Vector2f(cellSize, cellSize));
+	block.setOutlineColor(Color(32, 31, 31));
 	block.setOutlineThickness(6.f);
-	sf::Vector2f startPosition = gameFieldNext.getPosition() + sf::Vector2f(-50.f, -100.f);
-	sf::Vector2f verticalOffset(0.f, cellSize * 3.f);
-	bool isEmpty = true;
+
+	Vector2f startPosition = gameFieldNext.getPosition() + Vector2f(-50.f, -100.f);
+	Vector2f verticalOffset(0.f, cellSize * 3.f);
 	
 	for (int i = 1; i < 4; ++i) {
 		int figureType = nextTetris[i];
-		const auto& shape = game->getField().tetrisShapes[figureType];
+		const auto& shape = gameField.tetrisShapes[figureType];
 
-		block.setFillColor(game->getField().tetrisColors[figureType]);
+		block.setFillColor(gameField.tetrisColors[figureType]);
 		for (const auto& cell : shape) {
-			block.setPosition(startPosition + verticalOffset * float(i) + sf::Vector2f(cell.x * cellSize, cell.y * cellSize));
+			block.setPosition(startPosition + verticalOffset * float(i) + Vector2f(cell.x * cellSize, cell.y * cellSize));
 			target.draw(block);
 		}
 	}
