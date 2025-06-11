@@ -49,7 +49,7 @@ class PlayState : public GameState {//Класс состояния игры
 	
 public:
 	PlayState(Game& game);
-	void nextTetrisesFigure(RenderTarget& target, std::array<int, 4> nextTetrises);
+	void nextTetrisesFigure(RenderTarget& target, std::array<int, 4> nextTetris);
  	void eventHandler(Event& event) override;
 	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
