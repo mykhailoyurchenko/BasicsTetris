@@ -57,7 +57,9 @@ private:
 	int score = 0;
 
 	float moveInterval = 1.0f; // Інтервал спуску (сек)
+public:
 	float elapsedTime = 0.f;
+private:
 	float moveTimer = 0.f;
 	bool isMoving = false;
 	bool upHeld = false;

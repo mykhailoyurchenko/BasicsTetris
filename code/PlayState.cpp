@@ -122,22 +122,25 @@ void PlayState::draw(RenderWindow& window) {
 void PlayState::update(const Time& delta) {
 	GameState::update();
 	TetrisMenu& gameField = game->getField();
-	// Рух фігури донизу кожної секунди
-	
-	if (!gameField.isActive()) {
-		gameField.tetrisesShift();
-		gameField.spawnTetris();
-		if (gameField.isGameOver()) {
-			game->setState(GameStateType::Fail);
-			return;
-		}
-	}
-	else {
-		gameField.update(delta.asSeconds());
-	}
-	
-	// Оновлення очок
-	scoreOutput.setString(std::to_string(gameField.getScore()));
+
+    // Додаємо підрахунок часу тут
+    gameField.elapsedTime += delta.asSeconds();
+
+    // Рух фігури донизу кожної секунди
+    if (!gameField.isActive()) {
+        gameField.tetrisesShift();
+        gameField.spawnTetris();
+        if (gameField.isGameOver()) {
+            game->setState(GameStateType::Fail);
+            return;
+        }
+    }
+    else {
+        gameField.update(delta.asSeconds());
+    }
+    
+    // Оновлення очок
+    scoreOutput.setString(std::to_string(gameField.getScore()));
 
 
 		//час
