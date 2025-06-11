@@ -1,8 +1,7 @@
 ﻿#include <SFML/Graphics.hpp>
 #include "TetrisMenu.h"
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+
 
 
 using namespace sf;
@@ -51,14 +50,6 @@ bool TetrisMenu::canMove(int dx, int dy) const {
 	return true;
 }
 
-void TetrisMenu::clearTopRows() { // Temporary
-	for (int x = 0; x < cols; x++) {
-		for (int y = 0; y < 2; y++) {
-			grid[x][y].color = Color::Black;
-			grid[x][y].isFull = false;
-		}
-	}
-}
 void TetrisMenu::clearFullRows() {
 	int linesCleared = 0;
 	for (int y = rows - 1; y >= 0; y--) {
@@ -101,19 +92,27 @@ void TetrisMenu::lockTetris() {
 	clearFullRows();
 	isMoving = false;
 }
+bool TetrisMenu::isGameOver() const {
+	for (int x = 0; x < cols; ++x) {
+		if (grid[x][0].isFull) return true;
+	}
+	return false;
+}
 void TetrisMenu::spawnTetris() {  
 	int number = nextTetrises[0];
     int randomX = number == 0 ? rand() % (cols - 3) : rand() % (cols - 2);  
-    clearTopRows();  
 	currentTetris.fill({});
     currentType = number;  
     currentColor = tetrisColors[number];  
     for (int i = 0; i < 4; i++) {  
-        currentTetris[i].x = tetrisShapes[number][i].x + randomX;// стартова позиція по центру  
+        currentTetris[i].x = tetrisShapes[number][i].x + randomX;
 		currentTetris[i].y = tetrisShapes[number][i].y;
     }  
     isMoving = true;  
-    moveTimer = 0.f;  
+    moveTimer = 0.f;
+    if (isGameOver()) {
+        isMoving = false;
+    }
 }
 //std::cout << ": " << number << "X " << tetris.x << std::endl;
 // Повороти фігур

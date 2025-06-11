@@ -63,5 +63,6 @@ private:
 	bool upHeld = false;
 
 	void lockTetris();
-	void clearTopRows();
+public:
+	bool isGameOver() const;
 };

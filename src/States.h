@@ -67,3 +67,12 @@ public:
 	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
 };
+class GameOverState : public GameState {
+	Text gameOverText;
+	Text mainMenuText;
+public:
+	GameOverState(Game& game);
+	void eventHandler(Event& event) override;
+	void update(const Time& delta = Time::Zero) override;
+	void draw(RenderWindow& window) override;
+};

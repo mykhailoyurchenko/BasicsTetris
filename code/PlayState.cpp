@@ -126,9 +126,11 @@ void PlayState::update(const Time& delta) {
 	
 	if (!gameField.isActive()) {
 		gameField.tetrisesShift();
-	
 		gameField.spawnTetris();
-	
+		if (gameField.isGameOver()) {
+			game->setState(GameStateType::Fail);
+			return;
+		}
 	}
 	else {
 		gameField.update(delta.asSeconds());

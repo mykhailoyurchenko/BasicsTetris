@@ -6,7 +6,7 @@ using namespace std;
 
 class GameState;//Базовий клас 
 class MenuState;// Клас стану гри
-enum class GameStateType { Menu, Play, Pause };
+enum class GameStateType { Menu, Play, Pause, Fail };
 
 class Game { //Основний клас гри
 	RenderWindow window; //Вікно гри
@@ -52,6 +52,9 @@ public:
 			break;
 		case GameStateType::Pause:
 			currentState = make_unique<PauseState>(*this);
+			break;
+		case GameStateType::Fail:
+			currentState = make_unique<GameOverState>(*this);
 			break;
 		}
 	}
