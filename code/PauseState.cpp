@@ -35,11 +35,11 @@ void PauseState::eventHandler(Event& event) {
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
 		if (MainMenuText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState(GameStateType::Menu);
+			game->setState<MenuState>();
 			return;
 		}
 		if (ResumeText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState(GameStateType::Play);
+			game->setState<PlayState>();
 		}
 	};
 }

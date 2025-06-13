@@ -17,7 +17,7 @@ void GameOverState::eventHandler(Event& event) {
 	const auto* mouseEvent = event.getIf<sf::Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == sf::Mouse::Button::Left) {
 		if (mainMenuText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState(GameStateType::Menu);
+			game->setState<MenuState>();
 		}
 	}
 }

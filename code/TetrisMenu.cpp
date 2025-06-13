@@ -6,10 +6,12 @@
 
 using namespace sf;
 
-TetrisMenu::TetrisMenu(int cellSize, int originX, int originY)
-	: cellSize(cellSize), originX(originX), originY(originY) {
-	cols = 10;
-	rows = 20;
+TetrisMenu::TetrisMenu(int cellSize, int originX, int originY, Vector2u winSize)
+	: cellSize(cellSize), originX(originX), originY(originY), gameFieldNext(Vector2f(230, 600)) {
+
+	gameFieldNext.setFillColor(Color(0, 0, 0, 0.0));
+	gameFieldNext.setPosition({ winSize.x * 0.68f, winSize.y * 0.40f });
+
 	for (int x = 0; x < cols; x++) {
 		for (int y = 0; y < rows; y++) {
 			grid[x][y].x = x;
@@ -96,7 +98,6 @@ void TetrisMenu::spawnTetris() {
         isMoving = false;
     }
 }
-//std::cout << ": " << number << "X " << tetris.x << std::endl;
 // Повороти фігур
 void TetrisMenu::rotateTetris() {
 	if (currentType == 3) return;
@@ -205,7 +206,30 @@ void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
 		for (int y = 0; y < rows; y++) {
 			cell.setPosition(Vector2f(originX + x * cellSize, originY + y * cellSize));
 			cell.setFillColor(grid[x][y].color);
-			target.draw(cell);
+			target.draw(cell, states);
 		}
 	}
+	drawNextTetrises(target);
+}
+void TetrisMenu::drawNextTetrises(RenderTarget& target) const {
+	const float cellSize = 50.f;
+
+	RectangleShape block(Vector2f(cellSize, cellSize));
+	block.setOutlineColor(Color(32, 31, 31));
+	block.setOutlineThickness(6.f);
+
+	Vector2f startPosition = gameFieldNext.getPosition() + Vector2f(-50.f, -100.f);
+	Vector2f verticalOffset(0.f, cellSize * 3.f);
+
+	for (int i = 1; i < 4; i++) {
+		int figureType = nextTetrises[i];
+		const auto& shape = tetrisShapes[figureType];
+
+		block.setFillColor(tetrisColors[figureType]);
+		for (const auto& cell : shape) {
+			block.setPosition(startPosition + verticalOffset * float(i) + Vector2f(cell.x * cellSize, cell.y * cellSize));
+			target.draw(block);
+		}
+	}
+	target.draw(gameFieldNext);
 }

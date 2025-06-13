@@ -14,7 +14,7 @@ struct CellData {
 
 class TetrisMenu : public Drawable {
 public:
-	TetrisMenu(int cellSize, int originX, int originY);
+	TetrisMenu(int cellSize, int originX, int originY, Vector2u winSize);
 	const std::array<std::array<Vector2i, 4>, 7> tetrisShapes = { {
 			// I
 			{{{0,0}, {2,0}, {1,0}, {3,0}}},
@@ -55,18 +55,21 @@ public:
 	std::array<int, 4> getNextTetrises() const { return nextTetrises; }
 
 	void draw(RenderTarget& target, RenderStates states) const override;
+	void drawNextTetrises(RenderTarget& target) const;
 
 
 private:
-	int cols, rows, cellSize, originX, originY;
+	int cols = 10, rows = 20, cellSize, originX, originY;
 	std::array<std::array<CellData, 20>, 10> grid;
 
 	std::array<Vector2i, 4> currentTetris; // Позиції поточної фігури
-	std::array<int, 4> nextTetrises;
+	std::array<int, 4> nextTetrises{};
 
 	Color currentColor;
 	int currentType = -1;
 	int score = 0;
+
+	RectangleShape gameFieldNext;//Поле для следующих фигур
 
 	float moveInterval = 1.0f; // Інтервал спуску (сек)
 	float elapsedTime = 0.f;
