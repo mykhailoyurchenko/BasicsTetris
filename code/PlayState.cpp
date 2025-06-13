@@ -96,7 +96,8 @@ void PlayState::update(const Time& delta) {
 	GameState::update();
 	TetrisMenu& gameField = game->getField();
 	// Рух фігури донизу кожної секунди
-	
+	gameField.elapsedTime += delta.asSeconds();
+
 	if (!gameField.isActive()) {
 		gameField.tetrisesShift();
 		gameField.spawnTetris();

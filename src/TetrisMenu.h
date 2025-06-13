@@ -33,6 +33,8 @@ public:
 		} };
 	const std::array<Color, 7> tetrisColors = { Color::Cyan,Color::Blue,
 		Color(240,160,0),Color::Yellow,Color::Green,Color(160,0,240),Color(240,0,0) };
+	float elapsedTime = 0.f;
+
 
 	void spawnTetris(); // Створити нову фігуру
 	void update(float delta);     // Оновлення позиції фігури
@@ -72,7 +74,6 @@ private:
 	RectangleShape gameFieldNext;//Поле для следующих фигур
 
 	float moveInterval = 1.0f; // Інтервал спуску (сек)
-	float elapsedTime = 0.f;
 	float moveTimer = 0.f;
 	bool isMoving = false;
 	bool upHeld = false;

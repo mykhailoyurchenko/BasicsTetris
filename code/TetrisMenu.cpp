@@ -177,7 +177,6 @@ void TetrisMenu::rightMove() {
 
 void TetrisMenu::update(float delta) {
     if (!isMoving) return;
-    elapsedTime += delta;
     moveTimer += delta;
     if (moveTimer >= moveInterval) {
         moveTimer = 0.f;
