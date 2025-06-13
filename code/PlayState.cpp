@@ -5,9 +5,9 @@
 
 // Констуктор класу PlayState
 
-PlayState::PlayState(Game& game) : GameState(game),
-scoreText(font, "Score:", 40), scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
-bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40) {
+PlayState::PlayState(Game& game) : GameState(game),scoreText(font, "Score:", 40), scoreOutput(font, "0", 40), 
+timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),bestScoreOutput(font, "0", 40), 
+bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40) {
 	Vector2u winSize = game.getWindow().getSize();
 	centerAll(pauseButtonText, scoreOutput, scoreText, timeText, timeOutput, bestScoreOutput, bestScoreText);
 
@@ -79,11 +79,10 @@ void PlayState::eventHandler(Event& event) {
 	}
 }
 void PlayState::draw(RenderWindow& window) {  
-    GameState::draw(window);  
-	TetrisMenu& gameField = game->getField();
+    GameState::draw(window);
 
     window.draw(pauseButtonText);  
-    window.draw(gameField);  
+    window.draw(game->getField());
 	
     window.draw(scoreText);  
     window.draw(scoreOutput);  
@@ -111,7 +110,7 @@ void PlayState::update(const Time& delta) {
 	}
 	
 	// Оновлення очок
-	scoreOutput.setString(std::to_string(gameField.getScore()));
+	scoreOutput.setString(to_string(gameField.getScore()));
 
 
 		//час

@@ -212,16 +212,16 @@ void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
 	drawNextTetrises(target);
 }
 void TetrisMenu::drawNextTetrises(RenderTarget& target) const {
-	const float cellSize = 50.f;
+	const float cellSize = 42.f;
 
 	RectangleShape block(Vector2f(cellSize, cellSize));
-	block.setOutlineColor(Color(32, 31, 31));
-	block.setOutlineThickness(6.f);
+	block.setOutlineColor(Color(29, 29, 29));
+	block.setOutlineThickness(-1.f);
 
-	Vector2f startPosition = gameFieldNext.getPosition() + Vector2f(-50.f, -100.f);
-	Vector2f verticalOffset(0.f, cellSize * 3.f);
+	Vector2f startPosition = gameFieldNext.getPosition() + Vector2f(-60.f, -380.f);
+	Vector2f verticalOffset(0.f, cellSize * 4.f);
 
-	for (int i = 1; i < 4; i++) {
+	for (int i = 1; i < 4; ++i) {
 		int figureType = nextTetrises[i];
 		const auto& shape = tetrisShapes[figureType];
 
