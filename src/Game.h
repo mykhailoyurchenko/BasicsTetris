@@ -16,7 +16,7 @@ class Game { //Основний клас гри
 	Image icon; //Зображення іконки
 public:
 	//Налаштування вікна гри
-	Game() : window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default, State::Windowed) {
+	Game() : window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default, State::Fullscreen) {
 		mousePos = Vector2f(Mouse::getPosition(window));
 		window.setFramerateLimit(60); //Обмеження 60 кадрів
 
