@@ -5,6 +5,8 @@ MenuState::MenuState(Game& game) : GameState(game), playButtonText(font, "Play",
 	Vector2u winSize = game.getWindow().getSize();
 	centerAll(playButtonText, quitButtonText);
 
+	game.setField(make_unique<TetrisMenu>(40, 750, 100, winSize));
+
 	playButtonText.setFillColor(Color::White);
 	playButtonText.setPosition({winSize.x * 0.5f,winSize.y * 0.5f});
 
@@ -17,7 +19,7 @@ void MenuState::eventHandler(Event& event) {
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) { // Перевірка натискання миші
 		if (playButtonText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState(GameStateType::Play);
+			game->setState<PlayState>();
 			return;
 		}
 		if (quitButtonText.getGlobalBounds().contains(game->getMousePos())) {

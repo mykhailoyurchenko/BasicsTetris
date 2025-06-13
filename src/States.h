@@ -6,7 +6,7 @@ template<typename Drawabletype> void centerOrigin(Drawabletype& drawable) {
 	FloatRect bounds = drawable.getLocalBounds();
 	drawable.setOrigin({ bounds.size.x / 2, bounds.size.y / 2 });
 }
-template<typename... Ts> void centerAll(Ts&... drawables) {
+template<typename... Drawabletypes> void centerAll(Drawabletypes&... drawables) {
 	(centerOrigin(drawables), ...);
 }
 class Game;
@@ -36,9 +36,8 @@ public:
 	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
 };
-class PlayState : public GameState {//Класс состояния игры
-	RectangleShape gameFieldNext;//Поле для следующих фигур
 
+class PlayState : public GameState {//Класс состояния игры
 	Text pauseButtonText;
 	Text scoreText; // Текст для отображения очков
 	Text scoreOutput;//Отображение набранных очков
@@ -46,11 +45,9 @@ class PlayState : public GameState {//Класс состояния игры
 	Text timeOutput;//Рахунок часу
 	Text bestScoreOutput; // Найкращий рахунок 
 	Text bestScoreText; // Текст найкращого рахунку
-	float cellSize;
 	
 public:
 	PlayState(Game& game);
-	void nextTetrisesFigure(RenderTarget& target, std::array<int, 4> nextTetrises);
  	void eventHandler(Event& event) override;
 	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
@@ -67,6 +64,7 @@ public:
 	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
 };
+
 class GameOverState : public GameState {
 	Text gameOverText;
 	Text mainMenuText;

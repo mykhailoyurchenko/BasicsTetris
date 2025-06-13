@@ -1,15 +1,15 @@
 ﻿#include "Game.h"
-#include <iomanip> // додайте для std::setw та std::setfill
-#include<sstream>
+#include <iomanip>
+#include <sstream>
 //#include <random>
 
 // Констуктор класу PlayState
 
-PlayState::PlayState(Game& game) : GameState(game), gameFieldNext(Vector2f(230, 600)),
-scoreText(font, "Score:", 40), scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
-bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40), cellSize(0) {
+PlayState::PlayState(Game& game) : GameState(game),scoreText(font, "Score:", 40), scoreOutput(font, "0", 40), 
+timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),bestScoreOutput(font, "0", 40), 
+bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40) {
 	Vector2u winSize = game.getWindow().getSize();
-	centerAll(pauseButtonText, scoreOutput, scoreText, timeText, timeOutput, bestScoreOutput, bestScoreText, gameFieldNext);
+	centerAll(pauseButtonText, scoreOutput, scoreText, timeText, timeOutput, bestScoreOutput, bestScoreText);
 
 	// текст кнопки паузи
 	pauseButtonText.setFillColor(Color::White);
@@ -38,30 +38,6 @@ bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseBut
 	// текст найкращого результату
 	bestScoreText.setFillColor(Color::White);
 	bestScoreText.setPosition({ winSize.x * 0.81f, winSize.y * 0.78f });
-
-	gameFieldNext.setFillColor(Color(0, 0, 0, 0.0));
-	gameFieldNext.setPosition({ winSize.x * 0.68f, winSize.y * 0.40f });
-}
-
-void PlayState::nextTetrisesFigure(sf::RenderTarget& target, std::array<int, 4> nextTetris) {
-	const float cellSize = 50.f;
-	sf::RectangleShape block(sf::Vector2f(cellSize, cellSize));
-	block.setOutlineColor(sf::Color(32, 31, 31));
-	block.setOutlineThickness(6.f);
-	sf::Vector2f startPosition = gameFieldNext.getPosition() + sf::Vector2f(-50.f, -100.f);
-	sf::Vector2f verticalOffset(0.f, cellSize * 3.f);
-	bool isEmpty = true;
-	
-	for (int i = 1; i < 4; ++i) {
-		int figureType = nextTetris[i];
-		const auto& shape = game->getField().tetrisShapes[figureType];
-
-		block.setFillColor(game->getField().tetrisColors[figureType]);
-		for (const auto& cell : shape) {
-			block.setPosition(startPosition + verticalOffset * float(i) + sf::Vector2f(cell.x * cellSize, cell.y * cellSize));
-			target.draw(block);
-		}
-	}
 }
 
 //перевірка на взаємодію з кнопкою
@@ -98,18 +74,15 @@ void PlayState::eventHandler(Event& event) {
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
 	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
 		if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState(GameStateType::Pause);
+			game->setState<PauseState>();
 		}
 	}
 }
 void PlayState::draw(RenderWindow& window) {  
-    GameState::draw(window);  
-	TetrisMenu& gameField = game->getField();
-	nextTetrisesFigure(window, gameField.getNextTetrises());
+    GameState::draw(window);
 
     window.draw(pauseButtonText);  
-    window.draw(gameField);  
-    window.draw(gameFieldNext);  
+    window.draw(game->getField());
 	
     window.draw(scoreText);  
     window.draw(scoreOutput);  
@@ -122,25 +95,23 @@ void PlayState::draw(RenderWindow& window) {
 void PlayState::update(const Time& delta) {
 	GameState::update();
 	TetrisMenu& gameField = game->getField();
+	// Рух фігури донизу кожної секунди
+	gameField.elapsedTime += delta.asSeconds();
 
-    // Додаємо підрахунок часу тут
-    gameField.elapsedTime += delta.asSeconds();
-
-    // Рух фігури донизу кожної секунди
-    if (!gameField.isActive()) {
-        gameField.tetrisesShift();
-        gameField.spawnTetris();
-        if (gameField.isGameOver()) {
-            game->setState(GameStateType::Fail);
-            return;
-        }
-    }
-    else {
-        gameField.update(delta.asSeconds());
-    }
-    
-    // Оновлення очок
-    scoreOutput.setString(std::to_string(gameField.getScore()));
+	if (!gameField.isActive()) {
+		gameField.tetrisesShift();
+		gameField.spawnTetris();
+		if (gameField.isGameOver()) {
+			game->setState<GameOverState>();
+			return;
+		}
+	}
+	else {
+		gameField.update(delta.asSeconds());
+	}
+	
+	// Оновлення очок
+	scoreOutput.setString(to_string(gameField.getScore()));
 
 
 		//час

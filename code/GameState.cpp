@@ -9,9 +9,9 @@ GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris",
 	const path path3 = "src/fonts/Oi-Regular.ttf";
 	
 	//Загрузка текстур,шрифта
-	if (!backgroundTexture.loadFromFile(path1)) cerr << "Помилка доступу до файлу: " << path1 << endl;
-	if (!font.openFromFile(path2)) cerr << "Помилка доступу до файлу: " << path2 << endl;
-	if (!tetrisFont.openFromFile(path3)) cerr << "Помилка доступу до файлу: " << path3 << endl;
+	if (!backgroundTexture.loadFromFile(path1)) cerr << "File access error: " << path1 << endl;
+	if (!font.openFromFile(path2)) cerr << "File access error: " << path2 << endl;
+	if (!tetrisFont.openFromFile(path3)) cerr << "File access error: " << path3 << endl;
 	backgroundSprite = new Sprite(backgroundTexture);
 
 	//Настройка тексту
