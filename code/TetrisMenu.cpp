@@ -1,8 +1,5 @@
-﻿#include <SFML/Graphics.hpp>
-#include "TetrisMenu.h"
+﻿#include "TetrisMenu.h"
 #include <iostream>
-
-
 
 using namespace sf;
 
