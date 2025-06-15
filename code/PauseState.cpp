@@ -1,6 +1,5 @@
 ﻿#include "Game.h"
 
-
 PauseState::PauseState(Game& game) : PlayState(game), pauseOverlay(Vector2f(1920, 1080)), ResumeText(font, "Resume", 50), 
 MainMenuText(font, "Main Menu", 50), box(Vector2f(400,600)){
 	Vector2u winSize = game.getWindow().getSize();

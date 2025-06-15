@@ -1,13 +1,13 @@
 ﻿#include "Game.h"
 #include <iomanip>
 #include <sstream>
-//#include <random>
 
 // Констуктор класу PlayState
 
-PlayState::PlayState(Game& game) : GameState(game),scoreText(font, "Score:", 40), scoreOutput(font, "0", 40), 
-timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),bestScoreOutput(font, "0", 40), 
-bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40) {
+PlayState::PlayState(Game& game) : GameState(game), gameField(game.getField()) ,
+scoreText(font, "Score:", 40), scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
+bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40) 
+{
 	Vector2u winSize = game.getWindow().getSize();
 	centerAll(pauseButtonText, scoreOutput, scoreText, timeText, timeOutput, bestScoreOutput, bestScoreText);
 
@@ -43,9 +43,8 @@ bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40) {
 //перевірка на взаємодію з кнопкою
 void PlayState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
-	
+
 	const auto* keyboardEvent = event.getIf<Event::KeyPressed>();
-	TetrisMenu& gameField = game->getField();
 
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::W ||
       keyboardEvent->code == Keyboard::Key::Up) && !gameField.isUpHelded()) {
@@ -82,7 +81,7 @@ void PlayState::draw(RenderWindow& window) {
     GameState::draw(window);
 
     window.draw(pauseButtonText);  
-    window.draw(game->getField());
+    window.draw(gameField);
 	
     window.draw(scoreText);  
     window.draw(scoreOutput);  
@@ -94,7 +93,6 @@ void PlayState::draw(RenderWindow& window) {
 // зміна колір тексту кнопки при наведенні миші
 void PlayState::update(const Time& delta) {
 	GameState::update();
-	TetrisMenu& gameField = game->getField();
 	// Рух фігури донизу кожної секунди
 	gameField.elapsedTime += delta.asSeconds();
 

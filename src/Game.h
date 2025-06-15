@@ -13,6 +13,7 @@ class Game { //Основний клас гри
 	unique_ptr<TetrisMenu> gameField;
 	unique_ptr<GameState> currentState; // GameState* currentState; // Поточний стан гри
 	Vector2f mousePos;//Позиція мишки
+	Vector2u winSize; //Розмір вікна
 	Image icon; //Зображення іконки
 public:
 	//Налаштування вікна гри
@@ -51,6 +52,7 @@ public:
 		srand(time(0));
 		while (window.isOpen()) {
 			mousePos = Vector2f(Mouse::getPosition(window));
+			winSize = window.getSize();
 			currentState->update(clock.restart());
 			while (optional event = window.pollEvent()) {
 				currentState->eventHandler(*event);

@@ -12,7 +12,7 @@ GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris",
 	if (!backgroundTexture.loadFromFile(path1)) cerr << "File access error: " << path1 << endl;
 	if (!font.openFromFile(path2)) cerr << "File access error: " << path2 << endl;
 	if (!tetrisFont.openFromFile(path3)) cerr << "File access error: " << path3 << endl;
-	backgroundSprite = new Sprite(backgroundTexture);
+	backgroundSprite = std::make_unique<Sprite>(backgroundTexture);
 
 	//Настройка тексту
 	tetrisText.setFillColor(Color::White);
