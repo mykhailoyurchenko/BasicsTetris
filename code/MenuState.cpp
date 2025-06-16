@@ -11,7 +11,7 @@ MenuState::MenuState(Game& game) : GameState(game), playButtonText(font, "Play",
 	playButtonText.setPosition({winSize.x * 0.5f,winSize.y * 0.5f});
 
 	quitButtonText.setFillColor(Color::White);
-	quitButtonText.setPosition({winSize.x * 0.498f, winSize.y * 0.57f});
+	quitButtonText.setPosition({ winSize.x * 0.498f, winSize.y * 0.57f});
 }
 // Обробка подій на клік
 void MenuState::eventHandler(Event& event) {
