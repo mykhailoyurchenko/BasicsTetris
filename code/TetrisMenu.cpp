@@ -1,10 +1,5 @@
-﻿#include <SFML/Graphics.hpp>
-#include "TetrisMenu.h"
+﻿#include "TetrisMenu.h"
 #include <iostream>
-
-
-
-using namespace sf;
 
 TetrisMenu::TetrisMenu(int cellSize, int originX, int originY, Vector2u winSize)
 	: cellSize(cellSize), originX(originX), originY(originY), gameFieldNext(Vector2f(230, 600)) {

@@ -38,6 +38,7 @@ add_executable(main
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
 target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/src)
+set_property(TARGET main PROPERTY CXX_STANDARD 17)
 
 # Копіювання ресурсів
 add_custom_command(TARGET main POST_BUILD

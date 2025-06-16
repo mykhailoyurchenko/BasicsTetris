@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
-#include <array>
-#include <vector>
+//#include <array>
+//#include <vector>
 
 using namespace sf;
 

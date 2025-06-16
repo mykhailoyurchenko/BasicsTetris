@@ -19,17 +19,17 @@ public:
 	virtual ~GameState() = default;//Деструктор
 protected://Поля дочірніх класів GameState
 	GameState(Game& game);
-	Game* game;//Указатель на обьект классу Game
+	Game* game;//Ука		затель на обьект классу Game
 	//Визуал
 	Texture backgroundTexture;
-	Sprite* backgroundSprite;
+	std::unique_ptr<Sprite> backgroundSprite;
 	Font font;
 	Font tetrisFont;
 	Text tetrisText;
 };
 class MenuState : public GameState {//Класс состояния игры
 	Text quitButtonText;
-	Text playButtonText;//Текст для кнопки play 
+	Text playButtonText;//Текст для кнопки play
 public:
 	MenuState(Game& game);//Передача посилання на поточну гру,для обробки подій
 	void eventHandler(Event& event) override;
@@ -38,6 +38,8 @@ public:
 };
 
 class PlayState : public GameState {//Класс состояния игры
+	TetrisMenu& gameField;
+
 	Text pauseButtonText;
 	Text scoreText; // Текст для отображения очков
 	Text scoreOutput;//Отображение набранных очков

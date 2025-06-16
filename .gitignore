@@ -1,7 +1,9 @@
 ﻿#Folders
 .vs/
+.vscode/
 .idea/
 out/
+build/
 .cmake-build-debug/
 
 # Prerequisites
@@ -39,3 +41,4 @@ out/
 
 # Files
 CmakeSettings.json
+CMakePresets.json
