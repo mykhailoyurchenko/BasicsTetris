@@ -1,5 +1,4 @@
 ﻿#pragma once
-#include <SFML/Graphics.hpp>
 #include "TetrisMenu.h"
 
 template<typename Drawabletype> void centerOrigin(Drawabletype& drawable) {
@@ -19,7 +18,7 @@ public:
 	virtual ~GameState() = default;//Деструктор
 protected://Поля дочірніх класів GameState
 	GameState(Game& game);
-	Game* game;//Ука		затель на обьект классу Game
+	Game* game;//Указатель на обьект классу Game
 	//Визуал
 	Texture backgroundTexture;
 	std::unique_ptr<Sprite> backgroundSprite;
@@ -36,7 +35,15 @@ public:
 	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;
 };
-
+class GameOverState : public GameState {
+	Text gameOverText;
+	Text mainMenuText;
+public:
+	GameOverState(Game& game);
+	void eventHandler(Event& event) override;
+	void update(const Time& delta = Time::Zero) override;
+	void draw(RenderWindow& window) override;
+};
 class PlayState : public GameState {//Класс состояния игры
 	TetrisMenu& gameField;
 
@@ -62,16 +69,6 @@ class PauseState : public PlayState {
 	Text MainMenuText;
 public:
 	PauseState(Game& game);
-	void eventHandler(Event& event) override;
-	void update(const Time& delta = Time::Zero) override;
-	void draw(RenderWindow& window) override;
-};
-
-class GameOverState : public GameState {
-	Text gameOverText;
-	Text mainMenuText;
-public:
-	GameOverState(Game& game);
 	void eventHandler(Event& event) override;
 	void update(const Time& delta = Time::Zero) override;
 	void draw(RenderWindow& window) override;

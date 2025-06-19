@@ -4,9 +4,6 @@
 
 using namespace std;
 
-class GameState;//Базовий клас 
-class MenuState;// Клас стану гри
-
 class Game { //Основний клас гри
 	RenderWindow window; //Вікно гри
 	Clock clock;
