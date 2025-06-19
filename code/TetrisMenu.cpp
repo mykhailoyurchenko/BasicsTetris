@@ -4,8 +4,8 @@
 TetrisMenu::TetrisMenu(int cellSize, int originX, int originY, Vector2u winSize)
 	: cellSize(cellSize), originX(originX), originY(originY), gameFieldNext(Vector2f(230, 600)) {
 
-	gameFieldNext.setFillColor(Color(0, 0, 0, 0.0));
-	gameFieldNext.setPosition({ winSize.x * 0.68f, winSize.y * 0.40f });
+	gameFieldNext.setFillColor(Color(0, 0, 0, 130));
+	gameFieldNext.setPosition({ winSize.x * 0.62f, winSize.y * 0.20f });
 
 	for (int x = 0; x < cols; x++) {
 		for (int y = 0; y < rows; y++) {
@@ -204,27 +204,28 @@ void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
 			target.draw(cell, states);
 		}
 	}
+	target.draw(gameFieldNext);
 	drawNextTetrises(target);
 }
-void TetrisMenu::drawNextTetrises(RenderTarget& target) const {
-	const float cellSize = 42.f;
+	void TetrisMenu::drawNextTetrises(RenderTarget& target) const {
+		const float cellSize = 42.f;
 
-	RectangleShape block(Vector2f(cellSize, cellSize));
-	block.setOutlineColor(Color(29, 29, 29));
-	block.setOutlineThickness(-1.f);
+		RectangleShape block(Vector2f(cellSize, cellSize));
+		block.setOutlineColor(Color(32, 31, 31));
+		block.setOutlineThickness(-1.f);
 
-	Vector2f startPosition = gameFieldNext.getPosition() + Vector2f(-60.f, -380.f);
-	Vector2f verticalOffset(0.f, cellSize * 4.f);
+		Vector2f startPosition = gameFieldNext.getPosition() + Vector2f(50.f, -80.f);
+		Vector2f verticalOffset(0.f, cellSize * 4.f);
 
-	for (int i = 1; i < 4; ++i) {
-		int figureType = nextTetrises[i];
-		const auto& shape = tetrisShapes[figureType];
+		for (int i = 1; i < 4; ++i) {
+			int figureType = nextTetrises[i];
+			const auto& shape = tetrisShapes[figureType];
 
-		block.setFillColor(tetrisColors[figureType]);
-		for (const auto& cell : shape) {
-			block.setPosition(startPosition + verticalOffset * float(i) + Vector2f(cell.x * cellSize, cell.y * cellSize));
-			target.draw(block);
+			block.setFillColor(tetrisColors[figureType]);
+			for (const auto& cell : shape) {
+				block.setPosition(startPosition + verticalOffset * float(i) + Vector2f(cell.x * cellSize, cell.y * cellSize));
+				target.draw(block);
+			}
 		}
+		
 	}
-	target.draw(gameFieldNext);
-}
