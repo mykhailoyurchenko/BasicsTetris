@@ -3,10 +3,6 @@
 
 int main()
 {
-	Game* game = new Game();
-
-	game->run();
-
-	delete game;
-	game = nullptr;
+	Game game;
+	game.run();
 }

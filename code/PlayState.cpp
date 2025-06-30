@@ -1,42 +1,33 @@
 ﻿#include "Game.h"
-#include <iomanip>
+//#include <iomanip>
 #include <sstream>
 
 // Констуктор класу PlayState
 
-PlayState::PlayState(Game& game) : GameState(game), gameField(game.getField()) ,
+PlayState::PlayState(Game& game) : GameState(game), gameField(game.getField()),
 scoreText(font, "Score:", 40), scoreOutput(font, "0", 40), timeText(font, "Time:", 40), timeOutput(font, "00:00:00", 40),
 bestScoreOutput(font, "0", 40), bestScoreText(font, "Best Score:", 40), pauseButtonText(font, "Pause", 40) 
 {
 	Vector2u winSize = game.getWindow().getSize();
-	centerAll(pauseButtonText, scoreOutput, scoreText, timeText, timeOutput, bestScoreOutput, bestScoreText);
-
 	// текст кнопки паузи
-	pauseButtonText.setFillColor(Color::White);
 	pauseButtonText.setPosition({ winSize.x * 0.95f, winSize.y * 0.2f });
 
 	//Лічильник для підрахунку очков
-	scoreOutput.setFillColor(Color::White);
 	scoreOutput.setPosition({ winSize.x * 0.83f, winSize.y * 0.73f });
 
 	//Текст для підрахунку очков
-	scoreText.setFillColor(Color::White);
 	scoreText.setPosition({ winSize.x * 0.79f, winSize.y * 0.73f });
 
 	//Текст часу
-	timeText.setFillColor(Color::White);
 	timeText.setPosition({ winSize.x * 0.82f, winSize.y * 0.83f });
 
 	//Лічильник часу
-	timeOutput.setFillColor(Color::White);
 	timeOutput.setPosition({ winSize.x * 0.82f, winSize.y * 0.88f });
 
 	//Лічільник найкращого результату
-	bestScoreOutput.setFillColor(Color::White);
 	bestScoreOutput.setPosition({ winSize.x * 0.87f, winSize.y * 0.78f });
 
 	// текст найкращого результату
-	bestScoreText.setFillColor(Color::White);
 	bestScoreText.setPosition({ winSize.x * 0.81f, winSize.y * 0.78f });
 }
 
@@ -63,11 +54,11 @@ void PlayState::eventHandler(Event& event) {
 	}
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::D || 
 		keyboardEvent->code == Keyboard::Key::Right)) {
-		gameField.rightMove();
+		gameField.move(1);
 	}
 	if (keyboardEvent && (keyboardEvent->code == Keyboard::Key::A || 
 		keyboardEvent->code == Keyboard::Key::Left)) {
-		gameField.leftMove();
+		gameField.move(-1);
 	}
 
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
@@ -94,7 +85,7 @@ void PlayState::draw(RenderWindow& window) {
 void PlayState::update(const Time& delta) {
 	GameState::update();
 	// Рух фігури донизу кожної секунди
-	gameField.elapsedTime += delta.asSeconds();
+	gameField.addToElapsedTime(delta.asSeconds());
 
 	if (!gameField.isActive()) {
 		gameField.tetrisesShift();
@@ -119,7 +110,7 @@ void PlayState::update(const Time& delta) {
 	int seconds = totalSeconds % 60;
 
 	std::ostringstream oss;
-	oss << std::setw(2) << std::setfill('0') << hours << ":"
+	oss << std::setw(2) << std::setfill('0') << hours  << ":"
 	    << std::setw(2) << std::setfill('0') << minutes << ":"
 	    << std::setw(2) << std::setfill('0') << seconds;
 	timeOutput.setString(oss.str());

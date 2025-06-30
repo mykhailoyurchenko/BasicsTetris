@@ -14,8 +14,8 @@ struct CellData {
 
 class TetrisMenu : public Drawable {
 public:
-	TetrisMenu(int cellSize, int originX, int originY, Vector2u winSize);
-	const std::array<std::array<Vector2i, 4>, 7> tetrisShapes = { {
+	TetrisMenu(Vector2u winSize);
+	static constexpr std::array<std::array<Vector2i, 4>, 7> tetrisShapes = { {
 			// I
 			{{{0,0}, {2,0}, {1,0}, {3,0}}},
 			// J
@@ -31,9 +31,8 @@ public:
 			// Z
 			{{{0,0}, {1,0}, {1,1}, {2,1}}}
 		} };
-	const std::array<Color, 7> tetrisColors = { Color::Cyan,Color::Blue,
+	static constexpr std::array<Color, 7> tetrisColors = { Color::Cyan,Color::Blue,
 		Color(240,160,0),Color::Yellow,Color::Green,Color(160,0,240),Color(240,0,0) };
-	float elapsedTime = 0.f;
 
 
 	void spawnTetris(); // Створити нову фігуру
@@ -41,11 +40,11 @@ public:
 	void clearFullRows();
 	void tetrisesShift();
 	void updateCurrentTetris();
-	void leftMove();
-	void rightMove();
+	void move(int dx);
 	void rotateTetris();            // Поворот фігури
 
 	void setUpHeld(bool upHelded) { upHeld = upHelded; }
+	void addToElapsedTime(float delta) { elapsedTime += delta; }
 
 	bool canMove(int dx, int dy) const;
 	bool isActive() const { return isMoving; } // Чи рухається фігура
@@ -55,17 +54,18 @@ public:
 	int getScore() const { return score; }
 	float getElapsedTime() const { return elapsedTime; }
 	std::array<int, 4> getNextTetrises() const { return nextTetrises; }
+	float getSpeedByScore(int score);
 
 	void draw(RenderTarget& target, RenderStates states) const override;
 	void drawNextTetrises(RenderTarget& target) const;
 
 
 private:
-	int cols = 10, rows = 20, cellSize, originX, originY;
-	std::array<std::array<CellData, 20>, 10> grid;
+	static constexpr int cols = 10, rows = 20, cellSize = 40, originX = 750, originY = 100;
+	std::array<std::array<CellData, rows>, cols> grid;
 
 	std::array<Vector2i, 4> currentTetris; // Позиції поточної фігури
-	std::array<int, 4> nextTetrises{};
+	std::array<int, 4> nextTetrises;
 
 	Color currentColor;
 	int currentType = -1;
@@ -75,6 +75,7 @@ private:
 
 	float moveInterval = 1.0f; // Інтервал спуску (сек)
 	float moveTimer = 0.f;
+	float elapsedTime = 0.f;
 	bool isMoving = false;
 	bool upHeld = false;
 

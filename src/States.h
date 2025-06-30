@@ -1,13 +1,7 @@
 ﻿#pragma once
 #include "TetrisMenu.h"
+#include "Button.h"
 
-template<typename Drawabletype> void centerOrigin(Drawabletype& drawable) {
-	FloatRect bounds = drawable.getLocalBounds();
-	drawable.setOrigin({ bounds.size.x / 2, bounds.size.y / 2 });
-}
-template<typename... Drawabletypes> void centerAll(Drawabletypes&... drawables) {
-	(centerOrigin(drawables), ...);
-}
 class Game;
 
 class GameState {//Базовый класс
@@ -24,11 +18,11 @@ protected://Поля дочірніх класів GameState
 	std::unique_ptr<Sprite> backgroundSprite;
 	Font font;
 	Font tetrisFont;
-	Text tetrisText;
+	Button tetrisText;
 };
 class MenuState : public GameState {//Класс состояния игры
-	Text quitButtonText;
-	Text playButtonText;//Текст для кнопки play
+	Button quitButtonText;
+	Button playButtonText;//Текст для кнопки play
 public:
 	MenuState(Game& game);//Передача посилання на поточну гру,для обробки подій
 	void eventHandler(Event& event) override;
@@ -36,8 +30,8 @@ public:
 	void draw(RenderWindow& window) override;
 };
 class GameOverState : public GameState {
-	Text gameOverText;
-	Text mainMenuText;
+	Button gameOverText;
+	Button mainMenuText;
 public:
 	GameOverState(Game& game);
 	void eventHandler(Event& event) override;
@@ -47,13 +41,13 @@ public:
 class PlayState : public GameState {//Класс состояния игры
 	TetrisMenu& gameField;
 
-	Text pauseButtonText;
-	Text scoreText; // Текст для отображения очков
-	Text scoreOutput;//Отображение набранных очков
-	Text timeText;// Текст для відображення часу
-	Text timeOutput;//Рахунок часу
-	Text bestScoreOutput; // Найкращий рахунок 
-	Text bestScoreText; // Текст найкращого рахунку
+	Button pauseButtonText;
+	Button scoreText; // Текст для отображения очков
+	Button scoreOutput;//Отображение набранных очков
+	Button timeText;// Текст для відображення часу
+	Button timeOutput;//Рахунок часу
+	Button bestScoreOutput; // Найкращий рахунок 
+	Button bestScoreText; // Текст найкращого рахунку
 	
 public:
 	PlayState(Game& game);
@@ -65,8 +59,8 @@ class PauseState : public PlayState {
 	RectangleShape pauseOverlay;
 	RectangleShape box;
 
-	Text ResumeText;
-	Text MainMenuText;
+	Button ResumeText;
+	Button MainMenuText;
 public:
 	PauseState(Game& game);
 	void eventHandler(Event& event) override;

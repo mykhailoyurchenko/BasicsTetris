@@ -10,15 +10,10 @@ MainMenuText(font, "Main Menu", 50), box(Vector2f(400,600)){
 	pauseOverlay.setFillColor(Color(0, 0, 0, 155));
 
 	// Кнопка Resume
-	ResumeText.setFillColor(Color::White);
 	ResumeText.setPosition({ winSize.x * 0.49f, winSize.y * 0.40f });
-	centerOrigin(ResumeText);
 
 	// Кнопка MainMenu
-	MainMenuText.setFillColor(Color::White);
-	MainMenuText.setPosition({ winSize.x * 0.49f, winSize.y * 0.50f });
-	centerOrigin(MainMenuText);
-	
+	MainMenuText.setPosition({ winSize.x * 0.49f, winSize.y * 0.50f });	
 }  
 void PauseState::draw(RenderWindow& window) {
 	PlayState::draw(window);
@@ -26,7 +21,6 @@ void PauseState::draw(RenderWindow& window) {
 	window.draw(box);
 	window.draw(MainMenuText);
 	window.draw(ResumeText);
-
 }
 void PauseState::eventHandler(Event& event) {
 	GameState::eventHandler(event);

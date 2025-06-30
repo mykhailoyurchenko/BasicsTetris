@@ -7,18 +7,18 @@ using namespace std;
 class Game { //Основний клас гри
 	RenderWindow window; //Вікно гри
 	Clock clock;
-	unique_ptr<TetrisMenu> gameField;
+	optional<TetrisMenu> gameField;
 	unique_ptr<GameState> currentState; // GameState* currentState; // Поточний стан гри
-	Vector2f mousePos;//Позиція мишки
-	Vector2u winSize; //Розмір вікна
+	Vector2i mousePos;//Позиція мишки
+	Vector2u winSize = { 1920, 1080 }; //Розмір вікна
 	Image icon; //Зображення іконки
 public:
 	//Налаштування вікна гри
-	Game() : window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default, State::Fullscreen) {
-		mousePos = Vector2f(Mouse::getPosition(window));
+	Game() : window(VideoMode({ 1920, 1080 }), "Tetris", Style::Default, State::Windowed) {
+		mousePos = Mouse::getPosition(window);
 		window.setFramerateLimit(60); //Обмеження 60 кадрів
 
-		const filesystem::path path = "src/texture/icon.png"; //Путь до іконки
+		const filesystem::path path = filesystem::current_path() / "src" / "texture" / "icon.png";//"src/texture/icon.png";
 
 		if (!icon.loadFromFile(path)) {
 			cerr << "File access error: " << path << endl; //Перевірка на завантаження іконки 
@@ -33,22 +33,22 @@ public:
 
 	RenderWindow& getWindow() { return window; }
 	Clock& getClock() { return clock; }
-	Vector2f getMousePos() { return mousePos; }
+	Vector2f getMousePos() { return Vector2f(mousePos); }
 	TetrisMenu& getField() { return *gameField; }
 
-	void setField(unique_ptr<TetrisMenu> field) {
-		gameField = move(field);
+	void resetField() {
+		gameField.emplace(winSize);
 	}
 	template <typename State> void setState() {
 		static_assert(is_base_of_v<GameState, State>,
-			"State must inherit from BaseState");
+			"State must inherit from GameState");
 		currentState = make_unique<State>(*this);
 	}
 	//Головний цикл гри
 	void run() {
 		srand(time(0));
 		while (window.isOpen()) {
-			mousePos = Vector2f(Mouse::getPosition(window));
+			mousePos = Mouse::getPosition(window);
 			winSize = window.getSize();
 			currentState->update(clock.restart());
 			while (optional event = window.pollEvent()) {
@@ -56,7 +56,7 @@ public:
 			}
 			window.clear();
 			currentState->draw(window);
-			window.display();
+			window.display();	
 		}
 	}
 };

@@ -3,14 +3,11 @@
 // Конструктор меню
 MenuState::MenuState(Game& game) : GameState(game), playButtonText(font, "Play", 50), quitButtonText(font, "Quit", 40) {
 	Vector2u winSize = game.getWindow().getSize();
-	centerAll(playButtonText, quitButtonText);
 
-	game.setField(make_unique<TetrisMenu>(40, 750, 100, winSize));
+	game.resetField();
 
-	playButtonText.setFillColor(Color::White);
 	playButtonText.setPosition({winSize.x * 0.5f,winSize.y * 0.5f});
 
-	quitButtonText.setFillColor(Color::White);
 	quitButtonText.setPosition({ winSize.x * 0.498f, winSize.y * 0.57f});
 }
 // Обробка подій на клік

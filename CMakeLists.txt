@@ -32,8 +32,7 @@ FetchContent_MakeAvailable(SFML)
 add_executable(main
         "main.cpp"
         "Code/MenuState.cpp"  "src/States.h"   "Code/PlayState.cpp" "Code/GameState.cpp" "src/Game.h" "src/TetrisMenu.h" "Code/TetrisMenu.cpp"  "Code/PauseState.cpp"
-        "Code/GameOverState.cpp"
-)
+        "Code/GameOverState.cpp" "src/Button.h")
 
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)

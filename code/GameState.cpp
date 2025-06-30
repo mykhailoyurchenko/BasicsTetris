@@ -10,12 +10,12 @@ GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris",
 	
 	//Загрузка текстур,шрифта
 	if (!backgroundTexture.loadFromFile(path1)) cerr << "File access error: " << path1 << endl;
+	else backgroundSprite = std::make_unique<Sprite>(backgroundTexture);
+
 	if (!font.openFromFile(path2)) cerr << "File access error: " << path2 << endl;
 	if (!tetrisFont.openFromFile(path3)) cerr << "File access error: " << path3 << endl;
-	backgroundSprite = std::make_unique<Sprite>(backgroundTexture);
 
 	//Настройка тексту
-	tetrisText.setFillColor(Color::White);
 	tetrisText.setPosition(Vector2f(200, 500)); // Змінити на вілносні координати
 }
 void GameState::eventHandler(Event& event) {
