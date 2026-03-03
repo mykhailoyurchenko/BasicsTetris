@@ -1,10 +1,15 @@
-﻿#include "Game.h"
+#include "Game.h"
 
-PauseState::PauseState(Game& game) : PlayState(game), pauseOverlay(Vector2f(1920, 1080)), ResumeText(font, "Resume", 50), 
-MainMenuText(font, "Main Menu", 50), box(Vector2f(400,600)){
+PauseState::PauseState(Game& game) : PlayState(game), 
+	pauseOverlay(Vector2f(game.getWindow().getSize())), 
+	ResumeText(font, "Resume", 50), 
+	MainMenuText(font, "Main Menu", 50), 
+	box(Vector2f(400, 600)) // Reverted to fixed size
+{
 	Vector2u winSize = game.getWindow().getSize();
 	
-	box.setPosition(Vector2f(750, 200)); // Саня, побачиш - виправиш
+	// Keep relative positioning for the box and buttons
+	box.setPosition(Vector2f(winSize.x * 0.39f, winSize.y * 0.18f)); // Саня, побачиш - виправиш
 	box.setFillColor(Color(40, 39, 39, 255));
 	
 	pauseOverlay.setFillColor(Color(0, 0, 0, 155));
@@ -24,26 +29,17 @@ void PauseState::draw(RenderWindow& window) {
 }
 void PauseState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
+	Vector2f mousePos = game->getMousePos();
 
-	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
-	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
-		if (MainMenuText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState<MenuState>();
-			return;
-		}
-		if (ResumeText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState<PlayState>();
-		}
-	};
+	if (MainMenuText.isClicked(mousePos, event)) {
+		game->setState<MenuState>();
+	}
+	else if (ResumeText.isClicked(mousePos, event)) {
+		game->setState<PlayState>();
+	}
 }
 void PauseState::update(const Time& delta) {
-	if (MainMenuText.getGlobalBounds().contains(game->getMousePos())) {
-		MainMenuText.setFillColor(Color::Yellow);
-	}
-	else MainMenuText.setFillColor(Color::White);
-
-	if (ResumeText.getGlobalBounds().contains(game->getMousePos())) {
-		ResumeText.setFillColor(Color::Yellow);
-	}
-	else ResumeText.setFillColor(Color::White);
+	Vector2f mousePos = game->getMousePos();
+	MainMenuText.update(mousePos);
+	ResumeText.update(mousePos);
 }

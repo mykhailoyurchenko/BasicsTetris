@@ -62,10 +62,8 @@ void PlayState::eventHandler(Event& event) {
 	}
 
 	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
-	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) {
-		if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState<PauseState>();
-		}
+	if (pauseButtonText.isClicked(game->getMousePos(), event)) {
+		game->setState<PauseState>();
 	}
 }
 void PlayState::draw(RenderWindow& window) {  
@@ -115,8 +113,5 @@ void PlayState::update(const Time& delta) {
 	    << std::setw(2) << std::setfill('0') << seconds;
 	timeOutput.setString(oss.str());
 
-	if (pauseButtonText.getGlobalBounds().contains(game->getMousePos())) {
-		pauseButtonText.setFillColor(Color::Yellow);
-	}
-	else pauseButtonText.setFillColor(Color::White);
+	pauseButtonText.update(game->getMousePos());
 }

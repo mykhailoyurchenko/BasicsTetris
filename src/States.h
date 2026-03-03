@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "TetrisMenu.h"
+#include "TetrisEngine.h"
 #include "Button.h"
 
 class Game;
@@ -14,10 +14,9 @@ protected://Поля дочірніх класів GameState
 	GameState(Game& game);
 	Game* game;//Указатель на обьект классу Game
 	//Визуал
-	Texture backgroundTexture;
-	std::unique_ptr<Sprite> backgroundSprite;
-	Font font;
-	Font tetrisFont;
+	Sprite backgroundSprite;
+	Font& font;
+	Font& tetrisFont;
 	Button tetrisText;
 };
 class MenuState : public GameState {//Класс состояния игры
@@ -39,7 +38,7 @@ public:
 	void draw(RenderWindow& window) override;
 };
 class PlayState : public GameState {//Класс состояния игры
-	TetrisMenu& gameField;
+	TetrisEngine& gameField;
 
 	Button pauseButtonText;
 	Button scoreText; // Текст для отображения очков

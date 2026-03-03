@@ -1,6 +1,6 @@
 ﻿#include "Game.h"
 
-GameOverState::GameOverState(Game& game): GameState(game),gameOverText(font, "Game Over", 80),mainMenuText(font, "Main Menu", 50)
+GameOverState::GameOverState(Game& game) : GameState(game), gameOverText(font, "Game Over", 80), mainMenuText(font, "Main Menu", 50)
 {
 	Vector2u winSize = game.getWindow().getSize();
 
@@ -12,20 +12,13 @@ GameOverState::GameOverState(Game& game): GameState(game),gameOverText(font, "Ga
 
 void GameOverState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
-	const auto* mouseEvent = event.getIf<sf::Event::MouseButtonPressed>();
-	if (mouseEvent && mouseEvent->button == sf::Mouse::Button::Left) {
-		if (mainMenuText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState<MenuState>();
-		}
+	if (mainMenuText.isClicked(game->getMousePos(), event)) {
+		game->setState<MenuState>();
 	}
 }
 
 void GameOverState::update(const Time&) {
-	if (mainMenuText.getGlobalBounds().contains(game->getMousePos())) {
-		mainMenuText.setFillColor(Color::Yellow);
-	} else {
-		mainMenuText.setFillColor(Color::White);
-	}
+	mainMenuText.update(game->getMousePos());
 }
 
 void GameOverState::draw(sf::RenderWindow& window) {

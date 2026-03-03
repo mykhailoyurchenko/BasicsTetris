@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "States.h"
+#include "AssetManager.h"
 #include <iostream>
 
 using namespace std;
@@ -7,7 +8,8 @@ using namespace std;
 class Game { //Основний клас гри
 	RenderWindow window; //Вікно гри
 	Clock clock;
-	optional<TetrisMenu> gameField;
+	AssetManager assets;
+	optional<TetrisEngine> gameField;
 	unique_ptr<GameState> currentState; // GameState* currentState; // Поточний стан гри
 	Vector2i mousePos;//Позиція мишки
 	Vector2u winSize = { 1920, 1080 }; //Розмір вікна
@@ -34,7 +36,8 @@ public:
 	RenderWindow& getWindow() { return window; }
 	Clock& getClock() { return clock; }
 	Vector2f getMousePos() { return Vector2f(mousePos); }
-	TetrisMenu& getField() { return *gameField; }
+	TetrisEngine& getField() { return *gameField; }
+	AssetManager& getAssets() { return assets; }
 
 	void resetField() {
 		gameField.emplace(winSize);

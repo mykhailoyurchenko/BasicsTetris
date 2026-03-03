@@ -1,8 +1,8 @@
-﻿#include "TetrisMenu.h"
+#include "TetrisEngine.h"
 #include <iostream>
 #include <random>
 
-TetrisMenu::TetrisMenu(Vector2u winSize) : gameFieldNext(Vector2f(230, 600)) {
+TetrisEngine::TetrisEngine(Vector2u winSize) : gameFieldNext(Vector2f(230, 600)) {
 	gameFieldNext.setFillColor(Color(0, 0, 0, 130));
 	gameFieldNext.setPosition({ winSize.x * 0.62f, winSize.y * 0.20f });
 
@@ -20,7 +20,7 @@ TetrisMenu::TetrisMenu(Vector2u winSize) : gameFieldNext(Vector2f(230, 600)) {
 	std::generate(nextTetrises.begin(), nextTetrises.end(), [&]() { return dist(rng); });
 
 }
-bool TetrisMenu::canMove(int dx, int dy) const {
+bool TetrisEngine::canMove(int dx, int dy) const {
 	for (const auto& block : currentTetris) {
 		int nx = block.x + dx;
 		int ny = block.y + dy;
@@ -30,7 +30,7 @@ bool TetrisMenu::canMove(int dx, int dy) const {
 	return true;
 }
 
-void TetrisMenu::clearFullRows() {
+void TetrisEngine::clearFullRows() {
 	int linesCleared = 0;
 	for (int y = rows - 1; y >= 0; y--) {
 		bool full = true;
@@ -60,7 +60,7 @@ void TetrisMenu::clearFullRows() {
 		score += linesCleared * 100;
 	}
 }
-void TetrisMenu::lockTetris() {
+void TetrisEngine::lockTetris() {
 	for (const auto& block : currentTetris) {
 		int x = block.x;
 		int y = block.y;
@@ -72,13 +72,13 @@ void TetrisMenu::lockTetris() {
 	clearFullRows();
 	isMoving = false;
 }
-bool TetrisMenu::isGameOver() const {
+bool TetrisEngine::isGameOver() const {
 	for (int x = 0; x < cols; ++x) {
 		if (grid[x][0].isFull) return true;
 	}
 	return false;
 }
-void TetrisMenu::spawnTetris() {
+void TetrisEngine::spawnTetris() {
 	moveInterval = getSpeedByScore(score);
 	int number = nextTetrises[0];
 	int randomX = number == 0 ? rand() % (cols - 3) : rand() % (cols - 2);
@@ -96,7 +96,7 @@ void TetrisMenu::spawnTetris() {
 	}
 }
 // Повороти фігур
-void TetrisMenu::rotateTetris() { // Спробувати переписати	
+void TetrisEngine::rotateTetris() { // Спробувати переписати	
 	if (currentType == 3) return;
 
 	Vector2i pivot = currentTetris[2];
@@ -139,7 +139,7 @@ void TetrisMenu::rotateTetris() { // Спробувати переписати
 		}
 	}
 }
-void TetrisMenu::updateCurrentTetris() {
+void TetrisEngine::updateCurrentTetris() {
 	// Оновити grid для відображення поточної фігури
 	for (int x = 0; x < cols; x++) {
 		for (int y = 0; y < rows; y++) {
@@ -156,7 +156,7 @@ void TetrisMenu::updateCurrentTetris() {
 		}
 	}
 }
-void TetrisMenu::move(int dx) {
+void TetrisEngine::move(int dx) {
     if (canMove(dx, 0)) {
         for (auto& block : currentTetris) block.x += dx;
         upHeld = false;
@@ -164,11 +164,11 @@ void TetrisMenu::move(int dx) {
     }
 }
 
-float TetrisMenu::getSpeedByScore(int score) {
+float TetrisEngine::getSpeedByScore(int score) {
 	return std::max(0.1f, 1.0f - score / 1000.f);
 }
 
-void TetrisMenu::update(float delta) {
+void TetrisEngine::update(float delta) {
 	if (!isMoving) return;
 	moveTimer += delta;
 	if (moveTimer >= moveInterval) {
@@ -183,14 +183,14 @@ void TetrisMenu::update(float delta) {
 	updateCurrentTetris();
 }
 
-void TetrisMenu::tetrisesShift() {
+void TetrisEngine::tetrisesShift() {
 	for (int i = 0; i < nextTetrises.size() - 1; ++i) {
 		nextTetrises[i] = nextTetrises[i + 1];
 	}
 	nextTetrises[nextTetrises.size() - 1] = rand() % 7;
 }
 
-void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
+void TetrisEngine::draw(RenderTarget& target, RenderStates states) const {
 	RectangleShape cell(Vector2f(cellSize, cellSize));
 	cell.setOutlineColor(Color(32, 31, 31));
 	cell.setOutlineThickness(1.f);
@@ -204,7 +204,7 @@ void TetrisMenu::draw(RenderTarget& target, RenderStates states) const {
 	target.draw(gameFieldNext);
 	drawNextTetrises(target);
 }
-void TetrisMenu::drawNextTetrises(RenderTarget& target) const {
+void TetrisEngine::drawNextTetrises(RenderTarget& target) const {
 	const float cellSize = 42.f;
 
 	RectangleShape block(Vector2f(cellSize, cellSize));

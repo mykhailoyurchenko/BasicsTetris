@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <SFML/Graphics.hpp>
 //#include <array>
 //#include <vector>
@@ -12,9 +12,9 @@ struct CellData {
 	bool isFull = 0;
 };
 
-class TetrisMenu : public Drawable {
+class TetrisEngine : public Drawable {
 public:
-	TetrisMenu(Vector2u winSize);
+	TetrisEngine(Vector2u winSize);
 	static constexpr std::array<std::array<Vector2i, 4>, 7> tetrisShapes = { {
 			// I
 			{{{0,0}, {2,0}, {1,0}, {3,0}}},

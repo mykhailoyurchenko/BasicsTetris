@@ -13,31 +13,22 @@ MenuState::MenuState(Game& game) : GameState(game), playButtonText(font, "Play",
 // Обробка подій на клік
 void MenuState::eventHandler(Event& event) {
 	GameState::eventHandler(event);
-	const auto* mouseEvent = event.getIf<Event::MouseButtonPressed>();
-	if (mouseEvent && mouseEvent->button == Mouse::Button::Left) { // Перевірка натискання миші
-		if (playButtonText.getGlobalBounds().contains(game->getMousePos())) {
-			game->setState<PlayState>();
-			return;
-		}
-		if (quitButtonText.getGlobalBounds().contains(game->getMousePos())) {
-			game->getWindow().close();
-		}
+	Vector2f mousePos = game->getMousePos();
+
+	if (playButtonText.isClicked(mousePos, event)) {
+		game->setState<PlayState>();
+	}
+	else if (quitButtonText.isClicked(mousePos, event)) {
+		game->getWindow().close();
 	}
 }
 // Оновлення стану
 void MenuState::update(const Time& delta) {
 	GameState::update();
-	if (quitButtonText.getGlobalBounds().contains(game->getMousePos())) {
-		quitButtonText.setFillColor(Color::Yellow);
-	}
-	else {
-		quitButtonText.setFillColor(Color::White);
-	}
-	// Зміна кольору тексту 
-	if (playButtonText.getGlobalBounds().contains(game->getMousePos())) {
-		playButtonText.setFillColor(Color::Yellow);
-	}
-	else playButtonText.setFillColor(Color::White);
+	Vector2f mousePos = game->getMousePos();
+
+	playButtonText.update(mousePos);
+	quitButtonText.update(mousePos);
 }
 // Відображення меню
 void MenuState::draw(RenderWindow & window) {

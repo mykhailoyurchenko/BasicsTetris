@@ -1,22 +1,15 @@
 ﻿#include "Game.h"
 
 //Конструктор 
-GameState::GameState(Game& game) : game(&game), tetrisText(tetrisFont, "Tetris", 70) {
-	using namespace filesystem;
-	//Пути к файлам
-	const path path1 = "src/texture/background.jpg";
-	const path path2 = "src/fonts/Roboto_Condensed-Black.ttf";
-	const path path3 = "src/fonts/Oi-Regular.ttf";
-	
-	//Загрузка текстур,шрифта
-	if (!backgroundTexture.loadFromFile(path1)) cerr << "File access error: " << path1 << endl;
-	else backgroundSprite = std::make_unique<Sprite>(backgroundTexture);
-
-	if (!font.openFromFile(path2)) cerr << "File access error: " << path2 << endl;
-	if (!tetrisFont.openFromFile(path3)) cerr << "File access error: " << path3 << endl;
-
+GameState::GameState(Game& game) : game(&game), 
+	font(game.getAssets().getFont("src/fonts/Roboto_Condensed-Black.ttf")),
+	tetrisFont(game.getAssets().getFont("src/fonts/Oi-Regular.ttf")),
+	backgroundSprite(game.getAssets().getTexture("src/texture/background.jpg")),
+	tetrisText(tetrisFont, "Tetris", 70) 
+{
+	Vector2u winSize = game.getWindow().getSize();
 	//Настройка тексту
-	tetrisText.setPosition(Vector2f(200, 500)); // Змінити на вілносні координати
+	tetrisText.setPosition(Vector2f(winSize.x * 0.1f, winSize.y * 0.46f)); // Змінити на вілносні координати
 }
 void GameState::eventHandler(Event& event) {
 	if (event.is<Event::Closed>()) {
@@ -24,6 +17,6 @@ void GameState::eventHandler(Event& event) {
 	}
 }
 void GameState::draw(RenderWindow& window) {
-	window.draw(*backgroundSprite);  //рендер background
+	window.draw(backgroundSprite);  //рендер background
 	window.draw(tetrisText);
 }
